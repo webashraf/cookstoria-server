@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import { facilityRoute } from "./app/modules/Facility/facility.routes";
 import { userRoute } from "./app/modules/User/user.routes";
 
 const app = express();
@@ -6,6 +7,8 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/auth/", userRoute);
+
+app.use("/api/facility/", facilityRoute);
 
 app.use((req, res) => {
   res.status(500).json({
