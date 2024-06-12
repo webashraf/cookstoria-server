@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import { bookingRoute } from "./app/modules/Booking/booking.routes";
 import { facilityRoute } from "./app/modules/Facility/facility.routes";
 import { userRoute } from "./app/modules/User/user.routes";
 
@@ -9,6 +10,8 @@ app.use(express.json());
 app.use("/api/auth/", userRoute);
 
 app.use("/api/facility/", facilityRoute);
+
+app.use("/api/bookings", bookingRoute);
 
 app.use((req, res) => {
   res.status(500).json({
