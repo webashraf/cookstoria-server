@@ -1,11 +1,9 @@
 import { Router } from "express";
 import validateRequest from "../../middleware/validateRequest";
-import { FacilityService } from "./facility.service";
-import { FacilityValidators } from "./facility.validation";
 import { FacilityController } from "./facility.controller";
+import { FacilityValidators } from "./facility.validation";
 
 const router = Router();
-
 
 router.post(
   "/",
@@ -13,5 +11,14 @@ router.post(
   FacilityController.createFacility
 );
 
+router.put(
+  "/:id",
+  validateRequest(FacilityValidators.updeteFacilityValidationSchema),
+  FacilityController.updateFacility
+);
+
+router.delete("/:id", FacilityController.deleteFacility);
+
+router.get("/", FacilityController.retriveFacility);
 
 export const facilityRoute = router;
