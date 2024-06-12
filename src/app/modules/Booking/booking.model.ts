@@ -23,9 +23,10 @@ const bookingSchema = new Schema<TBooking>({
     type: Schema.Types.ObjectId,
     required: true,
   },
-  payable: {
+  payableAmount: {
     type: Number,
-    required: true,
+    default: 0,
+    // required: true,
   },
   isBooked: {
     type: String,
@@ -35,15 +36,31 @@ const bookingSchema = new Schema<TBooking>({
 });
 
 bookingSchema.pre("save", async function (next) {
-  console.log(this.facility);
+  const { startTime, endTime } = this;
 
-  const isFacilityExist = await Facility.findById(this.facility);
-  console.log(isFacilityExist);
+  const time1 = new Date(`2000-01-01T${startTime}:00`);
+  const time2 = new Date(`2000-01-01T${endTime}:00`);
 
-  if (!isFacilityExist) {
-    throw new Error("Facility not found!!");
-  }
-  next();
+  const differenceMilliseconds = Number(time1) - Number(time2);
+
+  const differenceInHour = (Math.abs(differenceMilliseconds) / 3600000).toFixed(
+    2
+  );
+
+  console.log("Difference", Number(differenceInHour));
+
+  const facilityForBooking = await Facility.findById(this.facility);
+  const payableAmount =
+    Number(differenceInHour) * Number(facilityForBooking?.pricePerHour);
+  console.log(payableAmount);
+  this.payableAmount = payableAmount;
+
+  console.log(this);
+
+    if (!facilityForBooking) {
+      throw new Error("Facility not found!!");
+    }
+    next();
 });
 
 export const Booking = model<TBooking>("Booking", bookingSchema);
