@@ -4,7 +4,6 @@ import { FacilityController } from "./facility.controller";
 import { FacilityValidators } from "./facility.validation";
 
 const router = Router();
-
 router.post(
   "/",
   validateRequest(FacilityValidators.facilityValidationSchema),

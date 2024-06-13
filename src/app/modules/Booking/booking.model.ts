@@ -17,11 +17,11 @@ const bookingSchema = new Schema<TBooking>({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   facility: {
     type: Schema.Types.ObjectId,
-    ref: 'Facility',
+    ref: "Facility",
   },
   payableAmount: {
     type: Number,
@@ -46,15 +46,10 @@ bookingSchema.pre("save", async function (next) {
     2
   );
 
-  console.log("Difference", Number(differenceInHour));
-
   const facilityForBooking = await Facility.findById(this.facility);
   const payableAmount =
     Number(differenceInHour) * Number(facilityForBooking?.pricePerHour);
-  console.log(payableAmount);
   this.payableAmount = payableAmount;
-
-  console.log(this);
 
   if (!facilityForBooking) {
     throw new Error("Facility not found!!");
