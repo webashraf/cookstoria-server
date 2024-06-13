@@ -4,7 +4,7 @@ import { TBooking } from "./booking.interface";
 
 const bookingSchema = new Schema<TBooking>({
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
   startTime: {
@@ -17,20 +17,19 @@ const bookingSchema = new Schema<TBooking>({
   },
   user: {
     type: Schema.Types.ObjectId,
-    required: true,
+    ref: 'User',
   },
   facility: {
     type: Schema.Types.ObjectId,
-    required: true,
+    ref: 'Facility',
   },
   payableAmount: {
     type: Number,
     default: 0,
-    // required: true,
   },
   isBooked: {
     type: String,
-    enum: ["confirmed", "canceled"],
+    enum: ["confirmed", "unconfirmed", "canceled"],
     default: "confirmed",
   },
 });
@@ -57,10 +56,10 @@ bookingSchema.pre("save", async function (next) {
 
   console.log(this);
 
-    if (!facilityForBooking) {
-      throw new Error("Facility not found!!");
-    }
-    next();
+  if (!facilityForBooking) {
+    throw new Error("Facility not found!!");
+  }
+  next();
 });
 
 export const Booking = model<TBooking>("Booking", bookingSchema);
