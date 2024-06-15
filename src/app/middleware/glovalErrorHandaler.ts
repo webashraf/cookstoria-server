@@ -53,13 +53,17 @@ const glovalErrorHandaler: ErrorRequestHandler = (err, req, res, next) => {
     ];
   }
 
-  if (err instanceof NotFoundError === true) {
-    console.log({ NotFoundError: err instanceof NotFoundError });
-    message = err.message;
+  if (err instanceof NotFoundError === true && err.statusCode === 401) {
     return res.status(statusCode).json({
       success: false,
-      statusCode: 404,
-      message,
+      statusCode: err.statusCode,
+      message: err.message,
+    });
+  } else if (err instanceof NotFoundError === true) {
+    return res.status(statusCode).json({
+      success: false,
+      statusCode: err.statusCode,
+      message: err.message,
       data: [],
     });
   } else {

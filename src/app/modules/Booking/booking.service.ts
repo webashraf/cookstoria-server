@@ -6,8 +6,22 @@ import { bookingUtils } from "./booking.utils";
 const createABookingIntoDB = async (payload: TBooking, email: string) => {
   const currentDate = new Date(payload.date);
   const toDay = new Date();
+  const inputYear = payload.date.split("-");
 
-  console.log({ payload });
+  // const [day, month, year] = date.split("-");
+  // let formattedDate = `${year}-${month}-${day}`;
+
+  if (
+    inputYear[0].length !== 4 ||
+    !(Number(inputYear[1]) <= 12) ||
+    Number(inputYear[1]) === 0 ||
+    Number(inputYear[2]) === 0 ||
+    !(Number(inputYear[2]) <= 31)
+  ) {
+    throw new Error(
+      "Invalid date format! You must provide a date in YYYY-MM-DD format!!"
+    );
+  }
 
   const user = await User.findOne({ email });
   if (!user) {
@@ -15,10 +29,8 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
   }
 
   const userId = user._id;
-  console.log(userId);
 
   payload.user = userId;
-  console.log(payload);
 
   const currentBookingHistory = await Booking.find({
     date: payload.date,
@@ -50,12 +62,10 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
 
 const retriveABookingsIntoDB = async (id: string, isUser: boolean) => {
   if (isUser) {
-    console.log(isUser);
     const result = await Booking.find().populate("facility");
     return result;
   }
 
-  console.log(isUser);
   const result = await Booking.find().populate("user").populate("facility");
   if (result.length < 1) {
     throw new Error("Could not find data");
@@ -68,7 +78,7 @@ const deleteABookingFromDB = async (id: string) => {
     id,
     { isBooked: "canceled" },
     { runValidators: true, new: true }
-  ).populate('facility');
+  ).populate("facility");
   return result;
 };
 

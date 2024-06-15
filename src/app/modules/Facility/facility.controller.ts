@@ -37,7 +37,7 @@ const deleteFacility = catchAsync(async (req, res) => {
 });
 
 const retriveFacility = catchAsync(async (req, res) => {
-  const result = await FacilityService.retriveFacilityFromDB(req.params.id);
+  const result = await FacilityService.retriveFacilityFromDB();
 
   res.status(200).json({
     success: true,
