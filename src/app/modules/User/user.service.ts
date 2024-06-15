@@ -10,9 +10,10 @@ const createNewUserIntoDB = async (payload: TUser) => {
   );
 
   const result = await User.create(payload);
+  const savedUser = await User.findById({ _id: result._id });
 
   result.password = "";
-  return result;
+  return savedUser;
 };
 
 export const UserServices = {

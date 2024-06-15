@@ -5,6 +5,7 @@ import handleCastError from "../error/handleCastError";
 import handleDuplicateError from "../error/handleDuplicateError";
 import handleValidationError from "../error/handleValidationError";
 import handleZodError from "../error/handleZodError";
+import NotFoundError from "../error/notFoundError";
 import { TErrorMessage } from "../interface/error";
 
 const glovalErrorHandaler: ErrorRequestHandler = (err, req, res, next) => {
@@ -52,12 +53,23 @@ const glovalErrorHandaler: ErrorRequestHandler = (err, req, res, next) => {
     ];
   }
 
-  return res.status(statusCode).json({
-    success: false,
-    message,
-    errorMessages,
-    stack: config.NODE_ENV === "development" ? err?.stack : null,
-  });
+  if (err instanceof NotFoundError === true) {
+    console.log({ NotFoundError: err instanceof NotFoundError });
+    message = err.message;
+    return res.status(statusCode).json({
+      success: false,
+      statusCode: 404,
+      message,
+      data: [],
+    });
+  } else {
+    return res.status(statusCode).json({
+      success: false,
+      message,
+      errorMessages,
+      stack: config.NODE_ENV === "development" ? err?.stack : null,
+    });
+  }
 };
 
 export default glovalErrorHandaler;

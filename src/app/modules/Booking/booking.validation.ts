@@ -11,10 +11,7 @@ const BookingValidationSchema = z.object({
     endTime: z
       .string()
       .regex(timeRegex, { message: "Invalid end time format" }),
-    user: z.string(),
     facility: z.string(),
-    // payableAmount: z.number(),
-    // isBooked: z.enum(["confirmed", "unconfirmed", "canceled"]),
   }),
 });
 

@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import glovalErrorHandaler from "./app/middleware/glovalErrorHandaler";
+import { AuthRoute } from "./app/modules/Auth/auth.routes";
 import { availabilityRoute } from "./app/modules/Availability/availability.routes";
 import { bookingRoute } from "./app/modules/Booking/booking.routes";
 import { facilityRoute } from "./app/modules/Facility/facility.routes";
@@ -14,6 +15,8 @@ app.use("/api/auth/", userRoute);
 app.use("/api/facility/", facilityRoute);
 
 app.use("/api/bookings", bookingRoute);
+
+app.use("/api/auth/", AuthRoute);
 
 app.use("/api/check-availability", availabilityRoute);
 

@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import NotFoundError from "../../error/notFoundError";
 import { TFacility } from "./facility.interface";
 import { Facility } from "./facility.model";
 
@@ -19,12 +21,19 @@ const updateFacilityIntoDB = async (
 };
 
 const deleteFacilityIntoDB = async (id: string) => {
-  const result = await Facility.findByIdAndDelete(id);
+  const result = await Facility.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true, runValidators: true }
+  );
   return result;
 };
 
 const retriveFacilityFromDB = async (id: string) => {
   const result = await Facility.find();
+  if (result.length < 1) {
+    throw new NotFoundError(httpStatus.FORBIDDEN, "No Data Found");
+  }
   return result;
 };
 
