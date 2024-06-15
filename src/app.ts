@@ -24,6 +24,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello! roducts");
 });
 
+
 app.use((req, res) => {
   res.status(500).json({
     success: false,
