@@ -1,3 +1,4 @@
+import cors from "cors";
 import express, { Request, Response } from "express";
 import glovalErrorHandaler from "./app/middleware/glovalErrorHandaler";
 import { AuthRoute } from "./app/modules/Auth/auth.routes";
@@ -7,6 +8,9 @@ import { facilityRoute } from "./app/modules/Facility/facility.routes";
 import { userRoute } from "./app/modules/User/user.routes";
 
 const app = express();
+// Parser
+app.use(express.json());
+app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
 
 app.use(express.json());
 
@@ -23,7 +27,6 @@ app.use("/api/check-availability", availabilityRoute);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello! roducts");
 });
-
 
 app.use((req, res) => {
   res.status(500).json({
