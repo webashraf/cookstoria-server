@@ -29,7 +29,7 @@ const deleteFacilityIntoDB = async (id: string) => {
 };
 
 const retriveFacilityFromDB = async () => {
-  const result = await Facility.find();
+  const result = await Facility.find({ isDeleted: false });
   if (result.length < 1) {
     throw new NotFoundError(404, "No Data Found");
   }
