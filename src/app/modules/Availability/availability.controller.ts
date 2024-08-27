@@ -3,7 +3,8 @@ import { checkAvailabilityService } from "./availability.service";
 
 const checkAvailability = catchAsync(async (req, res) => {
   const result = await checkAvailabilityService.checkAvailabilityFromDB(
-    req.query.date as string
+    req.query.date as string,
+    req.query.facility as string
   );
   res.status(200).json({
     success: true,

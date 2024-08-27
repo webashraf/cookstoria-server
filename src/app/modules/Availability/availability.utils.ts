@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function formatTime24(hour: number) {
   const formattedHour = hour.toString().padStart(2, "0");
   return `${formattedHour}:00`;
