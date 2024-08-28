@@ -36,8 +36,8 @@ const deleteFacility = catchAsync(async (req, res) => {
   });
 });
 
-const retriveFacility = catchAsync(async (req, res) => {
-  const result = await FacilityService.retriveFacilityFromDB();
+const retrieveFacility = catchAsync(async (req, res) => {
+  const result = await FacilityService.retrieveFacilityFromDB();
 
   res.status(200).json({
     success: true,
@@ -51,5 +51,5 @@ export const FacilityController = {
   createFacility,
   updateFacility,
   deleteFacility,
-  retriveFacility
+  retrieveFacility,
 };

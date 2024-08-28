@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bookingUtils = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function doesOverlap(existingSlots, newSlot) {
     const newStart = parseTime(newSlot.startTime);
     const newEnd = parseTime(newSlot.endTime);

@@ -6,6 +6,10 @@ const facilitySchema = new Schema<TFacility>({
     type: String,
     required: true,
   },
+  photoUrl: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,

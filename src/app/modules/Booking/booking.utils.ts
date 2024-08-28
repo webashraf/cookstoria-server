@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function doesOverlap(existingSlots: any, newSlot: any) {
   const newStart = parseTime(newSlot.startTime);
   const newEnd = parseTime(newSlot.endTime);

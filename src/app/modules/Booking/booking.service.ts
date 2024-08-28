@@ -10,6 +10,13 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
 
   // const [day, month, year] = date.split("-");
   // let formattedDate = `${year}-${month}-${day}`;
+  console.log(payload.facility);
+
+  const findBookByCurrentDateAndFacility = await Booking.find({
+    date: payload.date,
+    facility: payload.facility,
+  });
+  console.log("FF", findBookByCurrentDateAndFacility);
 
   if (
     inputYear[0].length !== 4 ||
@@ -42,6 +49,11 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
   };
 
   const isNotTimeFree = bookingUtils.doesOverlap(
+    findBookByCurrentDateAndFacility,
+    newTime
+  );
+  console.log(
+    "🚀 ~ createABookingIntoDB ~ isNotTimeFree:",
     currentBookingHistory,
     newTime
   );

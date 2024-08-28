@@ -30,8 +30,8 @@ const deleteFacilityIntoDB = (id) => __awaiter(void 0, void 0, void 0, function*
     const result = yield facility_model_1.Facility.findByIdAndUpdate(id, { isDeleted: true }, { new: true, runValidators: true });
     return result;
 });
-const retriveFacilityFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield facility_model_1.Facility.find();
+const retrieveFacilityFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield facility_model_1.Facility.find({ isDeleted: false });
     if (result.length < 1) {
         throw new notFoundError_1.default(404, "No Data Found");
     }
@@ -41,5 +41,5 @@ exports.FacilityService = {
     createFacilityIntoDB,
     updateFacilityIntoDB,
     deleteFacilityIntoDB,
-    retriveFacilityFromDB,
+    retrieveFacilityFromDB,
 };

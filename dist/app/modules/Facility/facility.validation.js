@@ -10,15 +10,27 @@ const facilityValidationSchema = zod_1.z.object({
         location: zod_1.z.string({ required_error: "Location is required." }),
     }),
 });
-const updeteFacilityValidationSchema = zod_1.z.object({
+//! Old code
+// const updeteFacilityValidationSchema = z.object({
+//   body: z.object({
+//     name: z.string().optional(),
+//     photoUrl: z.string().optional(),
+//     description: z.string().optional(),
+//     pricePerHour: z.number().optional(),
+//     location: z.string().optional(),
+//   }),
+// });
+// * new code make it require
+const updateFacilityValidationSchema = zod_1.z.object({
     body: zod_1.z.object({
-        name: zod_1.z.string().optional(),
-        description: zod_1.z.string().optional(),
-        pricePerHour: zod_1.z.number().optional(),
-        location: zod_1.z.string().optional(),
+        name: zod_1.z.string(),
+        photoUrl: zod_1.z.string(),
+        description: zod_1.z.string(),
+        pricePerHour: zod_1.z.number(),
+        location: zod_1.z.string(),
     }),
 });
 exports.FacilityValidators = {
     facilityValidationSchema,
-    updeteFacilityValidationSchema,
+    updateFacilityValidationSchema,
 };

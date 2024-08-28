@@ -6,8 +6,8 @@ const checkAvailabilityFromDB = async (
   date: string = "0",
   facility: string = ""
 ) => {
+  console.log("DATE: ", date);
   let formattedNewDate = date;
-
   const inputYear = date.split("-");
   if (date.length === 1) {
     formattedNewDate = new Date().toISOString().slice(0, 10);
@@ -25,8 +25,18 @@ const checkAvailabilityFromDB = async (
 
   const currentDate = new Date(formattedNewDate);
   const toDay = new Date();
-
-  if (currentDate < toDay && !(date.length === 1)) {
+  console.log(
+    { currentDate, toDay },
+    currentDate < toDay,
+    date.length,
+    !(date.length === 1),
+    "ended test"
+  );
+  // ! old condition
+  // if (currentDate < toDay || !(date.length === 1)) {
+  //   throw new Error("Date is already pas!!");
+  // }
+  if (currentDate < toDay) {
     throw new Error("Date is already pas!!");
   }
 
@@ -38,21 +48,21 @@ const checkAvailabilityFromDB = async (
     filter["facility"] = facility;
   }
 
-  if (filter) {
-    const facilityResult = await Booking.find({
-      date: "2028-06-23",
-      facility: "66ccc0a163c1483f70b8615d",
-    });
-    console.log("facilityResult: ", facilityResult);
-  }
+  // if (filter) {
+  //   const facilityResult = await Booking.find({
+  //     date: "2028-06-23",
+  //     facility: "66ccc0a163c1483f70b8615d",
+  //   });
+  //   console.log("facilityResult: ", facilityResult);
+  // }
 
   const currentBookingHistory =
     await Booking.find(filter).select("startTime endTime");
   console.log("Current Booking History", currentBookingHistory);
 
-  if (currentBookingHistory.length === 0) {
-    throw new Error("Not available slot based on this facility!!");
-  }
+  // if (currentBookingHistory.length === 0) {
+  //   throw new Error("Not available slot based on this facility!!");
+  // }
 
   if (currentBookingHistory.length < 1) {
     return availiabilityUtils.generateTwoHourTimeSlots();

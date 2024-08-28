@@ -19,6 +19,12 @@ const createABookingIntoDB = (payload, email) => __awaiter(void 0, void 0, void 
     const inputYear = payload.date.split("-");
     // const [day, month, year] = date.split("-");
     // let formattedDate = `${year}-${month}-${day}`;
+    console.log(payload.facility);
+    const findBookByCurrentDateAndFacility = yield booking_model_1.Booking.find({
+        date: payload.date,
+        facility: payload.facility,
+    });
+    console.log("FF", findBookByCurrentDateAndFacility);
     if (inputYear[0].length !== 4 ||
         !(Number(inputYear[1]) <= 12) ||
         Number(inputYear[1]) === 0 ||
@@ -39,7 +45,8 @@ const createABookingIntoDB = (payload, email) => __awaiter(void 0, void 0, void 
         startTime: payload.startTime,
         endTime: payload.endTime,
     };
-    const isNotTimeFree = booking_utils_1.bookingUtils.doesOverlap(currentBookingHistory, newTime);
+    const isNotTimeFree = booking_utils_1.bookingUtils.doesOverlap(findBookByCurrentDateAndFacility, newTime);
+    console.log("🚀 ~ createABookingIntoDB ~ isNotTimeFree:", currentBookingHistory, newTime);
     if (isNotTimeFree) {
         throw new Error("Time is already overlapped!!");
     }

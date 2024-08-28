@@ -16,12 +16,12 @@ router.post(
 router.put(
   "/:id",
   auth(USER_ROLE.admin),
-  validateRequest(FacilityValidators.updeteFacilityValidationSchema),
+  validateRequest(FacilityValidators.updateFacilityValidationSchema),
   FacilityController.updateFacility
 );
 
 router.delete("/:id", auth(USER_ROLE.admin), FacilityController.deleteFacility);
 
-router.get("/", FacilityController.retriveFacility);
+router.get("/", FacilityController.retrieveFacility);
 
 export const facilityRoute = router;

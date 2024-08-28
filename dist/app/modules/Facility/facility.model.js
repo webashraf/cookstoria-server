@@ -7,6 +7,10 @@ const facilitySchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    photoUrl: {
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
         required: true,

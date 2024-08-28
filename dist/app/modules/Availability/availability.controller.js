@@ -16,7 +16,8 @@ exports.CheckAvailabilityController = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const availability_service_1 = require("./availability.service");
 const checkAvailability = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield availability_service_1.checkAvailabilityService.checkAvailabilityFromDB(req.query.date);
+    console.log("req.query.date as string, req.query.facility as string", req.query.date, req.query.facility);
+    const result = yield availability_service_1.checkAvailabilityService.checkAvailabilityFromDB(req.query.date, req.query.facility);
     res.status(200).json({
         success: true,
         statusCode: 200,

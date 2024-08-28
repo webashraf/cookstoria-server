@@ -42,8 +42,8 @@ const deleteFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
-const retriveFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield facility_service_1.FacilityService.retriveFacilityFromDB();
+const retrieveFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield facility_service_1.FacilityService.retrieveFacilityFromDB();
     res.status(200).json({
         success: true,
         statusCode: 200,
@@ -55,5 +55,5 @@ exports.FacilityController = {
     createFacility,
     updateFacility,
     deleteFacility,
-    retriveFacility
+    retrieveFacility,
 };

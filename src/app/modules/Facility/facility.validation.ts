@@ -9,16 +9,29 @@ const facilityValidationSchema = z.object({
   }),
 });
 
-const updeteFacilityValidationSchema = z.object({
+//! Old code
+// const updeteFacilityValidationSchema = z.object({
+//   body: z.object({
+//     name: z.string().optional(),
+//     photoUrl: z.string().optional(),
+//     description: z.string().optional(),
+//     pricePerHour: z.number().optional(),
+//     location: z.string().optional(),
+//   }),
+// });
+
+// * new code make it require
+const updateFacilityValidationSchema = z.object({
   body: z.object({
-    name: z.string().optional(),
-    description: z.string().optional(),
-    pricePerHour: z.number().optional(),
-    location: z.string().optional(),
+    name: z.string(),
+    photoUrl: z.string(),
+    description: z.string(),
+    pricePerHour: z.number(),
+    location: z.string(),
   }),
 });
 
 export const FacilityValidators = {
   facilityValidationSchema,
-  updeteFacilityValidationSchema,
+  updateFacilityValidationSchema,
 };

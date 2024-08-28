@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.availiabilityUtils = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function formatTime24(hour) {
     const formattedHour = hour.toString().padStart(2, "0");
     return `${formattedHour}:00`;
