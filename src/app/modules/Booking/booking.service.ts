@@ -1,22 +1,25 @@
+import { initiatePayment } from "../Payment/payment.utils";
 import { User } from "../User/user.model";
 import { TBooking } from "./booking.interface";
 import { Booking } from "./booking.model";
 import { bookingUtils } from "./booking.utils";
 
 const createABookingIntoDB = async (payload: TBooking, email: string) => {
+  console.log(payload, email);
+
   const currentDate = new Date(payload.date);
   const toDay = new Date();
   const inputYear = payload.date.split("-");
 
   // const [day, month, year] = date.split("-");
   // let formattedDate = `${year}-${month}-${day}`;
-  console.log(payload.facility);
+  // console.log(payload.facility);
 
   const findBookByCurrentDateAndFacility = await Booking.find({
     date: payload.date,
     facility: payload.facility,
   });
-  console.log("FF", findBookByCurrentDateAndFacility);
+  // console.log("FF", findBookByCurrentDateAndFacility);
 
   if (
     inputYear[0].length !== 4 ||
@@ -39,9 +42,9 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
 
   payload.user = userId;
 
-  const currentBookingHistory = await Booking.find({
-    date: payload.date,
-  }).select("startTime endTime date");
+  // const currentBookingHistory = await Booking.find({
+  //   date: payload.date,
+  // }).select("startTime endTime date");
 
   const newTime = {
     startTime: payload.startTime,
@@ -52,11 +55,6 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
     findBookByCurrentDateAndFacility,
     newTime
   );
-  console.log(
-    "🚀 ~ createABookingIntoDB ~ isNotTimeFree:",
-    currentBookingHistory,
-    newTime
-  );
 
   if (isNotTimeFree) {
     throw new Error("Time is already overlapped!!");
@@ -65,9 +63,29 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
   if (currentDate < toDay) {
     throw new Error("Date is out of range");
   }
+  function generateUniqueTransactionId() {
+    const randomString = Math.random().toString(36).substr(2, 9);
+    const transactionId = `TXN-${Date.now()}-${randomString}`;
+    return transactionId;
+  }
 
-  const result = await Booking.create(payload);
-  return result;
+  const transactionId = generateUniqueTransactionId();
+
+  const paymentInfo = {
+    transactionId,
+    payment: payload.payableAmount,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    address: user.address,
+  };
+  console.log(user);
+  console.log(transactionId);
+  const paymentSession = await initiatePayment(paymentInfo);
+  console.log(paymentSession);
+
+  // const result = await Booking.create(payload);
+  // return result;
 };
 
 // --------------------------------------------------------------------------------------------------------------------
