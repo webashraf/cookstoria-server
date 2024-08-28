@@ -47,9 +47,23 @@ const retrieveFacility = catchAsync(async (req, res) => {
   });
 });
 
+const retrieveSingleFacility = catchAsync(async (req, res) => {
+  const result = await FacilityService.retrieveSingleFacilityFromDB(
+    req.params.id
+  );
+
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: "Facilities retrieved successfully",
+    data: result,
+  });
+});
+
 export const FacilityController = {
   createFacility,
   updateFacility,
   deleteFacility,
   retrieveFacility,
+  retrieveSingleFacility,
 };

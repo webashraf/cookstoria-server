@@ -37,9 +37,14 @@ const retrieveFacilityFromDB = () => __awaiter(void 0, void 0, void 0, function*
     }
     return result;
 });
+const retrieveSingleFacilityFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield facility_model_1.Facility.findById(id);
+    return result;
+});
 exports.FacilityService = {
     createFacilityIntoDB,
     updateFacilityIntoDB,
     deleteFacilityIntoDB,
     retrieveFacilityFromDB,
+    retrieveSingleFacilityFromDB,
 };

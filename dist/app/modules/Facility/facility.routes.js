@@ -15,4 +15,5 @@ router.post("/", (0, auth_1.default)(user_const_1.USER_ROLE.admin), (0, validate
 router.put("/:id", (0, auth_1.default)(user_const_1.USER_ROLE.admin), (0, validateRequest_1.default)(facility_validation_1.FacilityValidators.updateFacilityValidationSchema), facility_controller_1.FacilityController.updateFacility);
 router.delete("/:id", (0, auth_1.default)(user_const_1.USER_ROLE.admin), facility_controller_1.FacilityController.deleteFacility);
 router.get("/", facility_controller_1.FacilityController.retrieveFacility);
+router.get("/:id", facility_controller_1.FacilityController.retrieveSingleFacility);
 exports.facilityRoute = router;

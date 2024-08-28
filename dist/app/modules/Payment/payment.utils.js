@@ -20,7 +20,7 @@ const initiatePayment = (_a) => __awaiter(void 0, [_a], void 0, function* ({ tra
         store_id: config_1.default.store_id,
         signature_key: config_1.default.signature_key,
         tran_id: transactionId,
-        success_url: "http://www.merchantdomain.com/suc esspage.html",
+        success_url: `http://localhost:5000/api/payment`,
         fail_url: "http://www.merchantdomain.com/faile dpage.html",
         cancel_url: "http://www.merchantdomain.com/can cellpage.html",
         amount: payment,

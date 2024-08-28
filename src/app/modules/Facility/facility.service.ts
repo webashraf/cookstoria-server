@@ -35,10 +35,16 @@ const retrieveFacilityFromDB = async () => {
   }
   return result;
 };
+const retrieveSingleFacilityFromDB = async (id: string) => {
+  const result = await Facility.findById(id);
+
+  return result;
+};
 
 export const FacilityService = {
   createFacilityIntoDB,
   updateFacilityIntoDB,
   deleteFacilityIntoDB,
   retrieveFacilityFromDB,
+  retrieveSingleFacilityFromDB,
 };

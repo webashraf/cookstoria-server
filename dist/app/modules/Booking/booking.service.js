@@ -71,9 +71,12 @@ const createABookingIntoDB = (payload, email) => __awaiter(void 0, void 0, void 
     console.log(user);
     console.log(transactionId);
     const paymentSession = yield (0, payment_utils_1.initiatePayment)(paymentInfo);
-    console.log(paymentSession);
-    // const result = await Booking.create(payload);
-    // return result;
+    console.log("paymentSession", paymentSession);
+    // return paymentSession;
+    if (paymentSession === null || paymentSession === void 0 ? void 0 : paymentSession.result) {
+        const result = yield booking_model_1.Booking.create(payload);
+        return { paymentSession, result };
+    }
 });
 // --------------------------------------------------------------------------------------------------------------------
 const retriveABookingsIntoDB = (id, isUser) => __awaiter(void 0, void 0, void 0, function* () {

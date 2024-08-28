@@ -23,5 +23,6 @@ router.put(
 router.delete("/:id", auth(USER_ROLE.admin), FacilityController.deleteFacility);
 
 router.get("/", FacilityController.retrieveFacility);
+router.get("/:id", FacilityController.retrieveSingleFacility);
 
 export const facilityRoute = router;
