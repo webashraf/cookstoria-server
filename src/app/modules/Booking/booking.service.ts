@@ -82,10 +82,13 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
   console.log(user);
   console.log(transactionId);
   const paymentSession = await initiatePayment(paymentInfo);
-  console.log(paymentSession);
+  console.log("paymentSession", paymentSession);
+  // return paymentSession;
 
-  // const result = await Booking.create(payload);
-  // return result;
+  if (paymentSession?.result) {
+    const result = await Booking.create(payload);
+    return { paymentSession, result };
+  }
 };
 
 // --------------------------------------------------------------------------------------------------------------------

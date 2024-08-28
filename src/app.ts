@@ -5,6 +5,7 @@ import { AuthRoute } from "./app/modules/Auth/auth.routes";
 import { availabilityRoute } from "./app/modules/Availability/availability.routes";
 import { bookingRoute } from "./app/modules/Booking/booking.routes";
 import { facilityRoute } from "./app/modules/Facility/facility.routes";
+import { paymentRoute } from "./app/modules/Payment/payment.route";
 import { userRoute } from "./app/modules/User/user.routes";
 
 const app = express();
@@ -13,16 +14,12 @@ app.use(express.json());
 app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
 
 app.use(express.json());
-
 app.use("/api/auth/", userRoute);
-
 app.use("/api/facility/", facilityRoute);
-
 app.use("/api/bookings", bookingRoute);
-
 app.use("/api/auth/", AuthRoute);
-
 app.use("/api/check-availability", availabilityRoute);
+app.use("/api/payment/", paymentRoute);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello! roducts");
