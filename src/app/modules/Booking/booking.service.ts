@@ -93,16 +93,31 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const retriveABookingsIntoDB = async (id: string, isUser: boolean) => {
+const retriveABookingsIntoDB = async (email: string, isUser: boolean) => {
   if (isUser) {
-    const result = await Booking.find().populate("facility");
+    // console.log(id);
+
+    const user = await User.findOne({ email: email });
+    console.log(user?._id);
+
+    const result = await Booking.find({
+      user: user?._id,
+      isBooked: "confirmed",
+    })
+      .populate("user")
+      .populate("facility");
+    if (result.length < 1) {
+      throw new Error("Could not find data");
+    }
     return result;
   }
-
-  const result = await Booking.find().populate("user").populate("facility");
+  const result = await Booking.find({ isBooked: "confirmed" })
+    .populate("user")
+    .populate("facility");
   if (result.length < 1) {
     throw new Error("Could not find data");
   }
+  // const result = await Booking.find().populate("facility");
   return result;
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import cors from "cors";
 import express, { Request, Response } from "express";
 import glovalErrorHandaler from "./app/middleware/glovalErrorHandaler";
@@ -9,11 +10,32 @@ import { paymentRoute } from "./app/modules/Payment/payment.route";
 import { userRoute } from "./app/modules/User/user.routes";
 
 const app = express();
-// Parser
-app.use(express.json());
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
 
+// Define allowed origins
+const allowedOrigins = [
+  "https://game-grounds-frontend.vercel.app",
+  "http://localhost:5173",
+];
+
+// Custom CORS configuration
+const corsOptions: cors.CorsOptions = {
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, success: boolean) => void
+  ) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"), false);
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
+
+// Define routes
 app.use("/api/auth/", userRoute);
 app.use("/api/facility/", facilityRoute);
 app.use("/api/bookings", bookingRoute);
@@ -22,15 +44,19 @@ app.use("/api/check-availability", availabilityRoute);
 app.use("/api/payment/", paymentRoute);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello! roducts");
+  res.send("Hello! Products");
 });
 
+// Global error handler
+app.use(glovalErrorHandaler);
+
+// 404 handler
 app.use((req, res) => {
-  res.status(500).json({
+  res.status(404).json({
     success: false,
     statusCode: 404,
     message: "Not Found",
   });
 });
-app.use(glovalErrorHandaler);
+
 export default app;

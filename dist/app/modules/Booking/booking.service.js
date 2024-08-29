@@ -79,15 +79,29 @@ const createABookingIntoDB = (payload, email) => __awaiter(void 0, void 0, void 
     }
 });
 // --------------------------------------------------------------------------------------------------------------------
-const retriveABookingsIntoDB = (id, isUser) => __awaiter(void 0, void 0, void 0, function* () {
+const retriveABookingsIntoDB = (email, isUser) => __awaiter(void 0, void 0, void 0, function* () {
     if (isUser) {
-        const result = yield booking_model_1.Booking.find().populate("facility");
+        // console.log(id);
+        const user = yield user_model_1.User.findOne({ email: email });
+        console.log(user === null || user === void 0 ? void 0 : user._id);
+        const result = yield booking_model_1.Booking.find({
+            user: user === null || user === void 0 ? void 0 : user._id,
+            isBooked: "confirmed",
+        })
+            .populate("user")
+            .populate("facility");
+        if (result.length < 1) {
+            throw new Error("Could not find data");
+        }
         return result;
     }
-    const result = yield booking_model_1.Booking.find().populate("user").populate("facility");
+    const result = yield booking_model_1.Booking.find({ isBooked: "confirmed" })
+        .populate("user")
+        .populate("facility");
     if (result.length < 1) {
         throw new Error("Could not find data");
     }
+    // const result = await Booking.find().populate("facility");
     return result;
 });
 const deleteABookingFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {

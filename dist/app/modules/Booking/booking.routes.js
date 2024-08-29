@@ -13,6 +13,6 @@ const booking_validation_1 = require("./booking.validation");
 const router = (0, express_1.Router)();
 router.post("/", (0, auth_1.default)(user_const_1.USER_ROLE.user), (0, validateRequest_1.default)(booking_validation_1.BookingValidators.BookingValidationSchema), booking_controller_1.BookingController.createABooking);
 router.get("/", (0, auth_1.default)(user_const_1.USER_ROLE.admin), booking_controller_1.BookingController.retriveBookings);
-router.get("/user", (0, auth_1.default)(user_const_1.USER_ROLE.user), booking_controller_1.BookingController.retriveBookingsForUser);
+router.get("/user/:id", (0, auth_1.default)(user_const_1.USER_ROLE.user), booking_controller_1.BookingController.retriveBookingsForUser);
 router.delete("/:id", (0, auth_1.default)(user_const_1.USER_ROLE.user), booking_controller_1.BookingController.deleteBookingForUser);
 exports.bookingRoute = router;
