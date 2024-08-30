@@ -11,6 +11,19 @@ const signupUser: RequestHandler = async (req, res) => {
   });
 };
 
+const retrieveSingleUser: RequestHandler = async (req, res) => {
+  const result = await UserServices.retrieveSingleUserIntoDB(
+    req?.params?.email
+  );
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: "User retrieve successfully",
+    data: result,
+  });
+};
+
 export const UserController = {
   signupUser,
+  retrieveSingleUser,
 };

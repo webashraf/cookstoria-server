@@ -23,6 +23,11 @@ const createNewUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, funct
     result.password = "";
     return savedUser;
 });
+const retrieveSingleUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield user_model_1.User.findOne({ email: payload });
+    return res;
+});
 exports.UserServices = {
     createNewUserIntoDB,
+    retrieveSingleUserIntoDB: retrieveSingleUserIntoDB,
 };

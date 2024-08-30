@@ -16,6 +16,12 @@ const createNewUserIntoDB = async (payload: TUser) => {
   return savedUser;
 };
 
+const retrieveSingleUserIntoDB = async (payload: string) => {
+  const res = await User.findOne({ email: payload });
+  return res;
+};
+
 export const UserServices = {
   createNewUserIntoDB,
+  retrieveSingleUserIntoDB: retrieveSingleUserIntoDB,
 };

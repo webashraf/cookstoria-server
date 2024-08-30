@@ -20,6 +20,17 @@ const signupUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         data: result,
     });
 });
+const retrieveSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const result = yield user_service_1.UserServices.retrieveSingleUserIntoDB((_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.email);
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: "User retrieve successfully",
+        data: result,
+    });
+});
 exports.UserController = {
     signupUser,
+    retrieveSingleUser,
 };

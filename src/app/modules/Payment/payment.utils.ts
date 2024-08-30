@@ -20,9 +20,10 @@ export const initiatePayment = async ({
     store_id: config.store_id,
     signature_key: config.signature_key,
     tran_id: transactionId,
-    success_url: `http://localhost:5000/api/payment`,
-    fail_url: "http://www.merchantdomain.com/faile dpage.html",
-    cancel_url: "http://www.merchantdomain.com/can cellpage.html",
+    success_url: `https://game-grouhnds-sports-facility-booking-backend.vercel.app/api/payment`,
+    fail_url:
+      "https://game-grouhnds-sports-facility-booking-backend.vercel.app/api/payment/failed",
+    cancel_url: "https://game-grounds-frontend.vercel.app",
     amount: payment,
     currency: "BDT",
     desc: "Merchant Registration Payment",

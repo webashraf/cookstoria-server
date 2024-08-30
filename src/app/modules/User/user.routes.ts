@@ -11,4 +11,6 @@ router.post(
   UserController.signupUser
 );
 
+router.get("/:email", UserController.retrieveSingleUser);
+
 export const userRoute = router;
