@@ -13,7 +13,6 @@ exports.checkAvailabilityService = void 0;
 const booking_model_1 = require("../Booking/booking.model");
 const availability_utils_1 = require("./availability.utils");
 const checkAvailabilityFromDB = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (date = "0", facility = "") {
-    console.log("DATE: ", date);
     let formattedNewDate = date;
     const inputYear = date.split("-");
     if (date.length === 1) {
@@ -28,7 +27,6 @@ const checkAvailabilityFromDB = (...args_1) => __awaiter(void 0, [...args_1], vo
     }
     const currentDate = new Date(formattedNewDate);
     const toDay = new Date();
-    console.log({ currentDate, toDay }, currentDate < toDay, date.length, !(date.length === 1), "ended test");
     // ! old condition
     // if (currentDate < toDay || !(date.length === 1)) {
     //   throw new Error("Date is already pas!!");
@@ -50,7 +48,6 @@ const checkAvailabilityFromDB = (...args_1) => __awaiter(void 0, [...args_1], vo
     //   console.log("facilityResult: ", facilityResult);
     // }
     const currentBookingHistory = yield booking_model_1.Booking.find(filter).select("startTime endTime");
-    console.log("Current Booking History", currentBookingHistory);
     // if (currentBookingHistory.length === 0) {
     //   throw new Error("Not available slot based on this facility!!");
     // }
@@ -58,7 +55,6 @@ const checkAvailabilityFromDB = (...args_1) => __awaiter(void 0, [...args_1], vo
         return availability_utils_1.availiabilityUtils.generateTwoHourTimeSlots();
     }
     const result = availability_utils_1.availiabilityUtils.generateAvailableSlots(currentBookingHistory);
-    console.log("result: ", result);
     if (result.length === 0) {
         throw new Error("Not available slot. Try another date!!");
     }

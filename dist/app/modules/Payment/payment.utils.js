@@ -20,7 +20,7 @@ const initiatePayment = (_a) => __awaiter(void 0, [_a], void 0, function* ({ tra
         store_id: config_1.default.store_id,
         signature_key: config_1.default.signature_key,
         tran_id: transactionId,
-        success_url: `https://game-grouhnds-sports-facility-booking-backend.vercel.app/api/payment`,
+        success_url: `https://game-grouhnds-sports-facility-booking-backend.vercel.app/api/payment/success`,
         fail_url: "https://game-grouhnds-sports-facility-booking-backend.vercel.app/api/payment/failed",
         cancel_url: "https://game-grounds-frontend.vercel.app",
         amount: payment,

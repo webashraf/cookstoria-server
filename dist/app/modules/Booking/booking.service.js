@@ -68,10 +68,7 @@ const createABookingIntoDB = (payload, email) => __awaiter(void 0, void 0, void 
         phone: user.phone,
         address: user.address,
     };
-    console.log(user);
-    console.log(transactionId);
     const paymentSession = yield (0, payment_utils_1.initiatePayment)(paymentInfo);
-    console.log("paymentSession", paymentSession);
     // return paymentSession;
     if (paymentSession === null || paymentSession === void 0 ? void 0 : paymentSession.result) {
         const result = yield booking_model_1.Booking.create(payload);
@@ -83,7 +80,6 @@ const retriveABookingsIntoDB = (email, isUser) => __awaiter(void 0, void 0, void
     if (isUser) {
         // console.log(id);
         const user = yield user_model_1.User.findOne({ email: email });
-        console.log(user === null || user === void 0 ? void 0 : user._id);
         const result = yield booking_model_1.Booking.find({
             user: user === null || user === void 0 ? void 0 : user._id,
             isBooked: "confirmed",

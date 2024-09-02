@@ -2,11 +2,7 @@ import catchAsync from "../../utils/catchAsync";
 import { checkAvailabilityService } from "./availability.service";
 
 const checkAvailability = catchAsync(async (req, res) => {
-  console.log(
-    "req.query.date as string, req.query.facility as string",
-    req.query.date as string,
-    req.query.facility as string
-  );
+ 
   const result = await checkAvailabilityService.checkAvailabilityFromDB(
     req.query.date as string,
     req.query.facility as string

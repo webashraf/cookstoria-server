@@ -18,7 +18,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../../config"));
 const user_model_1 = require("../User/user.model");
 const loginUserFromDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log({ payload });
     const user = yield user_model_1.User.isUserExistByEmail(payload.email);
     if (!user) {
         throw new Error("Could not find user!!");

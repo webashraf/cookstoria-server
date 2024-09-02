@@ -5,7 +5,6 @@ import { User } from "../User/user.model";
 import { TLoginUser } from "./auth.interface";
 
 const loginUserFromDB = async (payload: TLoginUser) => {
-  console.log({ payload });
   const user = await User.isUserExistByEmail(payload.email);
 
   if (!user) {

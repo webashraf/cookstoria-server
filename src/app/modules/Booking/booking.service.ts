@@ -79,10 +79,7 @@ const createABookingIntoDB = async (payload: TBooking, email: string) => {
     phone: user.phone,
     address: user.address,
   };
-  console.log(user);
-  console.log(transactionId);
   const paymentSession = await initiatePayment(paymentInfo);
-  console.log("paymentSession", paymentSession);
   // return paymentSession;
 
   if (paymentSession?.result) {
@@ -98,7 +95,6 @@ const retriveABookingsIntoDB = async (email: string, isUser: boolean) => {
     // console.log(id);
 
     const user = await User.findOne({ email: email });
-    console.log(user?._id);
 
     const result = await Booking.find({
       user: user?._id,

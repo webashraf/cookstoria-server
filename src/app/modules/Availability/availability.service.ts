@@ -6,7 +6,6 @@ const checkAvailabilityFromDB = async (
   date: string = "0",
   facility: string = ""
 ) => {
-  console.log("DATE: ", date);
   let formattedNewDate = date;
   const inputYear = date.split("-");
   if (date.length === 1) {
@@ -25,13 +24,7 @@ const checkAvailabilityFromDB = async (
 
   const currentDate = new Date(formattedNewDate);
   const toDay = new Date();
-  console.log(
-    { currentDate, toDay },
-    currentDate < toDay,
-    date.length,
-    !(date.length === 1),
-    "ended test"
-  );
+ 
   // ! old condition
   // if (currentDate < toDay || !(date.length === 1)) {
   //   throw new Error("Date is already pas!!");
@@ -58,7 +51,6 @@ const checkAvailabilityFromDB = async (
 
   const currentBookingHistory =
     await Booking.find(filter).select("startTime endTime");
-  console.log("Current Booking History", currentBookingHistory);
 
   // if (currentBookingHistory.length === 0) {
   //   throw new Error("Not available slot based on this facility!!");
@@ -70,7 +62,6 @@ const checkAvailabilityFromDB = async (
   const result = availiabilityUtils.generateAvailableSlots(
     currentBookingHistory
   );
-  console.log("result: ", result);
 
   if (result.length === 0) {
     throw new Error("Not available slot. Try another date!!");
