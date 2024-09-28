@@ -1,37 +1,18 @@
-import { Server } from "http";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from "mongoose";
 import app from "./app";
-import config from "./app/config";
-
-let server: Server;
 
 async function main() {
+  const port = 5000;
   try {
-    await mongoose.connect(config.database_url as string);
-    server = app.listen(config.port, () => {
-      console.log(
-        `Sports facility booking server is running on port ${config.port}`
-      );
+    await mongoose.connect(
+      "mongodb+srv://cookstoria:SQP7ayE5y10pkHxa@cluster0.8frxat4.mongodb.net/cookstoria?retryWrites=true&w=majority&appName=Cluster0"
+    );
+    app.listen(port, () => {
+      console.log(`cookstoria-culinary server running on port ${port}`);
     });
-  } catch (erorr) {
-    console.log(erorr);
+  } catch (error: any) {
+    console.log(error);
   }
 }
 main();
-
-process.on("unhandledRejection", () => {
-  console.log("Unhandled Rejection is detected 😒. Shooting down...");
-  if (server) {
-    server.close(() => {
-      process.exit(1);
-    });
-  }
-  process.exit(1);
-});
-
-process.on("uncaughtException", () => {
-  console.log("Unhandled Exception is detected 😒. Shooting down...");
-
-  process.exit(1);
-});
-

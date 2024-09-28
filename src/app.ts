@@ -1,69 +1,18 @@
 /* eslint-disable no-unused-vars */
 import cors from "cors";
 import express, { Request, Response } from "express";
-import glovalErrorHandaler from "./app/middleware/glovalErrorHandaler";
-import { AuthRoute } from "./app/modules/Auth/auth.routes";
-import { availabilityRoute } from "./app/modules/Availability/availability.routes";
-import { bookingRoute } from "./app/modules/Booking/booking.routes";
-import { facilityRoute } from "./app/modules/Facility/facility.routes";
-import { paymentRoute } from "./app/modules/Payment/payment.route";
-import { userRoute } from "./app/modules/User/user.routes";
 
 const app = express();
 
-// Define allowed origins
-// const allowedOrigins = [
-//   "https://game-grounds-frontend.vercel.app",
-//   "https://game-grouhnds-sports-facility-booking-backend.vercel.app",
-//   // "https://game-grouhnds-sports-facility-booking-backend.vercel.app/api/payment",
-//   "http://localhost:5173",
-//   "http://localhost:3000",
-// ];
-
-// // Custom CORS configuration
-// const corsOptions: cors.CorsOptions = {
-//   origin: (
-//     origin: string | undefined,
-//     callback: (err: Error | null, success: boolean) => void
-//   ) => {
-//     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"), false);
-//     }
-//   },
-//   credentials: true,
-// };
-// app.use(cors(corsOptions));
-
-const corsOptions = {
-  credentials: true,
-  origin: [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "https://game-grounds-frontend.vercel.app",
-    "https://game-grouhnds-sports-facility-booking-backend.vercel.app",
-  ], // Whitelist the domains you want to allow
-};
-
-app.use(cors(corsOptions)); // Use the cors middleware with your options
+app.use(cors());
 
 app.use(express.json());
 
-// Define routes
-app.use("/api/auth/", userRoute);
-app.use("/api/facility/", facilityRoute);
-app.use("/api/bookings", bookingRoute);
-app.use("/api/auth/", AuthRoute);
-app.use("/api/check-availability", availabilityRoute);
-app.use("/api/payment/", paymentRoute);
-
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello! Products");
+  res.send(
+    "<h2 style='font-family: Arial, sans-serif; color: #4a4a4a; text-align: center; padding: 20px; background-color: #f0f0f0; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'>Hello! CookstoriaCulinary</h2>"
+  );
 });
-
-// Global error handler
-app.use(glovalErrorHandaler);
 
 // 404 handler
 app.use((req, res) => {
