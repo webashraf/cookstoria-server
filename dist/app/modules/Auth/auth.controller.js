@@ -18,7 +18,7 @@ const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const auth_service_1 = require("./auth.service");
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.AuthServices.loginUser(req.body);
-    const { refreshToken } = result;
+    const { accessToken, refreshToken } = result;
     res.cookie("refreshToken", refreshToken, {
         secure: config_1.default.node_env === "production",
         httpOnly: true,
@@ -26,7 +26,9 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     res.status(200).json({
         success: true,
         message: "User is logged in successfully!",
-        data: result,
+        data: {
+            accessToken,
+        },
     });
 }));
 exports.AuthControllers = {

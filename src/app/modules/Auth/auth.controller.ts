@@ -1,9 +1,9 @@
+import jwt from "jsonwebtoken";
 import config from "../../config";
 import catchAsync from "../../utils/catchAsync";
-import { AuthServices } from "./auth.service";
-
+import { authServices } from "./auth.service";
 const loginUser = catchAsync(async (req, res) => {
-  const result = await AuthServices.loginUser(req.body);
+  const result = await authServices.loginUser(req.body);
   const { accessToken, refreshToken } = result;
 
   res.cookie("refreshToken", refreshToken, {
@@ -20,6 +20,22 @@ const loginUser = catchAsync(async (req, res) => {
   });
 });
 
-export const AuthControllers = {
+const userPasswordChange = catchAsync(async (req, res) => {
+  const userData = jwt.verify(
+    req.headers.authorization as string,
+    config.jwt_access_secret as string
+  );
+
+  const result = await authServices.changePasswordIntoDB(userData, req.body);
+
+  res.status(200).json({
+    succcess: true,
+    message: "Password is updated succesfully!",
+    data: result,
+  });
+});
+
+export const authControllers = {
   loginUser,
+  userPasswordChange,
 };

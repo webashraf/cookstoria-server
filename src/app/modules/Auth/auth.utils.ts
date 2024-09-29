@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const createToken = (
@@ -6,4 +7,12 @@ export const createToken = (
   expiresIn: string
 ) => {
   return jwt.sign(jwtPayload, secret, { expiresIn });
+};
+
+export const isPasswordMatched = async (
+  password: string,
+  hashPassword: string
+): Promise<boolean> => {
+  const comparePass = await bcrypt.compare(password, hashPassword);
+  return comparePass;
 };
