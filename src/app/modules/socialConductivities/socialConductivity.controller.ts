@@ -14,8 +14,8 @@ const createAFollower = catchAsync(async (req: Request, res: Response) => {
 
 const unfollowAUser = catchAsync(async (req: Request, res: Response) => {
   const result = await socialConductivityServices.unfollowASingleUser(
-    req.params.id,
-    req.body
+    req?.params?.id,
+    req?.body?.followedUserId
   );
 
   res.status(200).json({

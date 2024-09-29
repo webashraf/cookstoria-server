@@ -51,11 +51,19 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.statics.isUserExistByEmail = async function (email: string) {
-  return await User.findOne({ email }).select("+password");
+  return await User.findOne({
+    email,
+    isDeleted: false,
+    status: "active",
+  }).select("+password");
 };
 
 userSchema.statics.isUserExistById = async function (_id: string) {
-  return await User.findOne({ _id }).select("+password");
+  return await User.findOne({
+    _id,
+    isDeleted: false,
+    status: "active",
+  }).select("+password");
 };
 
 userSchema.post("save", function (doc, next) {
