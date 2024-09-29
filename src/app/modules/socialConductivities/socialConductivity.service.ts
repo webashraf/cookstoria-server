@@ -41,42 +41,12 @@ const createFollowIntoDB = async (payload: ISocialConductivity) => {
   }
 };
 
-//   console.log(myId, followedUserId);
-
-//   // Find the follow record for the followedUserId
-//   const followRecord = await Follow.findOne({ userId: followedUserId });
-
-//   console.log("followRecord", followRecord);
-
-//   // Check if the follow record exists
-//   if (!followRecord) {
-//     throw new AppError(httpStatus.NOT_FOUND, "Follow record not found!");
-//   }
-
-//   // Check if the user is already following
-//   const isFollowing = followRecord.followers.some(
-//     (follower) => follower.toString() === myId
-//   );
-
-//   if (!isFollowing) {
-//     throw new AppError(
-//       httpStatus.BAD_REQUEST,
-//       "You are not following this user!"
-//     );
-//   }
-
-//   // Remove myId from the followers array
-//   const updatedFollowRecord = await Follow.findByIdAndUpdate(
-//     followedUserId,
-//     { $pull: { followers: myId } }, // This will remove myId from the followers array
-//     { new: true } // Return the updated document
-//   );
-
-//   // Return the updated follow record
-//   return updatedFollowRecord;
-// };
-
 const unfollowASingleUser = async (myId: string, followedUserId: string) => {
+  const isUserExist = await User.isUserExistById(myId);
+  if (!isUserExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found!");
+  }
+
   const followRecord = await Follow.findOne({ userId: followedUserId });
 
   if (!followRecord) {
@@ -104,6 +74,10 @@ const unfollowASingleUser = async (myId: string, followedUserId: string) => {
 };
 
 const retrievedFollowerByIdIntoDB = async (userId: string) => {
+  const isUserExist = await User.isUserExistById(userId);
+  if (!isUserExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found!");
+  }
   const res = await Follow.findOne({ userId }).populate("followers");
 
   return res;
