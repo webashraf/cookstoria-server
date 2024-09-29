@@ -19,4 +19,6 @@ export interface IRecipe {
   };
   createdAt: Date;
   updatedAt: Date;
+  isDeleted?: boolean;
+  status?: "publish" | "unpublish";
 }

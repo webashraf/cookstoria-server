@@ -11,4 +11,6 @@ router.post(
   recipeController.createRecipe
 );
 
+router.delete("/:id", recipeController.deleteRecipe);
+router.post("/status/:id", recipeController.publishUnpublishRecipe);
 export const recipeRouters = router;

@@ -11,6 +11,30 @@ const createRecipe = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const deleteRecipe = catchAsync(async (req: Request, res: Response) => {
+  const result = await recipeService.deleteRecipeIntoDB(req.params.id);
+  res.status(200).json({
+    success: true,
+    message: "Recipe is deleted successfully!",
+    data: result,
+  });
+});
+
+const publishUnpublishRecipe = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await recipeService.publishOrUnpublishRecipeIntoDB(
+      req.params.id
+    );
+    res.status(200).json({
+      success: true,
+      message: "Recipe status successfully updated!",
+      data: result,
+    });
+  }
+);
+
 export const recipeController = {
   createRecipe,
+  deleteRecipe,
+  publishUnpublishRecipe,
 };

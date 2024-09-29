@@ -24,6 +24,8 @@ const recipeSchema: Schema<IRecipe> = new Schema({
   },
   createdAt: { type: Date, default: Date.now, required: false },
   updatedAt: { type: Date, default: Date.now, required: false },
+  isDeleted: { type: Boolean, default: false, required: false },
+  status: { type: String, default: "publish", required: false },
 });
 
 export const Recipe = model<IRecipe>("Recipe", recipeSchema);
