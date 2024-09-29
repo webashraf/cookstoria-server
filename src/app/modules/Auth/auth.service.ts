@@ -97,7 +97,51 @@ const changePasswordIntoDB = async (
   return null;
 };
 
+const genarateNewPassword = async (payload: {
+  email: string;
+  newPassword: string;
+}) => {
+  const user = await User.isUserExistByEmail(payload?.email);
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
+  }
+
+  const isDeleted = user?.isDeleted;
+
+  if (isDeleted) {
+    throw new AppError(httpStatus.FORBIDDEN, "This user is deleted !");
+  }
+
+  const userStatus = user?.status;
+
+  if (userStatus === "blocked") {
+    throw new AppError(httpStatus.FORBIDDEN, "This user is blocked ! !");
+  }
+
+
+  //hash new password
+  const newHashedPassword = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.bcrypt_salt)
+  );
+
+  await User.findOneAndUpdate(
+    {
+      email: payload.email,
+    },
+    {
+      password: newHashedPassword,
+      needsPasswordChange: false,
+      passwordChangedAt: new Date(),
+    }
+  );
+
+  return null;
+};
+
 export const authServices = {
   loginUser,
   changePasswordIntoDB,
+  generateNewPassword: genarateNewPassword,
 };

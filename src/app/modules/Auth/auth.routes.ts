@@ -13,5 +13,6 @@ router.post(
 );
 
 router.post("/change-password", authControllers.userPasswordChange);
+router.post("/generate-new-password", authControllers.forgatPassword);
 
 export const authRoutes = router;
