@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import cors from "cors";
 import express, { Request, Response } from "express";
-import router from "./app/modules/routes";
+import router from "./app/routes";
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use((req, res) => {
   res.status(404).json({
     success: false,
     statusCode: 404,
-    message: "Not Found",
+    message: "Not Found This Route",
   });
 });
 

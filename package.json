@@ -7,7 +7,7 @@
     "start": "node ./dist/server.js",
     "start:prod": "nodemon ./dist/server.js",
     "build": "tsc",
-    "start:dev": "ts-node-dev --inspect -- ./src/server.ts",
+    "dev": "ts-node-dev --inspect -- ./src/server.ts",
     "lint": "npx eslint .",
     "lint:fix": "npx eslint . --fix",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
