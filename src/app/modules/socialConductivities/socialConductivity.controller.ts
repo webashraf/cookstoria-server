@@ -12,6 +12,19 @@ const createAFollower = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const unfollowAUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await socialConductivityServices.unfollowASingleUser(
+    req.params.id,
+    req.body
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Successfully added new follower!!",
+    data: result,
+  });
+});
+
 const getFollowersById = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id;
   const result =
@@ -25,5 +38,6 @@ const getFollowersById = catchAsync(async (req: Request, res: Response) => {
 
 export const socialConductivityController = {
   createAFollower,
+  unfollowAUser,
   getFollowersById,
 };

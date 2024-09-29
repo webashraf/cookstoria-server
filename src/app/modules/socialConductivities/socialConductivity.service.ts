@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from "http-status";
 import AppError from "../../error/appError";
 import { User } from "../user/user.model";
@@ -20,15 +21,51 @@ const createFollowIntoDB = async (payload: ISocialConductivity) => {
   if (!haveFollowerInMyRecipe) {
     const res = await Follow.create(payload);
     return res;
-  } else if (haveFollowerInMyRecipe) {
-    const res = await Follow.findByIdAndUpdate(
-      myFollow,
-      { $push: { followers: { $each: [payload.followers] } } },
-      { new: true }
-    );
+  } else {
+    const isAlreadyFollowing = await Follow.findOne({
+      _id: myFollow,
+      followers: payload.followers,
+    });
 
-    return res;
+    if (isAlreadyFollowing) {
+      throw new AppError(httpStatus.BAD_REQUEST, "User has already followed!");
+    } else {
+      const res = await Follow.findByIdAndUpdate(
+        myFollow,
+        { $addToSet: { followers: payload.followers } },
+        { new: true }
+      );
+
+      return res;
+    }
   }
+};
+
+const unfollowASingleUser = async (myId: string, followedUserId: string) => {
+  const followRecord = await Follow.findById(followedUserId);
+
+  if (!followRecord) {
+    throw new AppError(httpStatus.NOT_FOUND, "Follow record not found!");
+  }
+
+  const isFollowing = followRecord.followers.some(
+    (follower) => follower.toString() === myId
+  );
+
+  if (!isFollowing) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "You are not following this user!"
+    );
+  }
+
+  const res = await Follow.findByIdAndUpdate(
+    followedUserId,
+    { $pull: { followers: myId } },
+    { new: true }
+  );
+
+  return res;
 };
 
 const retrievedFollowerByIdIntoDB = async (userId: string) => {
@@ -39,5 +76,6 @@ const retrievedFollowerByIdIntoDB = async (userId: string) => {
 
 export const socialConductivityServices = {
   createFollowIntoDB,
+  unfollowASingleUser,
   retrievedFollowerByIdIntoDB,
 };
