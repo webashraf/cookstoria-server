@@ -1,17 +1,22 @@
 import { Router } from "express";
 import { authRoutes } from "../modules/Auth/auth.routes";
-import { userRoute } from "../modules/user/user.routes";
+import { socialConductivityRoutes } from "../modules/socialConductivities/socialConductivity.routes";
+import { userRoutes } from "../modules/user/user.routes";
 
 const router = Router();
 
 const appRoutes = [
   {
     path: "/user",
-    route: userRoute,
+    route: userRoutes,
   },
   {
     path: "/auth",
     route: authRoutes,
+  },
+  {
+    path: "/social",
+    route: socialConductivityRoutes,
   },
 ];
 

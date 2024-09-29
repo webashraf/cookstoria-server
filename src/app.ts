@@ -2,6 +2,7 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
 import router from "./app/routes";
+import globalErrorHandler from "./app/middleware/glovalErrorHandalerMiddleware";
 
 const app = express();
 
@@ -24,5 +25,7 @@ app.use((req, res) => {
     message: "Not Found This Route",
   });
 });
+
+app.use(globalErrorHandler )
 
 export default app;

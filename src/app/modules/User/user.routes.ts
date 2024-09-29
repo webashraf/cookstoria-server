@@ -16,4 +16,4 @@ router.post(
   userController.updateUserInfo
 );
 
-export const userRoute = router;
+export const userRoutes = router;
