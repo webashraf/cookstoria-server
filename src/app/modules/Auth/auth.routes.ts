@@ -1,5 +1,6 @@
 import express from "express";
 
+import auth from "../../middleware/auth";
 import validateRequest from "../../middleware/validateRequest";
 import { authControllers } from "./auth.controller";
 import { AuthValidation } from "./auth.validation";
@@ -12,7 +13,11 @@ router.post(
   authControllers.loginUser
 );
 
-router.post("/change-password", authControllers.userPasswordChange);
+router.post(
+  "/change-password",
+  auth("admin", "user"),
+  authControllers.userPasswordChange
+);
 router.post("/generate-new-password", authControllers.forgatPassword);
 
 export const authRoutes = router;
