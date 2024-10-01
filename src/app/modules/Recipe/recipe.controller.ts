@@ -33,7 +33,17 @@ const publishUnpublishRecipe = catchAsync(
   }
 );
 
+const getRecipe = catchAsync(async (req: Request, res: Response) => {
+  const result = await recipeService.getRecipeFromDB();
+  res.status(200).json({
+    success: true,
+    message: "Recipe successfully get!",
+    data: result,
+  });
+});
+
 export const recipeController = {
+  getRecipe,
   createRecipe,
   deleteRecipe,
   publishUnpublishRecipe,

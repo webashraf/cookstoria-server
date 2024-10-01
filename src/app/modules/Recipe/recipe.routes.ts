@@ -10,7 +10,10 @@ router.post(
   validateRequest(recipeValidations.recipeValidationSchema),
   recipeController.createRecipe
 );
-
 router.delete("/:id", recipeController.deleteRecipe);
 router.post("/status/:id", recipeController.publishUnpublishRecipe);
+
+router.get("/", recipeController.getRecipe)
+
+
 export const recipeRouters = router;

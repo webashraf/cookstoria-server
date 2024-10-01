@@ -16,8 +16,8 @@ const createRecipeIntoDB = async (payload: IRecipe) => {
 const deleteRecipeIntoDB = async (id: string) => {
   const res = await Recipe.findByIdAndUpdate(
     id,
-    { isDeleted: true }, 
-    { new: true, runValidators: true, upsert: true } 
+    { isDeleted: true },
+    { new: true, runValidators: true, upsert: true }
   );
 
   return res;
@@ -45,7 +45,14 @@ const publishOrUnpublishRecipeIntoDB = async (id: string) => {
   }
 };
 
+const getRecipeFromDB = async () => {
+  const res = await Recipe.find();
+
+  return res;
+};
+
 export const recipeService = {
+  getRecipeFromDB,
   createRecipeIntoDB,
   deleteRecipeIntoDB,
   publishOrUnpublishRecipeIntoDB,

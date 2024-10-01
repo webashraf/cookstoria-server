@@ -1,12 +1,16 @@
 /* eslint-disable no-unused-vars */
 import cors from "cors";
 import express, { Request, Response } from "express";
-import router from "./app/routes";
 import globalErrorHandler from "./app/middleware/glovalErrorHandalerMiddleware";
+import router from "./app/routes";
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  credentials: true,
+  origin: ["http://localhost:3000", "http://localhost:5173"],
+};
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use("/api/v1", router);
@@ -26,6 +30,6 @@ app.use((req, res) => {
   });
 });
 
-app.use(globalErrorHandler )
+app.use(globalErrorHandler);
 
 export default app;

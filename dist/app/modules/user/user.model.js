@@ -65,7 +65,20 @@ userSchema.pre("save", function (next) {
 });
 userSchema.statics.isUserExistByEmail = function (email) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield exports.User.findOne({ email }).select("+password");
+        return yield exports.User.findOne({
+            email,
+            isDeleted: false,
+            status: "active",
+        }).select("+password");
+    });
+};
+userSchema.statics.isUserExistById = function (_id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield exports.User.findOne({
+            _id,
+            isDeleted: false,
+            status: "active",
+        }).select("+password");
     });
 };
 userSchema.post("save", function (doc, next) {

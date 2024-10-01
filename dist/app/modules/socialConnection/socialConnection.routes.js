@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.socialConductivityRoutes = void 0;
+const express_1 = require("express");
+const socialConnection_controller_1 = require("./socialConnection.controller");
+const router = (0, express_1.Router)();
+router.post("/follow", socialConnection_controller_1.socialConductivityController.createAFollower);
+router.post("/unfollow/:id", socialConnection_controller_1.socialConductivityController.unfollowAUser);
+router.get("/follow/:id", socialConnection_controller_1.socialConductivityController.getFollowersById);
+exports.socialConductivityRoutes = router;
