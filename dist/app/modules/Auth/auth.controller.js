@@ -21,7 +21,7 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     const result = yield auth_service_1.authServices.loginUser(req.body);
     const { accessToken, refreshToken } = result;
     res.cookie("refreshToken", refreshToken, {
-        secure: config_1.default.node_env === "production",
+        secure: config_1.default.NODE_ENV === "production",
         httpOnly: true,
     });
     res.status(200).json({
@@ -54,8 +54,19 @@ const forgatPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
+const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.cookies);
+    const { refreshToken } = req.cookies;
+    const result = yield auth_service_1.authServices.refreshTokenToAccessToken(refreshToken);
+    res.status(200).json({
+        success: true,
+        message: "Access token retrieved successfully!",
+        data: result,
+    });
+}));
 exports.authControllers = {
     loginUser,
     userPasswordChange,
     forgatPassword,
+    refreshToken,
 };

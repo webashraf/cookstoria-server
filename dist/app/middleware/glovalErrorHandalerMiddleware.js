@@ -61,7 +61,7 @@ next) => {
         message,
         errorSource: errorSources,
         // err: err.name,
-        stack: config_1.default.node_env === "development" ? err === null || err === void 0 ? void 0 : err.stack : null,
+        stack: config_1.default.NODE_ENV === "development" ? err === null || err === void 0 ? void 0 : err.stack : null,
     });
 };
 exports.default = globalErrorHandlerMiddleware;

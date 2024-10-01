@@ -63,7 +63,7 @@ const globalErrorHandlerMiddleware: ErrorRequestHandler = (
     message,
     errorSource: errorSources,
     // err: err.name,
-    stack: config.node_env === "development" ? err?.stack : null,
+    stack: config.NODE_ENV === "development" ? err?.stack : null,
   });
 };
 

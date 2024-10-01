@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import bcrypt from "bcrypt";
 import httpStatus from "http-status";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../../config";
 import AppError from "../../error/appError";
 import { User } from "../user/user.model";
@@ -97,7 +98,7 @@ const changePasswordIntoDB = async (
   return null;
 };
 
-const genarateNewPassword = async (payload: {
+const generateNewPassword = async (payload: {
   email: string;
   newPassword: string;
 }) => {
@@ -139,8 +140,39 @@ const genarateNewPassword = async (payload: {
   return null;
 };
 
+const refreshTokenToAccessToken = async (token: string) => {
+  const decoded = jwt.verify(
+    token,
+    config.jwt_refresh_secret as string
+  ) as JwtPayload;
+
+  const { email } = decoded;
+
+  const user = await User.isUserExistByEmail(email);
+
+  if (!user) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "User not found!");
+  }
+
+  const jwtPayload = {
+    email: user.email,
+    role: user.role,
+  };
+
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expire_in as string
+  );
+
+  return {
+    accessToken,
+  };
+};
+
 export const authServices = {
   loginUser,
   changePasswordIntoDB,
-  generateNewPassword: genarateNewPassword,
+  generateNewPassword: generateNewPassword,
+  refreshTokenToAccessToken,
 };

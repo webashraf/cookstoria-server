@@ -2,12 +2,13 @@ import jwt from "jsonwebtoken";
 import config from "../../config";
 import catchAsync from "../../utils/catchAsync";
 import { authServices } from "./auth.service";
+
 const loginUser = catchAsync(async (req, res) => {
   const result = await authServices.loginUser(req.body);
   const { accessToken, refreshToken } = result;
 
   res.cookie("refreshToken", refreshToken, {
-    secure: config.node_env === "production",
+    secure: config.NODE_ENV === "production",
     httpOnly: true,
   });
 
@@ -51,8 +52,21 @@ const forgatPassword = catchAsync(async (req, res) => {
   });
 });
 
+const refreshToken = catchAsync(async (req, res) => {
+  console.log(req.cookies);
+  const { refreshToken } = req.cookies;
+  const result = await authServices.refreshTokenToAccessToken(refreshToken);
+
+  res.status(200).json({
+    success: true,
+    message: "Access token retrieved successfully!",
+    data: result,
+  });
+});
+
 export const authControllers = {
   loginUser,
   userPasswordChange,
   forgatPassword,
+  refreshToken,
 };

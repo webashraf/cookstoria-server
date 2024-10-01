@@ -19,5 +19,6 @@ router.post(
   authControllers.userPasswordChange
 );
 router.post("/generate-new-password", authControllers.forgatPassword);
+router.post("/refresh-token", authControllers.refreshToken);
 
 export const authRoutes = router;

@@ -16,6 +16,7 @@ exports.authServices = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const http_status_1 = __importDefault(require("http-status"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../../config"));
 const appError_1 = __importDefault(require("../../error/appError"));
 const user_model_1 = require("../user/user.model");
@@ -75,7 +76,7 @@ const changePasswordIntoDB = (userData, payload) => __awaiter(void 0, void 0, vo
     });
     return null;
 });
-const genarateNewPassword = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+const generateNewPassword = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.User.isUserExistByEmail(payload === null || payload === void 0 ? void 0 : payload.email);
     if (!user) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "This user is not found !");
@@ -99,8 +100,25 @@ const genarateNewPassword = (payload) => __awaiter(void 0, void 0, void 0, funct
     });
     return null;
 });
+const refreshTokenToAccessToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_refresh_secret);
+    const { email } = decoded;
+    const user = yield user_model_1.User.isUserExistByEmail(email);
+    if (!user) {
+        throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User not found!");
+    }
+    const jwtPayload = {
+        email: user.email,
+        role: user.role,
+    };
+    const accessToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_secret, config_1.default.jwt_access_expire_in);
+    return {
+        accessToken,
+    };
+});
 exports.authServices = {
     loginUser,
     changePasswordIntoDB,
-    generateNewPassword: genarateNewPassword,
+    generateNewPassword: generateNewPassword,
+    refreshTokenToAccessToken,
 };
