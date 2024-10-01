@@ -9,7 +9,7 @@ const commentSchema = new Schema<IComment>({
   },
   description: {
     type: String,
-    required: true,
+    default: "",
   },
   rate: {
     type: Number,
@@ -30,11 +30,11 @@ const commentSchema = new Schema<IComment>({
   },
   createdAt: {
     type: String,
-    default: Date.now.toString(),
+    default: new Date().toString(),
   },
   updatedAt: {
     type: String,
-    default: Date.now.toString(),
+    default: new Date().toString(),
   },
   isDelete: {
     type: Boolean,

@@ -13,5 +13,5 @@ export interface IComment {
 
 export interface IUserOpinions {
   postId: string;
-  comments: IComment[];
+  comments: IComment;
 }
