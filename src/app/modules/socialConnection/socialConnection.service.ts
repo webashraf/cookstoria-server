@@ -2,8 +2,8 @@
 import httpStatus from "http-status";
 import AppError from "../../error/appError";
 import { User } from "../user/user.model";
-import { ISocialConductivity } from "./socialConductivity.interface";
-import { Follow } from "./socialConductivity.model";
+import { Follow } from "./socialConnection.model";
+import { ISocialConductivity } from "./socialConnection.interface";
 
 const createFollowIntoDB = async (payload: ISocialConductivity) => {
   const isUserExist = await User.isUserExistById(payload.userId);

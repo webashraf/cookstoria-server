@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { socialConductivityController } from "./socialConductivity.controller";
+import { socialConductivityController } from "./socialConnection.controller";
 
 const router = Router();
 

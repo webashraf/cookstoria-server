@@ -16,8 +16,8 @@ const createRecipeIntoDB = async (payload: IRecipe) => {
 const deleteRecipeIntoDB = async (id: string) => {
   const res = await Recipe.findByIdAndUpdate(
     id,
-    { isDeleted: true }, // This will add or update the field
-    { new: true, runValidators: true, upsert: true } // Creates a new doc if one doesn't exist (optional)
+    { isDeleted: true }, 
+    { new: true, runValidators: true, upsert: true } 
   );
 
   return res;
@@ -25,9 +25,9 @@ const deleteRecipeIntoDB = async (id: string) => {
 
 const publishOrUnpublishRecipeIntoDB = async (id: string) => {
   const recipe: any = await Recipe.findById(id);
-  console.log(recipe);
+  // console.log(recipe);
   if (recipe?.status === "unpublish") {
-    console.log(recipe?.status);
+    // console.log(recipe?.status);
     const res = await Recipe.findByIdAndUpdate(
       id,
       { status: "publish" },

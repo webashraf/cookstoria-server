@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
-import { socialConductivityServices } from "./socialConductivity.service";
+import { socialConductivityServices } from "./socialConnection.service";
 
 const createAFollower = catchAsync(async (req: Request, res: Response) => {
   const result = await socialConductivityServices.createFollowIntoDB(req.body);

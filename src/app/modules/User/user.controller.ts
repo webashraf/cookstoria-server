@@ -1,7 +1,8 @@
 import { RequestHandler } from "express";
+import catchAsync from "../../utils/catchAsync";
 import { userServices } from "./user.service";
 
-const signupUser: RequestHandler = async (req, res) => {
+const signupUser: RequestHandler = catchAsync(async (req, res) => {
   const result = await userServices.createNewUserIntoDB(req.body);
   res.status(200).json({
     success: true,
@@ -9,9 +10,8 @@ const signupUser: RequestHandler = async (req, res) => {
     message: "User registered successfully",
     data: result,
   });
-};
-
-const updateUserInfo: RequestHandler = async (req, res) => {
+});
+const updateUserInfo: RequestHandler = catchAsync(async (req, res) => {
   const userId = req.params.id;
   const result = await userServices.updateUserIntoDb(userId, req.body);
   res.status(200).json({
@@ -20,7 +20,7 @@ const updateUserInfo: RequestHandler = async (req, res) => {
     message: "User registered successfully",
     data: result,
   });
-};
+});
 
 export const userController = {
   signupUser,
