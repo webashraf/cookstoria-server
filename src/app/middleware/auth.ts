@@ -39,13 +39,13 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const isDeleted = user?.isDeleted;
 
     if (isDeleted) {
-      throw new AppError(httpStatus.FORBIDDEN, "This user is deleted !");
+      throw new AppError(httpStatus.UNAUTHORIZED, "This user is deleted !");
     }
 
     const userStatus = user?.status;
 
     if (userStatus === "blocked") {
-      throw new AppError(httpStatus.FORBIDDEN, "This user is blocked ! !");
+      throw new AppError(httpStatus.UNAUTHORIZED, "This user is blocked ! !");
     }
 
     console.log("Auth guard", requiredRoles, !requiredRoles.includes(role));

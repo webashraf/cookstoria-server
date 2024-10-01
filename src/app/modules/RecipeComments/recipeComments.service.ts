@@ -15,13 +15,13 @@ const createCommentUpDownVoteAndRatingsIntoDB = async (
   // Check if the post exists
   const isPostExist = await Recipe.findById(postId);
   if (!isPostExist) {
-    throw new AppError(httpStatus.FORBIDDEN, "Post does not exist!!");
+    throw new AppError(httpStatus.NOT_FOUND, "Post does not exist!!");
   }
 
   // Check if the user exists
   const isUserExist = await User.isUserExistById(userId as any);
   if (!isUserExist) {
-    throw new AppError(httpStatus.FORBIDDEN, "User does not exist!!");
+    throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
   }
 
   const commentFilter = { postId, "comments.userId": userId };
@@ -74,7 +74,7 @@ const removeUserOpinionsFromRecipeIntoDB = async ({
 
   const isPostExist = await Recipe.findById(postId);
   if (!isPostExist) {
-    throw new AppError(httpStatus.FORBIDDEN, "Post does not exist!!");
+    throw new AppError(httpStatus.NOT_FOUND, "Post does not exist!!");
   }
 
   const commentFilter = { postId, "comments.userId": userId };

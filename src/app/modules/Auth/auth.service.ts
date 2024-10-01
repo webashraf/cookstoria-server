@@ -16,17 +16,17 @@ const loginUser = async (payload: TLoginUser) => {
   const isDeleted = user?.isDeleted;
 
   if (isDeleted) {
-    throw new AppError(httpStatus.FORBIDDEN, "User is deleted!");
+    throw new AppError(httpStatus.UNAUTHORIZED, "User is deleted!");
   }
 
   const userStatus = user?.status;
 
   if (userStatus === "blocked") {
-    throw new AppError(httpStatus.FORBIDDEN, "User is blocked!!");
+    throw new AppError(httpStatus.UNAUTHORIZED, "User is blocked!!");
   }
 
   if (!(await isPasswordMatched(payload.password, user.password))) {
-    throw new AppError(httpStatus.FORBIDDEN, "Don't match password!!");
+    throw new AppError(httpStatus.UNAUTHORIZED, "Don't match password!!");
   }
 
   const jwtPayload = {
@@ -65,17 +65,17 @@ const changePasswordIntoDB = async (
   const isDeleted = user?.isDeleted;
 
   if (isDeleted) {
-    throw new AppError(httpStatus.FORBIDDEN, "This user is deleted !");
+    throw new AppError(httpStatus.UNAUTHORIZED, "This user is deleted !");
   }
 
   const userStatus = user?.status;
 
   if (userStatus === "blocked") {
-    throw new AppError(httpStatus.FORBIDDEN, "This user is blocked ! !");
+    throw new AppError(httpStatus.UNAUTHORIZED, "This user is blocked ! !");
   }
 
   if (!(await isPasswordMatched(payload.oldPassword, user.password))) {
-    throw new AppError(httpStatus.FORBIDDEN, "Don't match password!!");
+    throw new AppError(httpStatus.UNAUTHORIZED, "Don't match password!!");
   }
   //hash new password
   const newHashedPassword = await bcrypt.hash(
@@ -110,15 +110,14 @@ const genarateNewPassword = async (payload: {
   const isDeleted = user?.isDeleted;
 
   if (isDeleted) {
-    throw new AppError(httpStatus.FORBIDDEN, "This user is deleted !");
+    throw new AppError(httpStatus.UNAUTHORIZED, "This user is deleted !");
   }
 
   const userStatus = user?.status;
 
   if (userStatus === "blocked") {
-    throw new AppError(httpStatus.FORBIDDEN, "This user is blocked ! !");
+    throw new AppError(httpStatus.UNAUTHORIZED, "This user is blocked ! !");
   }
-
 
   //hash new password
   const newHashedPassword = await bcrypt.hash(
