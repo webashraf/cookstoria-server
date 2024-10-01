@@ -29,6 +29,7 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         message: "User is logged in successfully!",
         data: {
             accessToken,
+            refreshToken,
         },
     });
 }));
