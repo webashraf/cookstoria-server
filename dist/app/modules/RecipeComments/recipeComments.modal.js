@@ -2,19 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecipeComments = void 0;
 const mongoose_1 = require("mongoose");
-const commentSchema = new mongoose_1.Schema({
+const userOpinionsSchema = new mongoose_1.Schema({
+    postId: {
+        type: String,
+        required: true,
+    },
     userId: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,
         ref: "User",
     },
-    description: {
+    comments: {
         type: String,
         default: "",
     },
     rate: {
         type: Number,
-        required: true,
         default: 0,
         min: 0,
         max: 5,
@@ -41,12 +44,5 @@ const commentSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
-});
-const userOpinionsSchema = new mongoose_1.Schema({
-    postId: {
-        type: String,
-        required: true,
-    },
-    comments: [commentSchema],
 });
 exports.RecipeComments = (0, mongoose_1.model)("RecipeComments", userOpinionsSchema);

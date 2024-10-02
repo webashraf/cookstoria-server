@@ -20,37 +20,26 @@ const recipe_modal_1 = require("../Recipe/recipe.modal");
 const user_model_1 = require("../user/user.model");
 const recipeComments_modal_1 = require("./recipeComments.modal");
 const createCommentUpDownVoteAndRatingsIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const { postId, comments } = payload;
-    const { userId, upVote, downVote, rate, description } = comments;
-    // Check if the post exists
+    const { postId, userId, upVote, downVote } = payload;
     const isPostExist = yield recipe_modal_1.Recipe.findById(postId);
     if (!isPostExist) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "Post does not exist!!");
     }
-    // Check if the user exists
     const isUserExist = yield user_model_1.User.isUserExistById(userId);
     if (!isUserExist) {
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User does not exist!!");
     }
-    const commentFilter = { postId, "comments.userId": userId };
+    const commentFilter = { postId, userId };
     const postComment = yield recipeComments_modal_1.RecipeComments.findOne(commentFilter);
     if (postComment) {
-        const update = {};
-        // If user upvotes, set upVote to 1 and downVote to 0
+        const update = Object.assign({}, payload);
         if (upVote) {
-            update.$set = { "comments.$.upVote": 1, "comments.$.downVote": 0 };
+            update.upVote = 1;
+            update.downVote = 0;
         }
-        // If user downvotes, set downVote to 1 and upVote to 0
         if (downVote) {
-            update.$set = { "comments.$.downVote": 1, "comments.$.upVote": 0 };
-        }
-        // Update the rating if it's passed in the request
-        if (rate !== undefined) {
-            update.$set = Object.assign(Object.assign({}, update.$set), { "comments.$.rate": rate });
-        }
-        // Update the description if it's passed in the request
-        if (description) {
-            update.$set = Object.assign(Object.assign({}, update.$set), { "comments.$.description": description });
+            update.downVote = 1;
+            update.upVote = 0;
         }
         // Update the existing comment
         const res = yield recipeComments_modal_1.RecipeComments.findOneAndUpdate(commentFilter, update, {
@@ -59,13 +48,11 @@ const createCommentUpDownVoteAndRatingsIntoDB = (payload) => __awaiter(void 0, v
         return res;
     }
     else {
-        // Create a new comment if it doesn't exist
         const res = yield recipeComments_modal_1.RecipeComments.create(payload);
         return res;
     }
 });
 const removeUserOpinionsFromRecipeIntoDB = (_a) => __awaiter(void 0, [_a], void 0, function* ({ postId, userId, }) {
-    console.log({ postId, userId });
     const isPostExist = yield recipe_modal_1.Recipe.findById(postId);
     if (!isPostExist) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "Post does not exist!!");
@@ -84,7 +71,12 @@ const removeUserOpinionsFromRecipeIntoDB = (_a) => __awaiter(void 0, [_a], void 
         return res;
     }
 });
+const getCommentsInfo = (postId) => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield recipeComments_modal_1.RecipeComments.find({ postId }).populate("userId");
+    return res;
+});
 exports.userOpinionsServices = {
     createCommentUpDownVoteAndRatingsIntoDB,
     removeUserOpinionsFromRecipeIntoDB,
+    getCommentsInfo,
 };

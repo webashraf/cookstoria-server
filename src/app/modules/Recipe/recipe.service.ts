@@ -46,7 +46,7 @@ const publishOrUnpublishRecipeIntoDB = async (id: string) => {
 };
 
 const getRecipeFromDB = async () => {
-  const res = await Recipe.find();
+  const res = await Recipe.find().populate("user");
 
   return res;
 };

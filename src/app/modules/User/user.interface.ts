@@ -17,5 +17,5 @@ export type TUserRole = keyof typeof USER_ROLE;
 
 export interface UserModel extends Model<TUser> {
   isUserExistByEmail(email: string): Promise<TUser | null>;
-  isUserExistById(id: string): Promise<TUser | null>;
+  isUserExistById(userId: string): Promise<TUser | null>;
 }

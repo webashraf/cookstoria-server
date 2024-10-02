@@ -36,7 +36,16 @@ const removeUserOpinions = (0, catchAsync_1.default)((req, res) => __awaiter(voi
         data: result,
     });
 }));
+const getComments = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield recipeComments_service_1.userOpinionsServices.getCommentsInfo(req.params.postId);
+    res.status(200).json({
+        success: true,
+        message: "Recipe comments successfully retrieved!",
+        data: result,
+    });
+}));
 exports.userOpinionsController = {
     createRecipeUserOpinion,
     removeUserOpinions,
+    getComments,
 };

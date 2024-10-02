@@ -1,19 +1,22 @@
 import { model, Schema } from "mongoose";
-import { IComment, IUserOpinions } from "./recipeComments.interface";
+import { IUserOpinions } from "./recipeComments.interface";
 
-const commentSchema = new Schema<IComment>({
+const userOpinionsSchema = new Schema<IUserOpinions>({
+  postId: {
+    type: String,
+    required: true,
+  },
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },
-  description: {
+  comments: {
     type: String,
     default: "",
   },
   rate: {
     type: Number,
-    required: true,
     default: 0,
     min: 0,
     max: 5,
@@ -40,14 +43,6 @@ const commentSchema = new Schema<IComment>({
     type: Boolean,
     default: false,
   },
-});
-
-const userOpinionsSchema = new Schema<IUserOpinions>({
-  postId: {
-    type: String,
-    required: true,
-  },
-  comments: [commentSchema],
 });
 
 export const RecipeComments = model("RecipeComments", userOpinionsSchema);

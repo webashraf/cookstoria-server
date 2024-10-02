@@ -34,7 +34,7 @@ const publishOrUnpublishRecipeIntoDB = (id) => __awaiter(void 0, void 0, void 0,
     }
 });
 const getRecipeFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield recipe_modal_1.Recipe.find();
+    const res = yield recipe_modal_1.Recipe.find().populate("user");
     return res;
 });
 exports.recipeService = {
