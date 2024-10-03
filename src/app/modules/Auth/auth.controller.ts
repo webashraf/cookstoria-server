@@ -43,6 +43,8 @@ const forgatPassword = catchAsync(async (req, res) => {
   //   config.jwt_access_secret as string
   // );
 
+  // console.log(req.body, "generating password");
+
   const result = await authServices.generateNewPassword(req.body);
 
   res.status(200).json({
@@ -63,8 +65,18 @@ const refreshToken = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getAllUsers = catchAsync(async (req, res) => {
+  const result = await authServices.getAllUsersFromDB();
+
+  res.status(200).json({
+    success: true,
+    message: "User retrieved successfully!",
+    data: result,
+  });
+});
 
 export const authControllers = {
+  getAllUsers,
   loginUser,
   userPasswordChange,
   forgatPassword,

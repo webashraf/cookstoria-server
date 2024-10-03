@@ -33,6 +33,8 @@ const loginUser = async (payload: TLoginUser) => {
   const jwtPayload = {
     email: user.email,
     role: user.role,
+    id: user._id,
+    photo: user.profilePicture,
   };
   const accessToken = createToken(
     jwtPayload,
@@ -157,6 +159,7 @@ const refreshTokenToAccessToken = async (token: string) => {
   const jwtPayload = {
     email: user.email,
     role: user.role,
+    id: user._id,
   };
 
   const accessToken = createToken(
@@ -170,7 +173,13 @@ const refreshTokenToAccessToken = async (token: string) => {
   };
 };
 
+const getAllUsersFromDB = async () => {
+  const res = await User.find();
+  return res;
+};
+
 export const authServices = {
+  getAllUsersFromDB,
   loginUser,
   changePasswordIntoDB,
   generateNewPassword: generateNewPassword,

@@ -24,7 +24,7 @@ const userSchema = new Schema<TUser, UserModel>({
   },
   role: {
     type: String,
-    required: true,
+    default: "user",
     enum: ["admin", "user"],
   },
   needsPasswordChange: {

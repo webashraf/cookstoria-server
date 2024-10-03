@@ -35,9 +35,18 @@ const getFollowersById = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getFollowers = catchAsync(async (req: Request, res: Response) => {
+  const result = await socialConductivityServices.retrievedFollowerByIntoDB();
+  res.status(200).json({
+    success: true,
+    message: "Followers retrieved successful!!",
+    data: result,
+  });
+});
 
 export const socialConductivityController = {
   createAFollower,
   unfollowAUser,
   getFollowersById,
+  getFollowers,
 };

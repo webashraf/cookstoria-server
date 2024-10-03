@@ -2,8 +2,8 @@
 import httpStatus from "http-status";
 import AppError from "../../error/appError";
 import { User } from "../user/user.model";
-import { Follow } from "./socialConnection.model";
 import { ISocialConductivity } from "./socialConnection.interface";
+import { Follow } from "./socialConnection.model";
 
 const createFollowIntoDB = async (payload: ISocialConductivity) => {
   const isUserExist = await User.isUserExistById(payload.userId);
@@ -12,13 +12,13 @@ const createFollowIntoDB = async (payload: ISocialConductivity) => {
     throw new AppError(httpStatus.BAD_REQUEST, "User not found!!");
   }
 
-  const haveFollowerInMyRecipe = await Follow.findOne({
+  const haveFollower = await Follow.findOne({
     userId: payload.userId,
   });
 
-  const myFollow = haveFollowerInMyRecipe?._id;
+  const myFollow = haveFollower?._id;
 
-  if (!haveFollowerInMyRecipe) {
+  if (!haveFollower) {
     const res = await Follow.create(payload);
     return res;
   } else {
@@ -47,26 +47,29 @@ const unfollowASingleUser = async (myId: string, followedUserId: string) => {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
   }
 
-  const followRecord = await Follow.findOne({ userId: followedUserId });
+  console.log(myId, followedUserId);
+
+  const followRecord = await Follow.findOne({ followers: followedUserId });
 
   if (!followRecord) {
     throw new AppError(httpStatus.NOT_FOUND, "Follow record not found!");
   }
+  // console.log(followRecord);
+  // const isFollowing = followRecord.followers.some((follower) => {
+  //   console.log("followe =", follower.toString(), myId);
+  //   return follower.toString() === myId;
+  // });
 
-  const isFollowing = followRecord.followers.some(
-    (follower) => follower.toString() === myId
-  );
-
-  if (!isFollowing) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      "You are not following this user!"
-    );
-  }
+  // if (!isFollowing) {
+  //   throw new AppError(
+  //     httpStatus.BAD_REQUEST,
+  //     "You are not following this user!"
+  //   );
+  // }
 
   const updatedFollowRecord = await Follow.findOneAndUpdate(
-    { userId: followedUserId },
-    { $pull: { followers: myId } },
+    { userId: myId },
+    { $pull: { followers: followedUserId } },
     { new: true }
   );
 
@@ -83,8 +86,15 @@ const retrievedFollowerByIdIntoDB = async (userId: string) => {
   return res;
 };
 
+const retrievedFollowerByIntoDB = async () => {
+  const res = await Follow.find().populate("followers");
+
+  return res;
+};
+
 export const socialConductivityServices = {
   createFollowIntoDB,
   unfollowASingleUser,
   retrievedFollowerByIdIntoDB,
+  retrievedFollowerByIntoDB,
 };

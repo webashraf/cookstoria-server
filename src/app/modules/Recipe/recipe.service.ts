@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from "http-status";
+import AppError from "../../error/appError";
+import { User } from "../user/user.model";
 import { IRecipe } from "./recipe.interface";
 import { Recipe } from "./recipe.modal";
 
@@ -8,6 +11,11 @@ const createRecipeIntoDB = async (payload: IRecipe) => {
     createdAt: new Date(),
     updatedAt: new Date(),
   };
+
+  const isUserExist = await User.isUserExistById(payload.user as any);
+  if (!isUserExist) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
+  }
 
   const res = await Recipe.create(recipeData);
   return res;
