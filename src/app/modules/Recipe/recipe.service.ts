@@ -53,10 +53,47 @@ const publishOrUnpublishRecipeIntoDB = async (id: string) => {
   }
 };
 
-const getRecipeFromDB = async () => {
-  const res = await Recipe.find().populate("user");
+const getRecipeFromDB = async (query: Record<string, unknown>) => {
+  const filterQueryItems = { ...query };
+  const removableFields = ["searchTerm", "sort", "limit", "page"];
+  removableFields.forEach((field) => delete filterQueryItems[field]);
 
-  return res;
+  // search
+  let searchTerm = "";
+  if (query?.searchTerm) {
+    searchTerm = query.searchTerm as string;
+  }
+  const searchQuery = Recipe.find({
+    title: { $regex: searchTerm, $options: "i" },
+  });
+  
+  console.log({ query }, { filterQueryItems });
+  // Filter query
+  const filterQuery = searchQuery.find(filterQueryItems).populate("user");
+
+  // sort
+  let sort = "-cookingTime";
+  if (query?.sort) {
+    sort = query.sort as string;
+  }
+  const sortQuery = filterQuery.sort(sort);
+
+  let page = 1;
+  let limit = 0;
+  let skip = 0;
+  if (query?.limit) {
+    limit = Number(query.limit) as number;
+  }
+  if (query?.page) {
+    page = Number(query?.page) as number;
+    skip = (page - 1) * limit;
+  }
+
+  const paginateQuery = sortQuery.skip(skip);
+
+  const limitQuery = await paginateQuery.limit(limit);
+
+  return limitQuery;
 };
 
 export const recipeService = {
