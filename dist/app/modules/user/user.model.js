@@ -53,6 +53,16 @@ const userSchema = new mongoose_1.Schema({
         enum: ["active", "blocked"],
         default: "active",
     },
+    isPremium: {
+        type: Boolean,
+        default: false,
+    },
+    paymentStatus: {
+        success: { type: Boolean },
+        transaction: { type: String },
+        amount: { type: Number },
+        date: { type: String },
+    },
 });
 userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {

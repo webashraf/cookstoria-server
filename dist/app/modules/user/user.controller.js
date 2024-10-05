@@ -30,7 +30,7 @@ const updateUserInfo = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
     res.status(200).json({
         success: true,
         statusCode: 200,
-        message: "User registered successfully",
+        message: "User info updated successfully",
         data: result,
     });
 }));

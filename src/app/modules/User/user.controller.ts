@@ -17,7 +17,7 @@ const updateUserInfo: RequestHandler = catchAsync(async (req, res) => {
   res.status(200).json({
     success: true,
     statusCode: 200,
-    message: "User registered successfully",
+    message: "User info updated successfully",
     data: result,
   });
 });

@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import { Schema, model } from "mongoose";
-import { boolean } from "zod";
 import config from "../../config";
 import { TUser, UserModel } from "./user.interface";
 
@@ -41,11 +40,15 @@ const userSchema = new Schema<TUser, UserModel>({
     enum: ["active", "blocked"],
     default: "active",
   },
-  isPremium: boolean,
+  isPremium: {
+    type: Boolean,
+    default: false,
+  },
   paymentStatus: {
-    success: { type: Boolean, required: true },
-    transaction: { type: String, required: true },
-    amount: { type: Number, required: true },
+    success: { type: Boolean },
+    transaction: { type: String },
+    amount: { type: Number },
+    date: { type: String },
   },
 });
 

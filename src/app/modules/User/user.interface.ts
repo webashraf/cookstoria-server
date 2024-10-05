@@ -18,6 +18,7 @@ export interface TUser {
     success: boolean;
     transaction: string;
     amount: number;
+    date: string;
   };
 }
 

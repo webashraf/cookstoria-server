@@ -15,7 +15,18 @@ const userCreateValidationSchema = z.object({
       required_error: "profilePicture is required!!",
     }),
 
-    role: z.enum(["admin", "user"], { required_error: "Role is required!!" }),
+    role: z
+      .enum(["admin", "user"], { required_error: "Role is required!!" })
+      .optional(),
+    isPremium: z.boolean().optional(),
+    paymentStatus: z
+      .object({
+        success: z.boolean().optional(),
+        transaction: z.string().optional(),
+        amount: z.number().min(0).optional(),
+        date: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 
@@ -43,6 +54,14 @@ const userUpdateValidationSchema = z.object({
     isDeleted: z.boolean().optional(),
     status: z.enum(["active", "blocked"]).optional(),
     needsPasswordChange: z.boolean().optional(),
+    isPremium: z.boolean().optional(),
+    paymentStatus: z
+      .object({
+        success: z.boolean().optional(),
+        transaction: z.string().optional(),
+        amount: z.number().min(0).optional(),
+      })
+      .optional(),
   }),
 });
 

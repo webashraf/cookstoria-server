@@ -16,8 +16,7 @@ const createNewUserIntoDB = async (payload: TUser) => {
 };
 
 const updateUserIntoDb = async (userId: string, payload: Partial<TUser>) => {
-  const isUserExist = await User.isUserExistByEmail(payload?.email as string);
-
+  const isUserExist = await User.isUserExistById(userId as string);
   if (!isUserExist) {
     throw new AppError(httpStatus.UNAUTHORIZED, "User not found!");
   }

@@ -14,7 +14,18 @@ const userCreateValidationSchema = zod_1.z.object({
         profilePicture: zod_1.z.string({
             required_error: "profilePicture is required!!",
         }),
-        role: zod_1.z.enum(["admin", "user"], { required_error: "Role is required!!" }),
+        role: zod_1.z
+            .enum(["admin", "user"], { required_error: "Role is required!!" })
+            .optional(),
+        isPremium: zod_1.z.boolean().optional(),
+        paymentStatus: zod_1.z
+            .object({
+            success: zod_1.z.boolean().optional(),
+            transaction: zod_1.z.string().optional(),
+            amount: zod_1.z.number().min(0).optional(),
+            date: zod_1.z.string().optional(),
+        })
+            .optional(),
     }),
 });
 const userUpdateValidationSchema = zod_1.z.object({
@@ -38,6 +49,14 @@ const userUpdateValidationSchema = zod_1.z.object({
         isDeleted: zod_1.z.boolean().optional(),
         status: zod_1.z.enum(["active", "blocked"]).optional(),
         needsPasswordChange: zod_1.z.boolean().optional(),
+        isPremium: zod_1.z.boolean().optional(),
+        paymentStatus: zod_1.z
+            .object({
+            success: zod_1.z.boolean().optional(),
+            transaction: zod_1.z.string().optional(),
+            amount: zod_1.z.number().min(0).optional(),
+        })
+            .optional(),
     }),
 });
 exports.userValidations = {
