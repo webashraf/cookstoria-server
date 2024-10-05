@@ -7,4 +7,5 @@ const router = (0, express_1.Router)();
 router.post("/follow", socialConnection_controller_1.socialConductivityController.createAFollower);
 router.post("/unfollow/:id", socialConnection_controller_1.socialConductivityController.unfollowAUser);
 router.get("/follow/:id", socialConnection_controller_1.socialConductivityController.getFollowersById);
+router.get("/follow", socialConnection_controller_1.socialConductivityController.getFollowers);
 exports.socialConductivityRoutes = router;

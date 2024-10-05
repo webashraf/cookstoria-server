@@ -28,10 +28,6 @@ const updateUserIntoDb = async (userId: string, payload: Partial<TUser>) => {
     { new: true, runValidators: true }
   );
 
-  // if (!result) {
-  //   throw new Error("Failed to update user!");
-  // }
-
   return result;
 };
 

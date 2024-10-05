@@ -4,6 +4,8 @@ export interface IRecipe {
   title: string;
   user: ObjectId;
   ingredients: string[];
+  tags: string[];
+  categories: string[];
   instructions: string;
   preparationTime: number;
   cookingTime: number;
@@ -20,5 +22,6 @@ export interface IRecipe {
   createdAt: Date;
   updatedAt: Date;
   isDeleted?: boolean;
+  isPremium?: boolean;
   status?: "publish" | "unpublish";
 }

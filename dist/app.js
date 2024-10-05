@@ -10,11 +10,11 @@ const express_1 = __importDefault(require("express"));
 const glovalErrorHandalerMiddleware_1 = __importDefault(require("./app/middleware/glovalErrorHandalerMiddleware"));
 const routes_1 = __importDefault(require("./app/routes"));
 const app = (0, express_1.default)();
-// const corsOptions = {
-//   credentials: true,
-//   origin: ["http://localhost:3000", "http://localhost:5173"],
-// };
-app.use((0, cors_1.default)());
+const corsOptions = {
+    credentials: true,
+    origin: ["http://localhost:3000", "http://localhost:5173"],
+};
+app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 // routes

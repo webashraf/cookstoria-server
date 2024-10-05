@@ -33,9 +33,8 @@ const deleteRecipeIntoDB = async (id: string) => {
 
 const publishOrUnpublishRecipeIntoDB = async (id: string) => {
   const recipe: any = await Recipe.findById(id);
-  // console.log(recipe);
+  
   if (recipe?.status === "unpublish") {
-    // console.log(recipe?.status);
     const res = await Recipe.findByIdAndUpdate(
       id,
       { status: "publish" },
@@ -54,8 +53,10 @@ const publishOrUnpublishRecipeIntoDB = async (id: string) => {
 };
 
 const getRecipeFromDB = async (query: Record<string, unknown>) => {
-  const filterQueryItems = { ...query };
-  const removableFields = ["searchTerm", "sort", "limit", "page"];
+  const filterQueryItems: any = {
+    ...query,
+  };
+  const removableFields = ["searchTerm", "sort", "limit", "page", "fields"];
   removableFields.forEach((field) => delete filterQueryItems[field]);
 
   // search
@@ -64,10 +65,11 @@ const getRecipeFromDB = async (query: Record<string, unknown>) => {
     searchTerm = query.searchTerm as string;
   }
   const searchQuery = Recipe.find({
-    title: { $regex: searchTerm, $options: "i" },
+    $or: ["title", "ingredients", "tags"].map((field) => ({
+      [field]: { $regex: searchTerm, $options: "i" },
+    })),
   });
-  
-  console.log({ query }, { filterQueryItems });
+
   // Filter query
   const filterQuery = searchQuery.find(filterQueryItems).populate("user");
 
@@ -91,9 +93,16 @@ const getRecipeFromDB = async (query: Record<string, unknown>) => {
 
   const paginateQuery = sortQuery.skip(skip);
 
-  const limitQuery = await paginateQuery.limit(limit);
+  const limitQuery = paginateQuery.limit(limit);
 
-  return limitQuery;
+  let fields = "-__v";
+
+  if (query?.fields) {
+    fields = (query.fields as string).split(",").join(" ");
+  }
+  const filedLimitQuery = await limitQuery.select(fields);
+
+  return filedLimitQuery;
 };
 
 export const recipeService = {

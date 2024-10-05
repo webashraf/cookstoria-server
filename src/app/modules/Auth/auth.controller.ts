@@ -38,13 +38,6 @@ const userPasswordChange = catchAsync(async (req, res) => {
 });
 
 const forgatPassword = catchAsync(async (req, res) => {
-  // const userData = jwt.verify(
-  //   req.headers.authorization as string,
-  //   config.jwt_access_secret as string
-  // );
-
-  // console.log(req.body, "generating password");
-
   const result = await authServices.generateNewPassword(req.body);
 
   res.status(200).json({
@@ -55,7 +48,7 @@ const forgatPassword = catchAsync(async (req, res) => {
 });
 
 const refreshToken = catchAsync(async (req, res) => {
-  console.log(req.cookies);
+  // console.log(req.cookies);
   const { refreshToken } = req.cookies;
   const result = await authServices.refreshTokenToAccessToken(refreshToken);
 

@@ -40,6 +40,8 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const jwtPayload = {
         email: user.email,
         role: user.role,
+        id: user._id,
+        photo: user.profilePicture,
     };
     const accessToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_secret, config_1.default.jwt_access_expire_in);
     const refreshToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_refresh_secret, config_1.default.jwt_refresh_expire_in);
@@ -110,13 +112,19 @@ const refreshTokenToAccessToken = (token) => __awaiter(void 0, void 0, void 0, f
     const jwtPayload = {
         email: user.email,
         role: user.role,
+        id: user._id,
     };
     const accessToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_secret, config_1.default.jwt_access_expire_in);
     return {
         accessToken,
     };
 });
+const getAllUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield user_model_1.User.find();
+    return res;
+});
 exports.authServices = {
+    getAllUsersFromDB,
     loginUser,
     changePasswordIntoDB,
     generateNewPassword: generateNewPassword,

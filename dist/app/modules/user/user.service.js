@@ -30,9 +30,6 @@ const updateUserIntoDb = (userId, payload) => __awaiter(void 0, void 0, void 0, 
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User not found!");
     }
     const result = yield user_model_1.User.findByIdAndUpdate(userId, { $set: payload }, { new: true, runValidators: true });
-    // if (!result) {
-    //   throw new Error("Failed to update user!");
-    // }
     return result;
 });
 exports.userServices = {

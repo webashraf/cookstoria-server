@@ -48,8 +48,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(httpStatus.UNAUTHORIZED, "This user is blocked ! !");
     }
 
-    console.log("Auth guard", requiredRoles, !requiredRoles.includes(role));
-
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,

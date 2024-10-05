@@ -37,7 +37,6 @@ const createCommentUpDownVoteAndRatingsIntoDB = async (
       update.upVote = 0;
     }
 
-    console.log({ payload, update });
 
     // Update the existing comment
     const res = await RecipeComments.findOneAndUpdate(commentFilter, update, {

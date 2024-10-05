@@ -16,7 +16,10 @@ const recipeValidationSchema = zod_1.z.object({
     body: zod_1.z.object({
         title: zod_1.z.string().min(1, { message: "Title is required" }),
         user: zod_1.z.string().min(1, { message: "User is required" }),
+        imageUrl: zod_1.z.string().url({ message: "Invalid URL" }).optional(),
         ingredients: zod_1.z.array(zod_1.z.string().min(1, { message: "Ingredient cannot be empty" })),
+        tags: zod_1.z.array(zod_1.z.string().min(1, { message: "Ingredient cannot be empty" })),
+        categories: zod_1.z.array(zod_1.z.string().min(1, { message: "Ingredient cannot be empty" })),
         instructions: zod_1.z.string().min(1, { message: "Instructions are required" }),
         preparationTime: zod_1.z
             .number()
@@ -26,8 +29,8 @@ const recipeValidationSchema = zod_1.z.object({
             .min(1, { message: "Cooking time must be at least 1 minute" }),
         servings: zod_1.z.number().min(1, { message: "Servings must be at least 1" }),
         cuisine: zod_1.z.string().optional(),
+        isPremium: zod_1.z.boolean().optional(),
         dietaryRestrictions: zod_1.z.array(zod_1.z.string()).optional(),
-        imageUrl: zod_1.z.string().url({ message: "Invalid URL" }).optional(),
         nutritionFacts: nutritionFactsValidationSchema.optional(),
     }),
 });

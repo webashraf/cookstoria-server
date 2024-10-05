@@ -9,6 +9,8 @@ const recipeSchema: Schema<IRecipe> = new Schema({
     required: true,
   },
   ingredients: { type: [String], required: true },
+  tags: { type: [String], required: true },
+  categories: { type: [String], required: true },
   instructions: { type: String, required: true },
   preparationTime: { type: Number, required: true },
   cookingTime: { type: Number, required: true },
@@ -25,6 +27,7 @@ const recipeSchema: Schema<IRecipe> = new Schema({
   createdAt: { type: Date, default: Date.now, required: false },
   updatedAt: { type: Date, default: Date.now, required: false },
   isDeleted: { type: Boolean, default: false, required: false },
+  isPremium: { type: Boolean, default: false, required: false },
   status: { type: String, default: "publish", required: false },
 });
 

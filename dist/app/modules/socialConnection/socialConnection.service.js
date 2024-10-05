@@ -23,11 +23,11 @@ const createFollowIntoDB = (payload) => __awaiter(void 0, void 0, void 0, functi
     if (!isUserExist) {
         throw new appError_1.default(http_status_1.default.BAD_REQUEST, "User not found!!");
     }
-    const haveFollowerInMyRecipe = yield socialConnection_model_1.Follow.findOne({
+    const haveFollower = yield socialConnection_model_1.Follow.findOne({
         userId: payload.userId,
     });
-    const myFollow = haveFollowerInMyRecipe === null || haveFollowerInMyRecipe === void 0 ? void 0 : haveFollowerInMyRecipe._id;
-    if (!haveFollowerInMyRecipe) {
+    const myFollow = haveFollower === null || haveFollower === void 0 ? void 0 : haveFollower._id;
+    if (!haveFollower) {
         const res = yield socialConnection_model_1.Follow.create(payload);
         return res;
     }
@@ -50,15 +50,11 @@ const unfollowASingleUser = (myId, followedUserId) => __awaiter(void 0, void 0, 
     if (!isUserExist) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "User not found!");
     }
-    const followRecord = yield socialConnection_model_1.Follow.findOne({ userId: followedUserId });
+    const followRecord = yield socialConnection_model_1.Follow.findOne({ followers: followedUserId });
     if (!followRecord) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "Follow record not found!");
     }
-    const isFollowing = followRecord.followers.some((follower) => follower.toString() === myId);
-    if (!isFollowing) {
-        throw new appError_1.default(http_status_1.default.BAD_REQUEST, "You are not following this user!");
-    }
-    const updatedFollowRecord = yield socialConnection_model_1.Follow.findOneAndUpdate({ userId: followedUserId }, { $pull: { followers: myId } }, { new: true });
+    const updatedFollowRecord = yield socialConnection_model_1.Follow.findOneAndUpdate({ userId: myId }, { $pull: { followers: followedUserId } }, { new: true });
     return updatedFollowRecord;
 });
 const retrievedFollowerByIdIntoDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -69,8 +65,13 @@ const retrievedFollowerByIdIntoDB = (userId) => __awaiter(void 0, void 0, void 0
     const res = yield socialConnection_model_1.Follow.findOne({ userId }).populate("followers");
     return res;
 });
+const retrievedFollowerByIntoDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield socialConnection_model_1.Follow.find().populate("followers");
+    return res;
+});
 exports.socialConductivityServices = {
     createFollowIntoDB,
     unfollowASingleUser,
     retrievedFollowerByIdIntoDB,
+    retrievedFollowerByIntoDB,
 };

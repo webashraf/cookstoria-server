@@ -41,8 +41,17 @@ const getFollowersById = (0, catchAsync_1.default)((req, res) => __awaiter(void 
         data: result,
     });
 }));
+const getFollowers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield socialConnection_service_1.socialConductivityServices.retrievedFollowerByIntoDB();
+    res.status(200).json({
+        success: true,
+        message: "Followers retrieved successful!!",
+        data: result,
+    });
+}));
 exports.socialConductivityController = {
     createAFollower,
     unfollowAUser,
     getFollowersById,
+    getFollowers,
 };

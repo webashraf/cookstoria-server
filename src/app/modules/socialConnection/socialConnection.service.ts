@@ -47,25 +47,12 @@ const unfollowASingleUser = async (myId: string, followedUserId: string) => {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
   }
 
-  console.log(myId, followedUserId);
-
   const followRecord = await Follow.findOne({ followers: followedUserId });
 
   if (!followRecord) {
     throw new AppError(httpStatus.NOT_FOUND, "Follow record not found!");
   }
-  // console.log(followRecord);
-  // const isFollowing = followRecord.followers.some((follower) => {
-  //   console.log("followe =", follower.toString(), myId);
-  //   return follower.toString() === myId;
-  // });
 
-  // if (!isFollowing) {
-  //   throw new AppError(
-  //     httpStatus.BAD_REQUEST,
-  //     "You are not following this user!"
-  //   );
-  // }
 
   const updatedFollowRecord = await Follow.findOneAndUpdate(
     { userId: myId },

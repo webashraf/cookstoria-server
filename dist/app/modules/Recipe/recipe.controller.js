@@ -40,7 +40,7 @@ const publishUnpublishRecipe = (0, catchAsync_1.default)((req, res) => __awaiter
     });
 }));
 const getRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_service_1.recipeService.getRecipeFromDB();
+    const result = yield recipe_service_1.recipeService.getRecipeFromDB(req.query);
     res.status(200).json({
         success: true,
         message: "Recipe successfully get!",

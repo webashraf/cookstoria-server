@@ -4,6 +4,6 @@ exports.Follow = void 0;
 const mongoose_1 = require("mongoose");
 const followersSchema = new mongoose_1.Schema({
     userId: { type: String, required: true },
-    followers: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "User" }], // Array of User references
+    followers: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "User" }],
 });
 exports.Follow = (0, mongoose_1.model)("Follow", followersSchema);

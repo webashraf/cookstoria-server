@@ -15,7 +15,12 @@ const recipeValidationSchema = z.object({
   body: z.object({
     title: z.string().min(1, { message: "Title is required" }),
     user: z.string().min(1, { message: "User is required" }),
+    imageUrl: z.string().url({ message: "Invalid URL" }).optional(),
     ingredients: z.array(
+      z.string().min(1, { message: "Ingredient cannot be empty" })
+    ),
+    tags: z.array(z.string().min(1, { message: "Ingredient cannot be empty" })),
+    categories: z.array(
       z.string().min(1, { message: "Ingredient cannot be empty" })
     ),
     instructions: z.string().min(1, { message: "Instructions are required" }),
@@ -27,8 +32,8 @@ const recipeValidationSchema = z.object({
       .min(1, { message: "Cooking time must be at least 1 minute" }),
     servings: z.number().min(1, { message: "Servings must be at least 1" }),
     cuisine: z.string().optional(),
+    isPremium: z.boolean().optional(),
     dietaryRestrictions: z.array(z.string()).optional(),
-    imageUrl: z.string().url({ message: "Invalid URL" }).optional(),
     nutritionFacts: nutritionFactsValidationSchema.optional(),
   }),
 });
