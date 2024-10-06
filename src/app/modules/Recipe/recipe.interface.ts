@@ -3,6 +3,9 @@ import { ObjectId } from "mongoose";
 export interface IRecipe {
   title: string;
   user: ObjectId;
+  imageUrl: string;
+  description: string;
+  htmlDescription: string;
   ingredients: string[];
   tags: string[];
   categories: string[];
@@ -12,7 +15,6 @@ export interface IRecipe {
   servings: number;
   cuisine?: string;
   dietaryRestrictions?: string[];
-  imageUrl?: string;
   nutritionFacts?: {
     calories: number;
     protein: number;

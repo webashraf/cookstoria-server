@@ -3,7 +3,9 @@ import catchAsync from "../../utils/catchAsync";
 import { recipeService } from "./recipe.service";
 
 const createRecipe = catchAsync(async (req: Request, res: Response) => {
-  const result = await recipeService.createRecipeIntoDB(req.body);
+  // validateRequest(recipeValidations.recipeValidationSchema);
+  const image = req?.file?.path;
+  const result = await recipeService.createRecipeIntoDB(req.body, image);
   res.status(200).json({
     success: true,
     message: "Recipe is created successfully!",

@@ -21,6 +21,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
+    "@types/multer": "^1.4.12",
     "axios": "^1.7.5",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
@@ -30,6 +31,8 @@
     "http-status": "^1.7.4",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "vercel": "^37.1.1",
     "zod": "^3.23.8"
   },

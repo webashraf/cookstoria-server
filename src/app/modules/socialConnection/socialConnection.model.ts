@@ -1,9 +1,9 @@
 import { model, Schema } from "mongoose";
-import { ISocialConductivity } from "./socialConnection.interface";
+import { IsocialConnectivity } from "./socialConnection.interface";
 
-const followersSchema = new Schema<ISocialConductivity>({
+const followersSchema = new Schema<IsocialConnectivity>({
   userId: { type: String, required: true },
-  followers: [{ type: Schema.Types.ObjectId, ref: "User" }], 
+  followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
-export const Follow = model<ISocialConductivity>("Follow", followersSchema);
+export const Follow = model<IsocialConnectivity>("Follow", followersSchema);

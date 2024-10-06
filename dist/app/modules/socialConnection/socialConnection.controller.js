@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.socialConductivityController = void 0;
+exports.socialConnectivityController = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const socialConnection_service_1 = require("./socialConnection.service");
 const createAFollower = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield socialConnection_service_1.socialConductivityServices.createFollowIntoDB(req.body);
+    const result = yield socialConnection_service_1.socialConnectivityServices.createFollowIntoDB(req.body);
     res.status(200).json({
         success: true,
         message: "Successfully added new follower!!",
@@ -25,7 +25,7 @@ const createAFollower = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
 }));
 const unfollowAUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
-    const result = yield socialConnection_service_1.socialConductivityServices.unfollowASingleUser((_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.id, (_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.followedUserId);
+    const result = yield socialConnection_service_1.socialConnectivityServices.unfollowASingleUser((_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.id, (_b = req === null || req === void 0 ? void 0 : req.body) === null || _b === void 0 ? void 0 : _b.followedUserId);
     res.status(200).json({
         success: true,
         message: "Successfully added new follower!!",
@@ -34,7 +34,7 @@ const unfollowAUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
 }));
 const getFollowersById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;
-    const result = yield socialConnection_service_1.socialConductivityServices.retrievedFollowerByIdIntoDB(userId);
+    const result = yield socialConnection_service_1.socialConnectivityServices.retrievedFollowerByIdIntoDB(userId);
     res.status(200).json({
         success: true,
         message: "Followers retrieved successful!!",
@@ -42,14 +42,14 @@ const getFollowersById = (0, catchAsync_1.default)((req, res) => __awaiter(void 
     });
 }));
 const getFollowers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield socialConnection_service_1.socialConductivityServices.retrievedFollowerByIntoDB();
+    const result = yield socialConnection_service_1.socialConnectivityServices.retrievedFollowerByIntoDB();
     res.status(200).json({
         success: true,
         message: "Followers retrieved successful!!",
         data: result,
     });
 }));
-exports.socialConductivityController = {
+exports.socialConnectivityController = {
     createAFollower,
     unfollowAUser,
     getFollowersById,

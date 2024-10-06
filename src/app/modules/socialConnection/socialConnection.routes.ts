@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { socialConductivityController } from "./socialConnection.controller";
+import { socialConnectivityController } from "./socialConnection.controller";
 
 const router = Router();
 
-router.post("/follow", socialConductivityController.createAFollower);
-router.post("/unfollow/:id", socialConductivityController.unfollowAUser);
-router.get("/follow/:id", socialConductivityController.getFollowersById);
-router.get("/follow", socialConductivityController.getFollowers);
+router.post("/follow", socialConnectivityController.createAFollower);
+router.post("/unfollow/:id", socialConnectivityController.unfollowAUser);
+router.get("/follow/:id", socialConnectivityController.getFollowersById);
+router.get("/follow", socialConnectivityController.getFollowers);
 
-export const socialConductivityRoutes = router;
+export const socialConnectivityRoutes = router;

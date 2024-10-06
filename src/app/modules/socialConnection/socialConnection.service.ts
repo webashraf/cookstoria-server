@@ -2,10 +2,10 @@
 import httpStatus from "http-status";
 import AppError from "../../error/appError";
 import { User } from "../user/user.model";
-import { ISocialConductivity } from "./socialConnection.interface";
+import { IsocialConnectivity } from "./socialConnection.interface";
 import { Follow } from "./socialConnection.model";
 
-const createFollowIntoDB = async (payload: ISocialConductivity) => {
+const createFollowIntoDB = async (payload: IsocialConnectivity) => {
   const isUserExist = await User.isUserExistById(payload.userId);
 
   if (!isUserExist) {
@@ -53,7 +53,6 @@ const unfollowASingleUser = async (myId: string, followedUserId: string) => {
     throw new AppError(httpStatus.NOT_FOUND, "Follow record not found!");
   }
 
-
   const updatedFollowRecord = await Follow.findOneAndUpdate(
     { userId: myId },
     { $pull: { followers: followedUserId } },
@@ -79,7 +78,7 @@ const retrievedFollowerByIntoDB = async () => {
   return res;
 };
 
-export const socialConductivityServices = {
+export const socialConnectivityServices = {
   createFollowIntoDB,
   unfollowASingleUser,
   retrievedFollowerByIdIntoDB,

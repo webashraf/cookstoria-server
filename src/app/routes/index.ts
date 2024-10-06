@@ -2,7 +2,7 @@ import { Router } from "express";
 import { authRoutes } from "../modules/Auth/auth.routes";
 import { recipeRouters } from "../modules/Recipe/recipe.routes";
 import { userOpinionRoutes } from "../modules/RecipeComments/recipeComments.routes";
-import { socialConductivityRoutes } from "../modules/socialConnection/socialConnection.routes";
+import { socialConnectivityRoutes } from "../modules/socialConnection/socialConnection.routes";
 import { userRoutes } from "../modules/user/user.routes";
 
 const router = Router();
@@ -18,7 +18,7 @@ const appRoutes = [
   },
   {
     path: "/social",
-    route: socialConductivityRoutes,
+    route: socialConnectivityRoutes,
   },
   {
     path: "/recipe",

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.socialConductivityServices = void 0;
+exports.socialConnectivityServices = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const http_status_1 = __importDefault(require("http-status"));
 const appError_1 = __importDefault(require("../../error/appError"));
@@ -69,7 +69,7 @@ const retrievedFollowerByIntoDB = () => __awaiter(void 0, void 0, void 0, functi
     const res = yield socialConnection_model_1.Follow.find().populate("followers");
     return res;
 });
-exports.socialConductivityServices = {
+exports.socialConnectivityServices = {
     createFollowIntoDB,
     unfollowASingleUser,
     retrievedFollowerByIdIntoDB,

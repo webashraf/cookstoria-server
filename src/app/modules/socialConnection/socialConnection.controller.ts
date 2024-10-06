@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
-import { socialConductivityServices } from "./socialConnection.service";
+import { socialConnectivityServices } from "./socialConnection.service";
 
 const createAFollower = catchAsync(async (req: Request, res: Response) => {
-  const result = await socialConductivityServices.createFollowIntoDB(req.body);
+  const result = await socialConnectivityServices.createFollowIntoDB(req.body);
 
   res.status(200).json({
     success: true,
@@ -13,7 +13,7 @@ const createAFollower = catchAsync(async (req: Request, res: Response) => {
 });
 
 const unfollowAUser = catchAsync(async (req: Request, res: Response) => {
-  const result = await socialConductivityServices.unfollowASingleUser(
+  const result = await socialConnectivityServices.unfollowASingleUser(
     req?.params?.id,
     req?.body?.followedUserId
   );
@@ -28,7 +28,7 @@ const unfollowAUser = catchAsync(async (req: Request, res: Response) => {
 const getFollowersById = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id;
   const result =
-    await socialConductivityServices.retrievedFollowerByIdIntoDB(userId);
+    await socialConnectivityServices.retrievedFollowerByIdIntoDB(userId);
   res.status(200).json({
     success: true,
     message: "Followers retrieved successful!!",
@@ -36,7 +36,7 @@ const getFollowersById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const getFollowers = catchAsync(async (req: Request, res: Response) => {
-  const result = await socialConductivityServices.retrievedFollowerByIntoDB();
+  const result = await socialConnectivityServices.retrievedFollowerByIntoDB();
   res.status(200).json({
     success: true,
     message: "Followers retrieved successful!!",
@@ -44,7 +44,7 @@ const getFollowers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const socialConductivityController = {
+export const socialConnectivityController = {
   createAFollower,
   unfollowAUser,
   getFollowersById,

@@ -5,9 +5,11 @@ import { User } from "../user/user.model";
 import { IRecipe } from "./recipe.interface";
 import { Recipe } from "./recipe.modal";
 
-const createRecipeIntoDB = async (payload: IRecipe) => {
+const createRecipeIntoDB = async (payload: IRecipe, image: any) => {
+  console.log(payload, { image });
   const recipeData = {
     ...payload,
+    imageUrl: image,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -33,7 +35,7 @@ const deleteRecipeIntoDB = async (id: string) => {
 
 const publishOrUnpublishRecipeIntoDB = async (id: string) => {
   const recipe: any = await Recipe.findById(id);
-  
+
   if (recipe?.status === "unpublish") {
     const res = await Recipe.findByIdAndUpdate(
       id,

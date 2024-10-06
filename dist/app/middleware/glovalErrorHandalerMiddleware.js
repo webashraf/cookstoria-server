@@ -41,7 +41,7 @@ next) => {
         message = err === null || err === void 0 ? void 0 : err.message;
         errorSources = [
             {
-                path: "socialConductivity",
+                path: "socialConnectivity",
                 message: err === null || err === void 0 ? void 0 : err.message,
             },
         ];

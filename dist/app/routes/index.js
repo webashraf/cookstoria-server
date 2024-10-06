@@ -18,7 +18,7 @@ const appRoutes = [
     },
     {
         path: "/social",
-        route: socialConnection_routes_1.socialConductivityRoutes,
+        route: socialConnection_routes_1.socialConnectivityRoutes,
     },
     {
         path: "/recipe",
