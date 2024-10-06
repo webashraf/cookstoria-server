@@ -23,6 +23,9 @@ const recipeValidationSchema = z.object({
     categories: z.array(
       z.string().min(1, { message: "Ingredient cannot be empty" })
     ),
+    htmlInstructions: z
+      .string()
+      .min(1, { message: "Instructions are required" }),
     instructions: z.string().min(1, { message: "Instructions are required" }),
     preparationTime: z
       .number()

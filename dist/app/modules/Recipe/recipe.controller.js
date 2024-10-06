@@ -16,7 +16,10 @@ exports.recipeController = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const recipe_service_1 = require("./recipe.service");
 const createRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_service_1.recipeService.createRecipeIntoDB(req.body);
+    var _a;
+    // validateRequest(recipeValidations.recipeValidationSchema);
+    const image = (_a = req === null || req === void 0 ? void 0 : req.file) === null || _a === void 0 ? void 0 : _a.path;
+    const result = yield recipe_service_1.recipeService.createRecipeIntoDB(req.body, image);
     res.status(200).json({
         success: true,
         message: "Recipe is created successfully!",

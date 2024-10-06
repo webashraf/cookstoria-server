@@ -4,12 +4,11 @@ export interface IRecipe {
   title: string;
   user: ObjectId;
   imageUrl: string;
-  description: string;
-  htmlDescription: string;
+  instructions: string;
+  htmlInstructions: string;
   ingredients: string[];
   tags: string[];
   categories: string[];
-  instructions: string;
   preparationTime: number;
   cookingTime: number;
   servings: number;

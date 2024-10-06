@@ -12,6 +12,7 @@ const recipeSchema: Schema<IRecipe> = new Schema({
   tags: { type: [String], required: true },
   categories: { type: [String], required: true },
   instructions: { type: String, required: true },
+  htmlInstructions: { type: String, required: true },
   preparationTime: { type: Number, required: true },
   cookingTime: { type: Number, required: true },
   servings: { type: Number, required: true },

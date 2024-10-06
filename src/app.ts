@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
@@ -14,7 +15,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 // routes
 app.use("/api/v1", router);
 app.get("/", (req: Request, res: Response) => {

@@ -18,8 +18,9 @@ const http_status_1 = __importDefault(require("http-status"));
 const appError_1 = __importDefault(require("../../error/appError"));
 const user_model_1 = require("../user/user.model");
 const recipe_modal_1 = require("./recipe.modal");
-const createRecipeIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const recipeData = Object.assign(Object.assign({}, payload), { createdAt: new Date(), updatedAt: new Date() });
+const createRecipeIntoDB = (payload, image) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(payload, { image });
+    const recipeData = Object.assign(Object.assign({}, payload), { imageUrl: image, createdAt: new Date(), updatedAt: new Date() });
     const isUserExist = yield user_model_1.User.isUserExistById(payload.user);
     if (!isUserExist) {
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User does not exist!!");
@@ -83,9 +84,51 @@ const getRecipeFromDB = (query) => __awaiter(void 0, void 0, void 0, function* (
     const filedLimitQuery = yield limitQuery.select(fields);
     return filedLimitQuery;
 });
+const getMyRecipeFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const filterQueryItems = Object.assign({}, query);
+    const removableFields = ["searchTerm", "sort", "limit", "page", "fields"];
+    removableFields.forEach((field) => delete filterQueryItems[field]);
+    // search
+    let searchTerm = "";
+    if (query === null || query === void 0 ? void 0 : query.searchTerm) {
+        searchTerm = query.searchTerm;
+    }
+    const searchQuery = recipe_modal_1.Recipe.find({
+        $or: ["title", "ingredients", "tags"].map((field) => ({
+            [field]: { $regex: searchTerm, $options: "i" },
+        })),
+    });
+    // Filter query
+    const filterQuery = searchQuery.find(filterQueryItems).populate("user");
+    // sort
+    let sort = "-upVote";
+    if (query === null || query === void 0 ? void 0 : query.sort) {
+        sort = query.sort;
+    }
+    const sortQuery = filterQuery.sort(sort);
+    let page = 1;
+    let limit = 0;
+    let skip = 0;
+    if (query === null || query === void 0 ? void 0 : query.limit) {
+        limit = Number(query.limit);
+    }
+    if (query === null || query === void 0 ? void 0 : query.page) {
+        page = Number(query === null || query === void 0 ? void 0 : query.page);
+        skip = (page - 1) * limit;
+    }
+    const paginateQuery = sortQuery.skip(skip);
+    const limitQuery = paginateQuery.limit(limit);
+    let fields = "-__v";
+    if (query === null || query === void 0 ? void 0 : query.fields) {
+        fields = query.fields.split(",").join(" ");
+    }
+    const filedLimitQuery = yield limitQuery.select(fields);
+    return filedLimitQuery;
+});
 exports.recipeService = {
     getRecipeFromDB,
     createRecipeIntoDB,
     deleteRecipeIntoDB,
     publishOrUnpublishRecipeIntoDB,
+    getMyRecipeFromDB,
 };

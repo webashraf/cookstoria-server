@@ -20,6 +20,9 @@ const recipeValidationSchema = zod_1.z.object({
         ingredients: zod_1.z.array(zod_1.z.string().min(1, { message: "Ingredient cannot be empty" })),
         tags: zod_1.z.array(zod_1.z.string().min(1, { message: "Ingredient cannot be empty" })),
         categories: zod_1.z.array(zod_1.z.string().min(1, { message: "Ingredient cannot be empty" })),
+        htmlInstructions: zod_1.z
+            .string()
+            .min(1, { message: "Instructions are required" }),
         instructions: zod_1.z.string().min(1, { message: "Instructions are required" }),
         preparationTime: zod_1.z
             .number()

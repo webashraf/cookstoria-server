@@ -107,9 +107,63 @@ const getRecipeFromDB = async (query: Record<string, unknown>) => {
   return filedLimitQuery;
 };
 
+const getMyRecipeFromDB = async (query: Record<string, unknown>) => {
+  const filterQueryItems: any = {
+    ...query,
+  };
+  const removableFields = ["searchTerm", "sort", "limit", "page", "fields"];
+  removableFields.forEach((field) => delete filterQueryItems[field]);
+
+  // search
+  let searchTerm = "";
+  if (query?.searchTerm) {
+    searchTerm = query.searchTerm as string;
+  }
+  const searchQuery = Recipe.find({
+    $or: ["title", "ingredients", "tags"].map((field) => ({
+      [field]: { $regex: searchTerm, $options: "i" },
+    })),
+  });
+
+  // Filter query
+  const filterQuery = searchQuery.find(filterQueryItems).populate("user");
+
+  // sort
+  let sort = "-upVote";
+  if (query?.sort) {
+    sort = query.sort as string;
+  }
+  const sortQuery = filterQuery.sort(sort);
+
+  let page = 1;
+  let limit = 0;
+  let skip = 0;
+  if (query?.limit) {
+    limit = Number(query.limit) as number;
+  }
+  if (query?.page) {
+    page = Number(query?.page) as number;
+    skip = (page - 1) * limit;
+  }
+
+  const paginateQuery = sortQuery.skip(skip);
+
+  const limitQuery = paginateQuery.limit(limit);
+
+  let fields = "-__v";
+
+  if (query?.fields) {
+    fields = (query.fields as string).split(",").join(" ");
+  }
+  const filedLimitQuery = await limitQuery.select(fields);
+
+  return filedLimitQuery;
+};
+
 export const recipeService = {
   getRecipeFromDB,
   createRecipeIntoDB,
   deleteRecipeIntoDB,
   publishOrUnpublishRecipeIntoDB,
+  getMyRecipeFromDB,
 };
