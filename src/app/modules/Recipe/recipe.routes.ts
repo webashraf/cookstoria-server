@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { multerUpload } from "../../config/multer.config";
+import validateImageFileRequest from "../../middleware/fileValidateRequest";
 import { parseBody } from "../../middleware/parseBody";
 import validateRequest from "../../middleware/validateRequest";
+import { ImageFilesArrayZodSchema } from "../../zod/image.validation";
 import { recipeController } from "./recipe.controller";
 import { recipeValidations } from "./recipe.validation";
 
@@ -10,6 +12,7 @@ const router = Router();
 router.post(
   "/create-recipe",
   multerUpload.single("image"),
+  validateImageFileRequest(ImageFilesArrayZodSchema),
   parseBody,
   validateRequest(recipeValidations.recipeValidationSchema),
   recipeController.createRecipe

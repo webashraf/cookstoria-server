@@ -12,3 +12,5 @@ export const parseBody = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+

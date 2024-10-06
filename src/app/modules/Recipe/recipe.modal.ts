@@ -18,7 +18,7 @@ const recipeSchema: Schema<IRecipe> = new Schema({
   servings: { type: Number, required: true },
   cuisine: { type: String, required: false },
   dietaryRestrictions: { type: [String], required: false },
-  imageUrl: { type: String, required: true },
+  imageUrl: { type: String },
   nutritionFacts: {
     calories: { type: Number, required: false },
     protein: { type: Number, required: false },
