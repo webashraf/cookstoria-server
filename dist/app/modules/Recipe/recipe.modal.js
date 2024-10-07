@@ -19,7 +19,7 @@ const recipeSchema = new mongoose_1.Schema({
     servings: { type: Number, required: true },
     cuisine: { type: String, required: false },
     dietaryRestrictions: { type: [String], required: false },
-    imageUrl: { type: String, required: true },
+    imageUrl: { type: String },
     nutritionFacts: {
         calories: { type: Number, required: false },
         protein: { type: Number, required: false },
@@ -27,6 +27,7 @@ const recipeSchema = new mongoose_1.Schema({
         carbohydrates: { type: Number, required: false },
     },
     createdAt: { type: Date, default: Date.now, required: false },
+    upVote: { type: Number, default: 0, required: false },
     updatedAt: { type: Date, default: Date.now, required: false },
     isDeleted: { type: Boolean, default: false, required: false },
     isPremium: { type: Boolean, default: false, required: false },

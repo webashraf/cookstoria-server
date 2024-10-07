@@ -9,10 +9,10 @@ const validateImageFileRequest = (
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     console.log("fsdfdsf", req.file);
     const parsedFile = await schema.parseAsync({
-      image: req.files,
+      file: req.file,
     });
 
-    req.files = parsedFile.image;
+    req.file = parsedFile.file;
 
     next();
   });

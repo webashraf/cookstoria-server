@@ -17,12 +17,21 @@ const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const recipe_service_1 = require("./recipe.service");
 const createRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    // validateRequest(recipeValidations.recipeValidationSchema);
     const image = (_a = req === null || req === void 0 ? void 0 : req.file) === null || _a === void 0 ? void 0 : _a.path;
     const result = yield recipe_service_1.recipeService.createRecipeIntoDB(req.body, image);
     res.status(200).json({
         success: true,
         message: "Recipe is created successfully!",
+        data: result,
+    });
+}));
+const updateRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
+    const image = (_b = req === null || req === void 0 ? void 0 : req.file) === null || _b === void 0 ? void 0 : _b.path;
+    const result = yield recipe_service_1.recipeService.updateRecipeIntoDB(req.params.id, req.body, image);
+    res.status(200).json({
+        success: true,
+        message: "Recipe is updated successfully!",
         data: result,
     });
 }));
@@ -35,7 +44,7 @@ const deleteRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     });
 }));
 const publishUnpublishRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_service_1.recipeService.publishOrUnpublishRecipeIntoDB(req.params.id);
+    const result = yield recipe_service_1.recipeService.publishOrUnpublishRecipeIntoDB(req.params.id, req.query);
     res.status(200).json({
         success: true,
         message: "Recipe status successfully updated!",
@@ -53,6 +62,7 @@ const getRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
 exports.recipeController = {
     getRecipe,
     createRecipe,
+    updateRecipe,
     deleteRecipe,
     publishUnpublishRecipe,
 };

@@ -3,12 +3,24 @@ import catchAsync from "../../utils/catchAsync";
 import { recipeService } from "./recipe.service";
 
 const createRecipe = catchAsync(async (req: Request, res: Response) => {
-  // validateRequest(recipeValidations.recipeValidationSchema);
   const image = req?.file?.path;
   const result = await recipeService.createRecipeIntoDB(req.body, image);
   res.status(200).json({
     success: true,
     message: "Recipe is created successfully!",
+    data: result,
+  });
+});
+const updateRecipe = catchAsync(async (req: Request, res: Response) => {
+  const image = req?.file?.path;
+  const result = await recipeService.updateRecipeIntoDB(
+    req.params.id,
+    req.body,
+    image
+  );
+  res.status(200).json({
+    success: true,
+    message: "Recipe is updated successfully!",
     data: result,
   });
 });
@@ -25,7 +37,8 @@ const deleteRecipe = catchAsync(async (req: Request, res: Response) => {
 const publishUnpublishRecipe = catchAsync(
   async (req: Request, res: Response) => {
     const result = await recipeService.publishOrUnpublishRecipeIntoDB(
-      req.params.id
+      req.params.id,
+      req.query
     );
     res.status(200).json({
       success: true,
@@ -47,6 +60,7 @@ const getRecipe = catchAsync(async (req: Request, res: Response) => {
 export const recipeController = {
   getRecipe,
   createRecipe,
+  updateRecipe,
   deleteRecipe,
   publishUnpublishRecipe,
 };

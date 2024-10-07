@@ -22,6 +22,7 @@ export interface IRecipe {
   };
   createdAt: Date;
   updatedAt: Date;
+  upVote: number;
   isDeleted?: boolean;
   isPremium?: boolean;
   status?: "publish" | "unpublish";

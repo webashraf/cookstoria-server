@@ -9,6 +9,8 @@ import { TLoginUser } from "./auth.interface";
 import { createToken, isPasswordMatched } from "./auth.utils";
 
 const loginUser = async (payload: TLoginUser) => {
+  console.log(payload.email);
+
   const user = await User.isUserExistByEmail(payload.email);
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
@@ -177,12 +179,17 @@ const refreshTokenToAccessToken = async (token: string) => {
 };
 
 const getAllUsersFromDB = async () => {
-  const res = await User.find();
+  const res = await User.find({ role: "user" });
+  return res;
+};
+const getAllAdminFromDB = async () => {
+  const res = await User.find({ role: "admin" });
   return res;
 };
 
 export const authServices = {
   getAllUsersFromDB,
+  getAllAdminFromDB,
   loginUser,
   changePasswordIntoDB,
   generateNewPassword: generateNewPassword,

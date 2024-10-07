@@ -10,7 +10,7 @@ router.post(
   validateRequest(userValidations.userCreateValidationSchema),
   userController.signupUser
 );
-router.post(
+router.put(
   "/update-user/:id",
   validateRequest(userValidations.userUpdateValidationSchema),
   userController.updateUserInfo

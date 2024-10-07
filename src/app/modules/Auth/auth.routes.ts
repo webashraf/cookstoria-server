@@ -16,5 +16,6 @@ router.post("/change-password", authControllers.userPasswordChange);
 router.post("/generate-new-password", authControllers.forgatPassword);
 router.post("/refresh-token", authControllers.refreshToken);
 router.get("/user", authControllers.getAllUsers);
+router.get("/admin", authControllers.getAllAdmin);
 
 export const authRoutes = router;

@@ -25,7 +25,7 @@ const createNewUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, funct
     return result;
 });
 const updateUserIntoDb = (userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const isUserExist = yield user_model_1.User.isUserExistById(userId);
+    const isUserExist = yield user_model_1.User.findById(userId);
     if (!isUserExist) {
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User not found!");
     }

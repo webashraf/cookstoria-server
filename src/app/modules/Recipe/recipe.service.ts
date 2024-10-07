@@ -23,6 +23,57 @@ const createRecipeIntoDB = async (payload: IRecipe, image: any) => {
   return res;
 };
 
+// const updateRecipeIntoDB = async (
+//   rId: string,
+//   payload: IRecipe,
+//   image: any
+// ) => {
+//   console.log(payload, { image });
+//   const recipeData = {
+//     ...payload,
+//     imageUrl: image || "",
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//   };
+
+//   const isUserExist = await User.isUserExistById(payload.user as any);
+//   if (!isUserExist) {
+//     throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
+//   }
+
+//   const res = await Recipe.findByIdAndUpdate(rId, recipeData);
+//   return res;
+// };
+
+const updateRecipeIntoDB = async (
+  rId: string,
+  payload: Partial<IRecipe>,
+  image?: any
+) => {
+  // const isUserExist = await User.isUserExistById(payload.user as any);
+  // if (!isUserExist) {
+  //   throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
+  // }
+
+  const recipeData = {
+    ...payload,
+    ...(image && { imageUrl: image }),
+    updatedAt: new Date(),
+  };
+
+  // Find and update the recipe
+  const updatedRecipe = await Recipe.findByIdAndUpdate(rId, recipeData, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!updatedRecipe) {
+    throw new AppError(httpStatus.NOT_FOUND, "Recipe not found");
+  }
+
+  return updatedRecipe;
+};
+
 const deleteRecipeIntoDB = async (id: string) => {
   const res = await Recipe.findByIdAndUpdate(
     id,
@@ -33,25 +84,21 @@ const deleteRecipeIntoDB = async (id: string) => {
   return res;
 };
 
-const publishOrUnpublishRecipeIntoDB = async (id: string) => {
-  const recipe: any = await Recipe.findById(id);
+const publishOrUnpublishRecipeIntoDB = async (id: string, query: any) => {
+  console.log(id, query);
 
-  if (recipe?.status === "unpublish") {
-    const res = await Recipe.findByIdAndUpdate(
-      id,
-      { status: "publish" },
-      { new: true, runValidators: true, upsert: true }
-    );
-    return res;
-  } else if (recipe?.status === "publish") {
-    const res = await Recipe.findByIdAndUpdate(
-      id,
-      { status: "unpublish" },
-      { new: true, runValidators: true, upsert: true }
-    );
+  const isRecipeExist: any = await Recipe.findById(id);
 
-    return res;
+  if (!isRecipeExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "Recipe not found!!");
   }
+
+  const res = await Recipe.findByIdAndUpdate(id, query, {
+    new: true,
+    runValidators: true,
+    upsert: true,
+  });
+  return res;
 };
 
 const getRecipeFromDB = async (query: Record<string, unknown>) => {
@@ -76,7 +123,7 @@ const getRecipeFromDB = async (query: Record<string, unknown>) => {
   const filterQuery = searchQuery.find(filterQueryItems).populate("user");
 
   // sort
-  let sort = "-cookingTime";
+  let sort = "upVote";
   if (query?.sort) {
     sort = query.sort as string;
   }
@@ -107,10 +154,9 @@ const getRecipeFromDB = async (query: Record<string, unknown>) => {
   return filedLimitQuery;
 };
 
-
-
 export const recipeService = {
   getRecipeFromDB,
+  updateRecipeIntoDB,
   createRecipeIntoDB,
   deleteRecipeIntoDB,
   publishOrUnpublishRecipeIntoDB,

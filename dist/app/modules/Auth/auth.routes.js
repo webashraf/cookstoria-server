@@ -14,4 +14,5 @@ router.post("/change-password", auth_controller_1.authControllers.userPasswordCh
 router.post("/generate-new-password", auth_controller_1.authControllers.forgatPassword);
 router.post("/refresh-token", auth_controller_1.authControllers.refreshToken);
 router.get("/user", auth_controller_1.authControllers.getAllUsers);
+router.get("/admin", auth_controller_1.authControllers.getAllAdmin);
 exports.authRoutes = router;

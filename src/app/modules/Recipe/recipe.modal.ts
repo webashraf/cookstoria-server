@@ -26,6 +26,7 @@ const recipeSchema: Schema<IRecipe> = new Schema({
     carbohydrates: { type: Number, required: false },
   },
   createdAt: { type: Date, default: Date.now, required: false },
+  upVote: { type: Number, default: 0, required: false },
   updatedAt: { type: Date, default: Date.now, required: false },
   isDeleted: { type: Boolean, default: false, required: false },
   isPremium: { type: Boolean, default: false, required: false },

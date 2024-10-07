@@ -43,7 +43,7 @@ const globalErrorHandlerMiddleware: ErrorRequestHandler = (
     message = err?.message;
     errorSources = [
       {
-        path: "socialConnectivity",
+        path: "App path error",
         message: err?.message,
       },
     ];

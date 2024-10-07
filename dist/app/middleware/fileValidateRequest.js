@@ -12,15 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseBody = void 0;
-const http_status_1 = __importDefault(require("http-status"));
-const appError_1 = __importDefault(require("../error/appError"));
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
-exports.parseBody = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("parseBody", req.body.data);
-    if (!req.body.data) {
-        throw new appError_1.default(http_status_1.default.BAD_REQUEST, "Data not found!!");
-    }
-    req.body = JSON.parse(req.body.data);
-    next();
-}));
+const validateImageFileRequest = (schema) => {
+    return (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("fsdfdsf", req.file);
+        const parsedFile = yield schema.parseAsync({
+            file: req.file,
+        });
+        req.file = parsedFile.file;
+        next();
+    }));
+};
+exports.default = validateImageFileRequest;

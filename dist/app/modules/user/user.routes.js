@@ -10,5 +10,5 @@ const user_controller_1 = require("./user.controller");
 const user_validation_1 = require("./user.validation");
 const router = (0, express_1.Router)();
 router.post("/create-user", (0, validateRequest_1.default)(user_validation_1.userValidations.userCreateValidationSchema), user_controller_1.userController.signupUser);
-router.post("/update-user/:id", (0, validateRequest_1.default)(user_validation_1.userValidations.userUpdateValidationSchema), user_controller_1.userController.updateUserInfo);
+router.put("/update-user/:id", (0, validateRequest_1.default)(user_validation_1.userValidations.userUpdateValidationSchema), user_controller_1.userController.updateUserInfo);
 exports.userRoutes = router;

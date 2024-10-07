@@ -68,8 +68,17 @@ const getAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         data: result,
     });
 }));
+const getAllAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield auth_service_1.authServices.getAllAdminFromDB();
+    res.status(200).json({
+        success: true,
+        message: "User retrieved successfully!",
+        data: result,
+    });
+}));
 exports.authControllers = {
     getAllUsers,
+    getAllAdmin,
     loginUser,
     userPasswordChange,
     forgatPassword,

@@ -10,7 +10,7 @@ const ACCEPTED_FILE_TYPES = [
   "jpg",
 ] as const;
 
-const ImageFileZodSchema = z.object({
+export const ImageFileZodSchema = z.object({
   fieldname: z.string(),
   originalname: z.string(),
   encoding: z.string(),
@@ -26,7 +26,5 @@ const ImageFileZodSchema = z.object({
 });
 
 export const ImageFilesArrayZodSchema = z.object({
-  image: z.record(z.string(), z.array(ImageFileZodSchema)).refine((files) => {
-    return Object.keys(files).length > 0;
-  }, "Image is required"),
+  image: ImageFileZodSchema,
 });

@@ -58,6 +58,7 @@ const refreshToken = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
 const getAllUsers = catchAsync(async (req, res) => {
   const result = await authServices.getAllUsersFromDB();
 
@@ -68,8 +69,19 @@ const getAllUsers = catchAsync(async (req, res) => {
   });
 });
 
+const getAllAdmin = catchAsync(async (req, res) => {
+  const result = await authServices.getAllAdminFromDB();
+
+  res.status(200).json({
+    success: true,
+    message: "User retrieved successfully!",
+    data: result,
+  });
+});
+
 export const authControllers = {
   getAllUsers,
+  getAllAdmin,
   loginUser,
   userPasswordChange,
   forgatPassword,
