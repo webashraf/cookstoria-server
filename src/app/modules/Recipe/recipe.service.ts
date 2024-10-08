@@ -50,10 +50,11 @@ const updateRecipeIntoDB = async (
   payload: Partial<IRecipe>,
   image?: any
 ) => {
-  // const isUserExist = await User.isUserExistById(payload.user as any);
-  // if (!isUserExist) {
-  //   throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
-  // }
+  console.log({ rId, payload, image });
+  const isUserExist = await User.isUserExistById(payload.user as any);
+  if (!isUserExist) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
+  }
 
   const recipeData = {
     ...payload,
