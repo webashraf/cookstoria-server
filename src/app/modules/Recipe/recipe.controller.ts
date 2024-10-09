@@ -34,19 +34,17 @@ const deleteRecipe = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const publishUnpublishRecipe = catchAsync(
-  async (req: Request, res: Response) => {
-    const result = await recipeService.publishOrUnpublishRecipeIntoDB(
-      req.params.id,
-      req.query
-    );
-    res.status(200).json({
-      success: true,
-      message: "Recipe status successfully updated!",
-      data: result,
-    });
-  }
-);
+const partialUpdateRecipe = catchAsync(async (req: Request, res: Response) => {
+  const result = await recipeService.updateRecipePertialInfo(
+    req.params.id,
+    req.query
+  );
+  res.status(200).json({
+    success: true,
+    message: "Recipe status successfully updated!",
+    data: result,
+  });
+});
 
 const getRecipe = catchAsync(async (req: Request, res: Response) => {
   const result = await recipeService.getRecipeFromDB(req.query);
@@ -62,5 +60,5 @@ export const recipeController = {
   createRecipe,
   updateRecipe,
   deleteRecipe,
-  publishUnpublishRecipe,
+  partialUpdateRecipe,
 };

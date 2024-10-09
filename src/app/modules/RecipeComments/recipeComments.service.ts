@@ -26,17 +26,36 @@ const createCommentUpDownVoteAndRatingsIntoDB = async (
 
   if (postComment) {
     const update: any = { ...payload };
+    const currentRecipe: any = await RecipeComments.find({ postId });
+    const totalUpVotes = currentRecipe.reduce(
+      (sum: any, recipe: any) => sum + (recipe.upVote || 0),
+      0
+    );
 
+    console.log("currentRecipe", totalUpVotes);
     if (upVote) {
       update.upVote = 1;
       update.downVote = 0;
+      await Recipe.findByIdAndUpdate(
+        postId,
+        { upVote: totalUpVotes },
+        {
+          new: true,
+        }
+      );
     }
 
     if (downVote) {
       update.downVote = 1;
       update.upVote = 0;
+      await Recipe.findByIdAndUpdate(
+        postId,
+        { upVote: totalUpVotes },
+        {
+          new: true,
+        }
+      );
     }
-
 
     // Update the existing comment
     const res = await RecipeComments.findOneAndUpdate(commentFilter, update, {

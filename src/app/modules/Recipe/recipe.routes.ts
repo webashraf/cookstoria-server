@@ -23,7 +23,7 @@ router.put(
   recipeController.updateRecipe
 );
 router.delete("/:id", recipeController.deleteRecipe);
-router.put("/status/:id", recipeController.publishUnpublishRecipe);
+router.put("/status/:id", recipeController.partialUpdateRecipe);
 
 router.get("/", recipeController.getRecipe);
 router.get("/my-recipe/:id", recipeController.getRecipe);

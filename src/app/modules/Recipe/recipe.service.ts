@@ -85,7 +85,7 @@ const deleteRecipeIntoDB = async (id: string) => {
   return res;
 };
 
-const publishOrUnpublishRecipeIntoDB = async (id: string, query: any) => {
+const updateRecipePartialInfo = async (id: string, query: any) => {
   console.log(id, query);
 
   const isRecipeExist: any = await Recipe.findById(id);
@@ -160,5 +160,5 @@ export const recipeService = {
   updateRecipeIntoDB,
   createRecipeIntoDB,
   deleteRecipeIntoDB,
-  publishOrUnpublishRecipeIntoDB,
+  updateRecipePertialInfo: updateRecipePartialInfo,
 };
