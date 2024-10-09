@@ -31,9 +31,11 @@ const recipeValidationSchema = zod_1.z.object({
             .number()
             .min(1, { message: "Cooking time must be at least 1 minute" }),
         servings: zod_1.z.number().min(1, { message: "Servings must be at least 1" }),
-        cuisine: zod_1.z.string().optional(),
+        cuisine: zod_1.z.string().min(1, { message: "Cuisine must be required" }),
+        dietaryRestrictions: zod_1.z
+            .array(zod_1.z.string())
+            .min(1, { message: "Dietary Restrictions must be required" }),
         isPremium: zod_1.z.boolean().optional(),
-        dietaryRestrictions: zod_1.z.array(zod_1.z.string()).optional(),
         nutritionFacts: nutritionFactsValidationSchema.optional(),
     }),
 });
@@ -77,14 +79,14 @@ const updateRecipeValidationSchema = zod_1.z.object({
             .string()
             .min(1, { message: "Instructions are required" })
             .optional(),
-        preparationTime: zod_1.z
-            .number()
-            .min(1, { message: "Preparation time must be at least 1 minute" })
-            .optional(),
-        cookingTime: zod_1.z
-            .number()
-            .min(1, { message: "Cooking time must be at least 1 minute" })
-            .optional(),
+        // preparationTime: z
+        //   .number()
+        //   .min(1, { message: "Preparation time must be at least 1 minute" })
+        //   .optional(),
+        // cookingTime: z
+        //   .number()
+        //   .min(1, { message: "Cooking time must be at least 1 minute" })
+        //   .optional(),
         servings: zod_1.z
             .number()
             .min(1, { message: "Servings must be at least 1" })

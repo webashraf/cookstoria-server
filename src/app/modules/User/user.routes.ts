@@ -15,5 +15,10 @@ router.put(
   validateRequest(userValidations.userUpdateValidationSchema),
   userController.updateUserInfo
 );
+router.put(
+  "/update-user-profile-info/:id",
+  validateRequest(userValidations.userUpdateValidationSchema),
+  userController.updateUserProfileInfo
+);
 
 export const userRoutes = router;

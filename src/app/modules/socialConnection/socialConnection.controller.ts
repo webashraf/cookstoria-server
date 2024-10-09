@@ -36,7 +36,7 @@ const getFollowersById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const getFollowers = catchAsync(async (req: Request, res: Response) => {
-  const result = await socialConnectivityServices.retrievedFollowerByIntoDB();
+  const result = await socialConnectivityServices.retrievedFollowerIntoDB();
   res.status(200).json({
     success: true,
     message: "Followers retrieved successful!!",

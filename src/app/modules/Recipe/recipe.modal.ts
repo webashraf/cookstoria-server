@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import { IRecipe } from "./recipe.interface";
 
 const recipeSchema: Schema<IRecipe> = new Schema({
-  title: { type: String, required: true},
+  title: { type: String, required: true, unique: true },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -29,7 +29,7 @@ const recipeSchema: Schema<IRecipe> = new Schema({
   upVote: { type: Number, default: 0, required: false },
   updatedAt: { type: Date, default: Date.now, required: false },
   isDeleted: { type: Boolean, default: false, required: false },
-  isPremium: { type: Boolean, default: false, required: false },
+  isPremium: { type: Boolean, default: true, required: false },
   status: { type: String, default: "publish", required: false },
 });
 

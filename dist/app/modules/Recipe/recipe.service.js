@@ -48,10 +48,11 @@ const createRecipeIntoDB = (payload, image) => __awaiter(void 0, void 0, void 0,
 //   return res;
 // };
 const updateRecipeIntoDB = (rId, payload, image) => __awaiter(void 0, void 0, void 0, function* () {
-    // const isUserExist = await User.isUserExistById(payload.user as any);
-    // if (!isUserExist) {
-    //   throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
-    // }
+    console.log({ rId, payload, image });
+    const isUserExist = yield user_model_1.User.isUserExistById(payload.user);
+    if (!isUserExist) {
+        throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User does not exist!!");
+    }
     const recipeData = Object.assign(Object.assign(Object.assign({}, payload), (image && { imageUrl: image })), { updatedAt: new Date() });
     // Find and update the recipe
     const updatedRecipe = yield recipe_modal_1.Recipe.findByIdAndUpdate(rId, recipeData, {
@@ -67,7 +68,7 @@ const deleteRecipeIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* (
     const res = yield recipe_modal_1.Recipe.findByIdAndUpdate(id, { isDeleted: true }, { new: true, runValidators: true, upsert: true });
     return res;
 });
-const publishOrUnpublishRecipeIntoDB = (id, query) => __awaiter(void 0, void 0, void 0, function* () {
+const updateRecipePartialInfo = (id, query) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(id, query);
     const isRecipeExist = yield recipe_modal_1.Recipe.findById(id);
     if (!isRecipeExist) {
@@ -126,5 +127,5 @@ exports.recipeService = {
     updateRecipeIntoDB,
     createRecipeIntoDB,
     deleteRecipeIntoDB,
-    publishOrUnpublishRecipeIntoDB,
+    updateRecipePertialInfo: updateRecipePartialInfo,
 };

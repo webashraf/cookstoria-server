@@ -34,7 +34,18 @@ const updateUserInfo = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
+const updateUserProfileInfo = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.id;
+    const result = yield user_service_1.userServices.updateUserProfileIntoDb(userId, req.body);
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: "User info updated successfully",
+        data: result,
+    });
+}));
 exports.userController = {
     signupUser,
     updateUserInfo,
+    updateUserProfileInfo,
 };

@@ -30,7 +30,7 @@ const recipeSchema = new mongoose_1.Schema({
     upVote: { type: Number, default: 0, required: false },
     updatedAt: { type: Date, default: Date.now, required: false },
     isDeleted: { type: Boolean, default: false, required: false },
-    isPremium: { type: Boolean, default: false, required: false },
+    isPremium: { type: Boolean, default: true, required: false },
     status: { type: String, default: "publish", required: false },
 });
 exports.Recipe = (0, mongoose_1.model)("Recipe", recipeSchema);

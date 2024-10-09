@@ -29,8 +29,25 @@ const updateUserIntoDb = async (userId: string, payload: Partial<TUser>) => {
 
   return result;
 };
+const updateUserProfileIntoDb = async (
+  userId: string,
+  payload: Partial<TUser>
+) => {
+  const isUserExist = await User.findById(userId as string);
+  if (!isUserExist) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "User not found!");
+  }
+
+  const result = await User.findByIdAndUpdate(userId, payload, {
+    new: true,
+    runValidators: true,
+  });
+
+  return result;
+};
 
 export const userServices = {
   createNewUserIntoDB,
   updateUserIntoDb,
+  updateUserProfileIntoDb,
 };

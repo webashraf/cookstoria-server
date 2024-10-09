@@ -32,7 +32,19 @@ const updateUserIntoDb = (userId, payload) => __awaiter(void 0, void 0, void 0, 
     const result = yield user_model_1.User.findByIdAndUpdate(userId, { $set: payload }, { new: true, runValidators: true });
     return result;
 });
+const updateUserProfileIntoDb = (userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const isUserExist = yield user_model_1.User.findById(userId);
+    if (!isUserExist) {
+        throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User not found!");
+    }
+    const result = yield user_model_1.User.findByIdAndUpdate(userId, payload, {
+        new: true,
+        runValidators: true,
+    });
+    return result;
+});
 exports.userServices = {
     createNewUserIntoDB,
     updateUserIntoDb,
+    updateUserProfileIntoDb,
 };

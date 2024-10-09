@@ -61,10 +61,10 @@ const loginUser = async (payload: TLoginUser) => {
 };
 
 const changePasswordIntoDB = async (
-  userData: any,
+  userId: any,
   payload: { oldPassword: string; newPassword: string }
 ) => {
-  const user = await User.isUserExistByEmail(userData?.email);
+  const user = await User.isUserExistById(userId);
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
@@ -90,17 +90,11 @@ const changePasswordIntoDB = async (
     payload.newPassword,
     Number(config.bcrypt_salt)
   );
-
-  await User.findOneAndUpdate(
-    {
-      email: userData.email,
-    },
-    {
-      password: newHashedPassword,
-      needsPasswordChange: false,
-      passwordChangedAt: new Date(),
-    }
-  );
+  await User.findByIdAndUpdate(userId, {
+    password: newHashedPassword,
+    needsPasswordChange: false,
+    passwordChangedAt: new Date(),
+  });
 
   return null;
 };

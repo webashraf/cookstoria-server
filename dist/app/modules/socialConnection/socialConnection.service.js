@@ -28,6 +28,7 @@ const createFollowIntoDB = (payload) => __awaiter(void 0, void 0, void 0, functi
     });
     const myFollow = haveFollower === null || haveFollower === void 0 ? void 0 : haveFollower._id;
     if (!haveFollower) {
+        // await User.findByIdAndUpdate(payload.userId, { follows: 1 });
         const res = yield socialConnection_model_1.Follow.create(payload);
         return res;
     }
@@ -65,7 +66,7 @@ const retrievedFollowerByIdIntoDB = (userId) => __awaiter(void 0, void 0, void 0
     const res = yield socialConnection_model_1.Follow.findOne({ userId }).populate("followers");
     return res;
 });
-const retrievedFollowerByIntoDB = () => __awaiter(void 0, void 0, void 0, function* () {
+const retrievedFollowerIntoDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield socialConnection_model_1.Follow.find().populate("followers");
     return res;
 });
@@ -73,5 +74,5 @@ exports.socialConnectivityServices = {
     createFollowIntoDB,
     unfollowASingleUser,
     retrievedFollowerByIdIntoDB,
-    retrievedFollowerByIntoDB,
+    retrievedFollowerIntoDB,
 };

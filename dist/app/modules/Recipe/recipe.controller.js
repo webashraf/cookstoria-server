@@ -43,8 +43,8 @@ const deleteRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         data: result,
     });
 }));
-const publishUnpublishRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_service_1.recipeService.publishOrUnpublishRecipeIntoDB(req.params.id, req.query);
+const partialUpdateRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield recipe_service_1.recipeService.updateRecipePertialInfo(req.params.id, req.query);
     res.status(200).json({
         success: true,
         message: "Recipe status successfully updated!",
@@ -64,5 +64,5 @@ exports.recipeController = {
     createRecipe,
     updateRecipe,
     deleteRecipe,
-    publishUnpublishRecipe,
+    partialUpdateRecipe,
 };

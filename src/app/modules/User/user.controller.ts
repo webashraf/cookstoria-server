@@ -21,8 +21,19 @@ const updateUserInfo: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const updateUserProfileInfo: RequestHandler = catchAsync(async (req, res) => {
+  const userId = req.params.id;
+  const result = await userServices.updateUserProfileIntoDb(userId, req.body);
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: "User info updated successfully",
+    data: result,
+  });
+});
 
 export const userController = {
   signupUser,
   updateUserInfo,
+  updateUserProfileInfo,
 };

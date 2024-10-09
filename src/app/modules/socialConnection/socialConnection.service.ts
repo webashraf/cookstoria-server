@@ -19,6 +19,7 @@ const createFollowIntoDB = async (payload: IsocialConnectivity) => {
   const myFollow = haveFollower?._id;
 
   if (!haveFollower) {
+    // await User.findByIdAndUpdate(payload.userId, { follows: 1 });
     const res = await Follow.create(payload);
     return res;
   } else {
@@ -72,7 +73,7 @@ const retrievedFollowerByIdIntoDB = async (userId: string) => {
   return res;
 };
 
-const retrievedFollowerByIntoDB = async () => {
+const retrievedFollowerIntoDB = async () => {
   const res = await Follow.find().populate("followers");
 
   return res;
@@ -82,5 +83,5 @@ export const socialConnectivityServices = {
   createFollowIntoDB,
   unfollowASingleUser,
   retrievedFollowerByIdIntoDB,
-  retrievedFollowerByIntoDB,
+  retrievedFollowerIntoDB,
 };

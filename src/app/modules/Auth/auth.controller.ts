@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import config from "../../config";
 import catchAsync from "../../utils/catchAsync";
 import { authServices } from "./auth.service";
@@ -23,12 +22,15 @@ const loginUser = catchAsync(async (req, res) => {
 });
 
 const userPasswordChange = catchAsync(async (req, res) => {
-  const userData = jwt.verify(
-    req.headers.authorization as string,
-    config.jwt_access_secret as string
-  );
+  // const userData = jwt.verify(
+  //   req.headers.authorization as string,
+  //   config.jwt_access_secret as string
+  // );
 
-  const result = await authServices.changePasswordIntoDB(userData, req.body);
+  const result = await authServices.changePasswordIntoDB(
+    req.params.id,
+    req.body
+  );
 
   res.status(200).json({
     success: true,

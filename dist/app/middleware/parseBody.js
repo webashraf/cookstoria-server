@@ -17,10 +17,10 @@ const http_status_1 = __importDefault(require("http-status"));
 const appError_1 = __importDefault(require("../error/appError"));
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
 exports.parseBody = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("parseBody", req.body.data);
     if (!req.body.data) {
         throw new appError_1.default(http_status_1.default.BAD_REQUEST, "Data not found!!");
     }
     req.body = JSON.parse(req.body.data);
+    console.log("parseBody", req);
     next();
 }));

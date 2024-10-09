@@ -55,8 +55,8 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         needsPasswordChange: user === null || user === void 0 ? void 0 : user.needsPasswordChange,
     };
 });
-const changePasswordIntoDB = (userData, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_1.User.isUserExistByEmail(userData === null || userData === void 0 ? void 0 : userData.email);
+const changePasswordIntoDB = (userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.User.isUserExistById(userId);
     if (!user) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "This user is not found !");
     }
@@ -73,9 +73,7 @@ const changePasswordIntoDB = (userData, payload) => __awaiter(void 0, void 0, vo
     }
     //hash new password
     const newHashedPassword = yield bcrypt_1.default.hash(payload.newPassword, Number(config_1.default.bcrypt_salt));
-    yield user_model_1.User.findOneAndUpdate({
-        email: userData.email,
-    }, {
+    yield user_model_1.User.findByIdAndUpdate(userId, {
         password: newHashedPassword,
         needsPasswordChange: false,
         passwordChangedAt: new Date(),
