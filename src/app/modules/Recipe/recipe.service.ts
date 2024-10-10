@@ -124,7 +124,7 @@ const getRecipeFromDB = async (query: Record<string, unknown>) => {
   const filterQuery = searchQuery.find(filterQueryItems).populate("user");
 
   // sort
-  let sort = "upVote";
+  let sort = "-upVote";
   if (query?.sort) {
     sort = query.sort as string;
   }
