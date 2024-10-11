@@ -2,6 +2,7 @@ import catchAsync from "../../utils/catchAsync";
 import { userOpinionsServices } from "./recipeComments.service";
 
 const createRecipeUserOpinion = catchAsync(async (req, res) => {
+  console.log("Comment created", req.body);
   const result =
     await userOpinionsServices.createCommentUpDownVoteAndRatingsIntoDB(
       req.body

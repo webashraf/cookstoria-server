@@ -11,6 +11,7 @@ const signupUser: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
 const updateUserInfo: RequestHandler = catchAsync(async (req, res) => {
   const userId = req.params.id;
   const result = await userServices.updateUserIntoDb(userId, req.body);
@@ -21,8 +22,10 @@ const updateUserInfo: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
 const updateUserProfileInfo: RequestHandler = catchAsync(async (req, res) => {
   const userId = req.params.id;
+  console.log(req.body);
   const result = await userServices.updateUserProfileIntoDb(userId, req.body);
   res.status(200).json({
     success: true,
