@@ -51,7 +51,8 @@ const getRecipe = catchAsync(async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     message: "Recipe successfully get!",
-    data: result,
+    data: result.recipes,
+    dataLength: result.dataLength,
   });
 });
 

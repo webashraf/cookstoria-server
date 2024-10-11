@@ -120,6 +120,8 @@ const getRecipeFromDB = async (query: Record<string, unknown>) => {
     })),
   });
 
+  const allRecipe = await Recipe.find();
+
   // Filter query
   const filterQuery = searchQuery.find(filterQueryItems).populate("user");
 
@@ -152,7 +154,7 @@ const getRecipeFromDB = async (query: Record<string, unknown>) => {
   }
   const filedLimitQuery = await limitQuery.select(fields);
 
-  return filedLimitQuery;
+  return { recipes: filedLimitQuery, dataLength: allRecipe?.length };
 };
 
 export const recipeService = {
