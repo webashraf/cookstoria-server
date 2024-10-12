@@ -9,7 +9,6 @@ import { TLoginUser } from "./auth.interface";
 import { createToken, isPasswordMatched } from "./auth.utils";
 
 const loginUser = async (payload: TLoginUser) => {
-  console.log(payload.email);
 
   const user = await User.isUserExistByEmail(payload.email);
   if (!user) {

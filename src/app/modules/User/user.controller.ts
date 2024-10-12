@@ -25,7 +25,6 @@ const updateUserInfo: RequestHandler = catchAsync(async (req, res) => {
 
 const updateUserProfileInfo: RequestHandler = catchAsync(async (req, res) => {
   const userId = req.params.id;
-  console.log(req.body);
   const result = await userServices.updateUserProfileIntoDb(userId, req.body);
   res.status(200).json({
     success: true,

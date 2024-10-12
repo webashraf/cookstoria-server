@@ -7,7 +7,6 @@ export const parseBody = catchAsync(async (req, res, next) => {
     throw new AppError(httpStatus.BAD_REQUEST, "Data not found!!");
   }
   req.body = JSON.parse(req.body.data);
-  console.log("parseBody", req);
 
   next();
 });

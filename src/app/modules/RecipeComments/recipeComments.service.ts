@@ -32,13 +32,12 @@ const createCommentUpDownVoteAndRatingsIntoDB = async (
       0
     );
 
-    console.log("currentRecipe", totalUpVotes);
     if (upVote) {
       update.upVote = 1;
       update.downVote = 0;
       await Recipe.findByIdAndUpdate(
         postId,
-        { upVote: totalUpVotes },
+        { upVote: totalUpVotes + 1 },
         {
           new: true,
         }
@@ -50,7 +49,7 @@ const createCommentUpDownVoteAndRatingsIntoDB = async (
       update.upVote = 0;
       await Recipe.findByIdAndUpdate(
         postId,
-        { upVote: totalUpVotes },
+        { upVote: totalUpVotes - 1 },
         {
           new: true,
         }

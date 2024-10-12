@@ -53,7 +53,6 @@ const forgatPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
     });
 }));
 const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log(req.cookies);
     const { refreshToken } = req.cookies;
     const result = yield auth_service_1.authServices.refreshTokenToAccessToken(refreshToken);
     res.status(200).json({

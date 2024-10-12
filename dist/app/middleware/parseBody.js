@@ -21,6 +21,5 @@ exports.parseBody = (0, catchAsync_1.default)((req, res, next) => __awaiter(void
         throw new appError_1.default(http_status_1.default.BAD_REQUEST, "Data not found!!");
     }
     req.body = JSON.parse(req.body.data);
-    console.log("parseBody", req);
     next();
 }));

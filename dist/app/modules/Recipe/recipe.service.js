@@ -19,7 +19,6 @@ const appError_1 = __importDefault(require("../../error/appError"));
 const user_model_1 = require("../user/user.model");
 const recipe_modal_1 = require("./recipe.modal");
 const createRecipeIntoDB = (payload, image) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(payload, { image });
     const recipeData = Object.assign(Object.assign({}, payload), { imageUrl: image, createdAt: new Date(), updatedAt: new Date() });
     const isUserExist = yield user_model_1.User.isUserExistById(payload.user);
     if (!isUserExist) {
@@ -33,7 +32,6 @@ const createRecipeIntoDB = (payload, image) => __awaiter(void 0, void 0, void 0,
 //   payload: IRecipe,
 //   image: any
 // ) => {
-//   console.log(payload, { image });
 //   const recipeData = {
 //     ...payload,
 //     imageUrl: image || "",
@@ -48,7 +46,6 @@ const createRecipeIntoDB = (payload, image) => __awaiter(void 0, void 0, void 0,
 //   return res;
 // };
 const updateRecipeIntoDB = (rId, payload, image) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log({ rId, payload, image });
     const isUserExist = yield user_model_1.User.isUserExistById(payload.user);
     if (!isUserExist) {
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User does not exist!!");
@@ -69,7 +66,6 @@ const deleteRecipeIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* (
     return res;
 });
 const updateRecipePartialInfo = (id, query) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(id, query);
     const isRecipeExist = yield recipe_modal_1.Recipe.findById(id);
     if (!isRecipeExist) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "Recipe not found!!");
@@ -95,10 +91,11 @@ const getRecipeFromDB = (query) => __awaiter(void 0, void 0, void 0, function* (
             [field]: { $regex: searchTerm, $options: "i" },
         })),
     });
+    const allRecipe = yield recipe_modal_1.Recipe.find();
     // Filter query
     const filterQuery = searchQuery.find(filterQueryItems).populate("user");
     // sort
-    let sort = "upVote";
+    let sort = "-upVote";
     if (query === null || query === void 0 ? void 0 : query.sort) {
         sort = query.sort;
     }
@@ -120,7 +117,7 @@ const getRecipeFromDB = (query) => __awaiter(void 0, void 0, void 0, function* (
         fields = query.fields.split(",").join(" ");
     }
     const filedLimitQuery = yield limitQuery.select(fields);
-    return filedLimitQuery;
+    return { recipes: filedLimitQuery, dataLength: allRecipe === null || allRecipe === void 0 ? void 0 : allRecipe.length };
 });
 exports.recipeService = {
     getRecipeFromDB,

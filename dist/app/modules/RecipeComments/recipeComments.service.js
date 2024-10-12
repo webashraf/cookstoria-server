@@ -35,18 +35,17 @@ const createCommentUpDownVoteAndRatingsIntoDB = (payload) => __awaiter(void 0, v
         const update = Object.assign({}, payload);
         const currentRecipe = yield recipeComments_modal_1.RecipeComments.find({ postId });
         const totalUpVotes = currentRecipe.reduce((sum, recipe) => sum + (recipe.upVote || 0), 0);
-        console.log("currentRecipe", totalUpVotes);
         if (upVote) {
             update.upVote = 1;
             update.downVote = 0;
-            yield recipe_modal_1.Recipe.findByIdAndUpdate(postId, { upVote: totalUpVotes }, {
+            yield recipe_modal_1.Recipe.findByIdAndUpdate(postId, { upVote: totalUpVotes + 1 }, {
                 new: true,
             });
         }
         if (downVote) {
             update.downVote = 1;
             update.upVote = 0;
-            yield recipe_modal_1.Recipe.findByIdAndUpdate(postId, { upVote: totalUpVotes }, {
+            yield recipe_modal_1.Recipe.findByIdAndUpdate(postId, { upVote: totalUpVotes - 1 }, {
                 new: true,
             });
         }

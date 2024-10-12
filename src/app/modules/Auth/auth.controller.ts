@@ -50,7 +50,6 @@ const forgatPassword = catchAsync(async (req, res) => {
 });
 
 const refreshToken = catchAsync(async (req, res) => {
-  // console.log(req.cookies);
   const { refreshToken } = req.cookies;
   const result = await authServices.refreshTokenToAccessToken(refreshToken);
 

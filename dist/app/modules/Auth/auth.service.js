@@ -22,7 +22,6 @@ const appError_1 = __importDefault(require("../../error/appError"));
 const user_model_1 = require("../user/user.model");
 const auth_utils_1 = require("./auth.utils");
 const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(payload.email);
     const user = yield user_model_1.User.isUserExistByEmail(payload.email);
     if (!user) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "User not found!");

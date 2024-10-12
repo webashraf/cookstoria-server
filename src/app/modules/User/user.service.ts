@@ -34,7 +34,6 @@ const updateUserProfileIntoDb = async (
   userId: string,
   payload: Partial<TUser>
 ) => {
-  console.log({ userId, payload });
   const isUserExist = await User.findById(userId as string);
   if (!isUserExist) {
     throw new AppError(httpStatus.UNAUTHORIZED, "User not found!");

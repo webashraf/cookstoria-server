@@ -6,7 +6,6 @@ import { IRecipe } from "./recipe.interface";
 import { Recipe } from "./recipe.modal";
 
 const createRecipeIntoDB = async (payload: IRecipe, image: any) => {
-  console.log(payload, { image });
   const recipeData = {
     ...payload,
     imageUrl: image,
@@ -28,7 +27,6 @@ const createRecipeIntoDB = async (payload: IRecipe, image: any) => {
 //   payload: IRecipe,
 //   image: any
 // ) => {
-//   console.log(payload, { image });
 //   const recipeData = {
 //     ...payload,
 //     imageUrl: image || "",
@@ -50,7 +48,6 @@ const updateRecipeIntoDB = async (
   payload: Partial<IRecipe>,
   image?: any
 ) => {
-  console.log({ rId, payload, image });
   const isUserExist = await User.isUserExistById(payload.user as any);
   if (!isUserExist) {
     throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
@@ -86,8 +83,6 @@ const deleteRecipeIntoDB = async (id: string) => {
 };
 
 const updateRecipePartialInfo = async (id: string, query: any) => {
-  console.log(id, query);
-
   const isRecipeExist: any = await Recipe.findById(id);
 
   if (!isRecipeExist) {
