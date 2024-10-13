@@ -13,7 +13,7 @@ This is the backend server for CookstoriaCulinary, built using Express.js and Mo
 
   - Users can create, update, and delete their own recipes.
   - Admins can manage all user recipes.
-  - Users can **upvote**, **downvote**, **rate**, and **comment** on recipes, encouraging community interaction.
+  - Users can **upvote**, **downvote**, **rate**, and **comment** on recipes also **follow** and **unfollow** other users, encouraging community interaction.
 
 - **Admin Controls:**
 
@@ -61,7 +61,16 @@ The backend follows a modular architecture to keep the codebase organized and ma
 4. Set up the environment variables in a `.env` file:
 
    ```bash
-   # Provided all required environment variables
+   PORT=5000
+   NODE_ENV=development
+   BCRYPT_SALT=12
+   JWT_ACCESS_SECRET=--
+   JWT_REFRESH_SECRET=--
+   JWT_ACCESS_EXPIRE_IN=7d
+   JWT_REFRESH_EXPIRE_IN=1y
+   CLOUDINARY_NAME=--
+   CLOUDINARY_API_KEY=--
+   CLOUDINARY_SECRET=--
    ```
 
 5. Start the development server:

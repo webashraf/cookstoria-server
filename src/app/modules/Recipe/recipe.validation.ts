@@ -84,14 +84,14 @@ const updateRecipeValidationSchema = z.object({
       .string()
       .min(1, { message: "Instructions are required" })
       .optional(),
-    // preparationTime: z
-    //   .number()
-    //   .min(1, { message: "Preparation time must be at least 1 minute" })
-    //   .optional(),
-    // cookingTime: z
-    //   .number()
-    //   .min(1, { message: "Cooking time must be at least 1 minute" })
-    //   .optional(),
+    preparationTime: z
+      .number()
+      .min(1, { message: "Preparation time must be at least 1 minute" })
+      .optional(),
+    cookingTime: z
+      .number()
+      .min(1, { message: "Cooking time must be at least 1 minute" })
+      .optional(),
     servings: z
       .number()
       .min(1, { message: "Servings must be at least 1" })
