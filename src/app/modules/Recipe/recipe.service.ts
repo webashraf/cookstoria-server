@@ -22,27 +22,6 @@ const createRecipeIntoDB = async (payload: IRecipe, image: any) => {
   return res;
 };
 
-// const updateRecipeIntoDB = async (
-//   rId: string,
-//   payload: IRecipe,
-//   image: any
-// ) => {
-//   const recipeData = {
-//     ...payload,
-//     imageUrl: image || "",
-//     createdAt: new Date(),
-//     updatedAt: new Date(),
-//   };
-
-//   const isUserExist = await User.isUserExistById(payload.user as any);
-//   if (!isUserExist) {
-//     throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
-//   }
-
-//   const res = await Recipe.findByIdAndUpdate(rId, recipeData);
-//   return res;
-// };
-
 const updateRecipeIntoDB = async (
   rId: string,
   payload: Partial<IRecipe>,
@@ -157,5 +136,5 @@ export const recipeService = {
   updateRecipeIntoDB,
   createRecipeIntoDB,
   deleteRecipeIntoDB,
-  updateRecipePertialInfo: updateRecipePartialInfo,
+  updateRecipePartialInfo,
 };

@@ -35,7 +35,7 @@ const deleteRecipe = catchAsync(async (req: Request, res: Response) => {
 });
 
 const partialUpdateRecipe = catchAsync(async (req: Request, res: Response) => {
-  const result = await recipeService.updateRecipePertialInfo(
+  const result = await recipeService.updateRecipePartialInfo(
     req.params.id,
     req.query
   );

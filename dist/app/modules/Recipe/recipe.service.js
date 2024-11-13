@@ -27,24 +27,6 @@ const createRecipeIntoDB = (payload, image) => __awaiter(void 0, void 0, void 0,
     const res = yield recipe_modal_1.Recipe.create(recipeData);
     return res;
 });
-// const updateRecipeIntoDB = async (
-//   rId: string,
-//   payload: IRecipe,
-//   image: any
-// ) => {
-//   const recipeData = {
-//     ...payload,
-//     imageUrl: image || "",
-//     createdAt: new Date(),
-//     updatedAt: new Date(),
-//   };
-//   const isUserExist = await User.isUserExistById(payload.user as any);
-//   if (!isUserExist) {
-//     throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
-//   }
-//   const res = await Recipe.findByIdAndUpdate(rId, recipeData);
-//   return res;
-// };
 const updateRecipeIntoDB = (rId, payload, image) => __awaiter(void 0, void 0, void 0, function* () {
     const isUserExist = yield user_model_1.User.isUserExistById(payload.user);
     if (!isUserExist) {
