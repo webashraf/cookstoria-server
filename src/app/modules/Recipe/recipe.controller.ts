@@ -11,6 +11,7 @@ const createRecipe = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 const updateRecipe = catchAsync(async (req: Request, res: Response) => {
   const image = req?.file?.path;
   const result = await recipeService.updateRecipeIntoDB(

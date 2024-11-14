@@ -1,7 +1,7 @@
 import { ObjectId } from "mongoose";
 
 export interface IStoryReels {
-  userId: ObjectId;
+  user: ObjectId;
   images: Array<string>;
   description: string;
   createdAt: string;

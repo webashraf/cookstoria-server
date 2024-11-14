@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import { IStoryReels } from "./storyReels.interface";
 
 const userOpinionsSchema = new Schema<IStoryReels>({
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: "User",
