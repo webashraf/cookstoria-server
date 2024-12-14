@@ -106,5 +106,5 @@ exports.recipeService = {
     updateRecipeIntoDB,
     createRecipeIntoDB,
     deleteRecipeIntoDB,
-    updateRecipePertialInfo: updateRecipePartialInfo,
+    updateRecipePartialInfo,
 };

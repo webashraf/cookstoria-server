@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.storyReelsRoute = void 0;
+const express_1 = require("express");
+const multer_config_1 = require("../../config/multer.config");
+const parseBody_1 = require("../../middleware/parseBody");
+const storyReels_controller_1 = require("./storyReels.controller");
+const router = (0, express_1.Router)();
+router.post("/create", multer_config_1.multerUpload.single("image"), parseBody_1.parseBody, storyReels_controller_1.storyReelsContainer.createStoryReels);
+router.get("/", storyReels_controller_1.storyReelsContainer.getStoryReels);
+router.delete("/:id", storyReels_controller_1.storyReelsContainer.removeAStroyImage);
+exports.storyReelsRoute = router;

@@ -4,6 +4,7 @@ const express_1 = require("express");
 const auth_routes_1 = require("../modules/Auth/auth.routes");
 const recipe_routes_1 = require("../modules/Recipe/recipe.routes");
 const recipeComments_routes_1 = require("../modules/RecipeComments/recipeComments.routes");
+const storyReels_routes_1 = require("../modules/StoryReels/storyReels.routes");
 const socialConnection_routes_1 = require("../modules/socialConnection/socialConnection.routes");
 const user_routes_1 = require("../modules/user/user.routes");
 const router = (0, express_1.Router)();
@@ -23,6 +24,10 @@ const appRoutes = [
     {
         path: "/recipe",
         route: recipe_routes_1.recipeRouters,
+    },
+    {
+        path: "/story",
+        route: storyReels_routes_1.storyReelsRoute,
     },
     {
         path: "/user-opinion",

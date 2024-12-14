@@ -59,8 +59,7 @@ const removeImageFromStory = async (storyId: string, imageUrl: string) => {
 };
 
 const getStories = async () => {
-  const res = await StoryReels.find();
-  // .populate("user");
+  const res = await StoryReels.find().populate("user").sort("-updatedAt");
   return res;
 };
 

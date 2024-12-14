@@ -128,7 +128,13 @@ const getRecipeFromDB = async (query: Record<string, unknown>) => {
   }
   const filedLimitQuery = await limitQuery.select(fields);
 
-  return { recipes: filedLimitQuery, dataLength: allRecipe?.length };
+  const premiumRecipe = await Recipe.find({ isPremium: true });
+
+  return {
+    recipes: filedLimitQuery,
+    dataLength: allRecipe?.length,
+    premiumRecipe: premiumRecipe.length,
+  };
 };
 
 export const recipeService = {

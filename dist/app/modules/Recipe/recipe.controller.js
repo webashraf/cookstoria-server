@@ -44,7 +44,7 @@ const deleteRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     });
 }));
 const partialUpdateRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_service_1.recipeService.updateRecipePertialInfo(req.params.id, req.query);
+    const result = yield recipe_service_1.recipeService.updateRecipePartialInfo(req.params.id, req.query);
     res.status(200).json({
         success: true,
         message: "Recipe status successfully updated!",

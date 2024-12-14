@@ -11,11 +11,6 @@ const express_1 = __importDefault(require("express"));
 const glovalErrorHandalerMiddleware_1 = __importDefault(require("./app/middleware/glovalErrorHandalerMiddleware"));
 const routes_1 = __importDefault(require("./app/routes"));
 const app = (0, express_1.default)();
-// const corsOptions = {
-//   credentials: true,
-//   origin: ["https://cook-storia-culinary-frontend.vercel.app", "https://cook-storia-culinary-frontend.vercel.app"],
-// };
-// app.use(cors(corsOptions));
 const corsOptions = {
     credentials: true,
     origin: [
