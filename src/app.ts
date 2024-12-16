@@ -8,8 +8,6 @@ import router from "./app/routes";
 
 const app: Application = express();
 
-
-
 const corsOptions = {
   credentials: true,
   origin: [
@@ -28,9 +26,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 // routes
 app.use("/api/v1", router);
 app.get("/", (req: Request, res: Response) => {
-  res.send(
-    "<h2 style='font-family: Arial, sans-serif; color: #4a4a4a; text-align: center; padding: 20px; background-color: #f0f0f0; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'>Hello! CookstoriaCulinary</h2>"
-  );
+  res.sendFile(__dirname + "/index.html");
 });
 
 // 404 handler

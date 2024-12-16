@@ -56,8 +56,9 @@ const getRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     res.status(200).json({
         success: true,
         message: "Recipe successfully get!",
-        data: result.recipes,
         dataLength: result.dataLength,
+        premiumRecipe: result.premiumRecipe,
+        data: result.recipes,
     });
 }));
 exports.recipeController = {

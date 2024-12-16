@@ -66,7 +66,9 @@ const getAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
     res.status(200).json({
         success: true,
         message: "User retrieved successfully!",
-        data: result,
+        dataLength: result.dataLength,
+        PremiumUser: result.premiumUser,
+        data: result.user,
     });
 }));
 const getAllAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

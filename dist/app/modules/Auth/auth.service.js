@@ -121,8 +121,9 @@ const refreshTokenToAccessToken = (token) => __awaiter(void 0, void 0, void 0, f
     };
 });
 const getAllUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield user_model_1.User.find({ role: "user" });
-    return res;
+    const user = yield user_model_1.User.find({ role: "user" });
+    const premiumUser = yield user_model_1.User.find({ role: "user", isPremium: true });
+    return { user, premiumUser: premiumUser.length, dataLength: user.length };
 });
 const getAllAdminFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield user_model_1.User.find({ role: "admin" });

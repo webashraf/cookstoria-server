@@ -99,7 +99,12 @@ const getRecipeFromDB = (query) => __awaiter(void 0, void 0, void 0, function* (
         fields = query.fields.split(",").join(" ");
     }
     const filedLimitQuery = yield limitQuery.select(fields);
-    return { recipes: filedLimitQuery, dataLength: allRecipe === null || allRecipe === void 0 ? void 0 : allRecipe.length };
+    const premiumRecipe = yield recipe_modal_1.Recipe.find({ isPremium: true });
+    return {
+        recipes: filedLimitQuery,
+        dataLength: allRecipe === null || allRecipe === void 0 ? void 0 : allRecipe.length,
+        premiumRecipe: premiumRecipe.length,
+    };
 });
 exports.recipeService = {
     getRecipeFromDB,

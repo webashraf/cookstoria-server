@@ -1,0 +1,131 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+      "
+    >
+      <h2
+        style="
+          color: #333;
+          text-align: center;
+          padding: 15px;
+          background-color: #fff;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          margin-bottom: 20px;
+        "
+      >
+        Welcome to Cookstoria Culinary Chat
+      </h2>
+
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 500px;
+        "
+      >
+        <div
+          style="
+            width: 100%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+          "
+        >
+          <ul
+            id="chatHistory"
+            style="
+              list-style: none;
+              margin: 0;
+              padding: 0;
+              overflow-y: auto;
+              height: 300px;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+              padding: 10px;
+              background-color: #f5f5f5;
+              box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+              display: block;
+            "
+          ></ul>
+
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              margin-top: 10px;
+              gap: 10px;
+            "
+          >
+            <input
+              type="text"
+              id="msgInput"
+              placeholder="Type your message..."
+              style="
+                flex: 1;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 14px;
+                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+              "
+            />
+            <input
+              type="button"
+              onclick="sendMsg()"
+              value="Send"
+              style="
+                padding: 10px 20px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s ease;
+              "
+              onmouseover="this.style.backgroundColor='#45a049'"
+              onmouseout="this.style.backgroundColor='#4caf50'"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let socket = io();
+
+      const sendMsg = () => {
+        let myMessage = document.getElementById("msgInput").value;
+
+        socket.emit("chat", myMessage);
+        document.getElementById("msgInput").value = "";
+      };
+      socket.on("chat_transfer", (msg) => {
+        const li = document.createElement("li");
+        li.textContent = msg;
+        const ul = document.getElementById("chatHistory");
+        ul.appendChild(li);
+      });
+    </script>
+  </body>
+</html>
