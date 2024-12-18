@@ -7,7 +7,6 @@ import globalErrorHandler from "./app/middleware/glovalErrorHandalerMiddleware";
 import router from "./app/routes";
 
 const app: Application = express();
-
 const corsOptions = {
   credentials: true,
   origin: [
@@ -23,10 +22,38 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
 // routes
 app.use("/api/v1", router);
+app.get("/api/v1", (req: Request, res: Response) => {
+  res.send("this is /api/v1");
+});
 app.get("/", (req: Request, res: Response) => {
-  res.sendFile(__dirname + "/index.html");
+  res.send(`<section
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+      "
+    >
+      <h2
+        style="
+          color: #333;
+          text-align: center;
+          padding: 15px;
+          background-color: #fff;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          margin-bottom: 20px;
+        "
+      >
+        Welcome to Cookstoria Culinary Server
+      </h2>
+    </section>`);
 });
 
 // 404 handler

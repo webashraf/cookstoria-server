@@ -71,6 +71,15 @@ const getAllUsers = catchAsync(async (req, res) => {
     data: result.user,
   });
 });
+const getSingleUserById = catchAsync(async (req, res) => {
+  const result = await authServices.getSingleUserFromDB(req.params.id);
+
+  res.status(200).json({
+    success: true,
+    message: "User retrieved successfully!",
+    data: result,
+  });
+});
 
 const getAllAdmin = catchAsync(async (req, res) => {
   const result = await authServices.getAllAdminFromDB();
@@ -84,6 +93,7 @@ const getAllAdmin = catchAsync(async (req, res) => {
 
 export const authControllers = {
   getAllUsers,
+  getSingleUserById,
   getAllAdmin,
   loginUser,
   userPasswordChange,

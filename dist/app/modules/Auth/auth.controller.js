@@ -71,6 +71,14 @@ const getAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         data: result.user,
     });
 }));
+const getSingleUserById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield auth_service_1.authServices.getSingleUserFromDB(req.params.id);
+    res.status(200).json({
+        success: true,
+        message: "User retrieved successfully!",
+        data: result,
+    });
+}));
 const getAllAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.authServices.getAllAdminFromDB();
     res.status(200).json({
@@ -81,6 +89,7 @@ const getAllAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
 }));
 exports.authControllers = {
     getAllUsers,
+    getSingleUserById,
     getAllAdmin,
     loginUser,
     userPasswordChange,

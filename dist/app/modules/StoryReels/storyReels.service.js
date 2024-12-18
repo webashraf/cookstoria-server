@@ -26,8 +26,8 @@ const createUpdateStory = (payload, image) => __awaiter(void 0, void 0, void 0, 
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User does not exist!!");
     }
     const res = yield storyReels_modal_1.StoryReels.findOneAndUpdate({ user }, {
-        $push: { images: image },
-        $set: { updatedAt: new Date() },
+        $push: { images: { $each: [image], $position: 0 } },
+        $set: { updatedAt: new Date().toISOString() },
     }, { new: true, upsert: true });
     return res;
 });
@@ -53,7 +53,10 @@ const removeImageFromStory = (storyId, imageUrl) => __awaiter(void 0, void 0, vo
     return updatedStory;
 });
 const getStories = () => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield storyReels_modal_1.StoryReels.find().populate("user").sort("-updatedAt");
+    const res = yield storyReels_modal_1.StoryReels.find()
+        .populate("user")
+        .sort("-updatedAt")
+        .lean();
     return res;
 });
 exports.storyReelsServices = {

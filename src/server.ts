@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Server as expressServer } from "http";
 import mongoose from "mongoose";
-import { Server } from "socket.io";
 import app from "./app";
 
 let server: expressServer;
@@ -16,14 +15,6 @@ async function main() {
 
     server = app.listen(port, () => {
       console.log(`cookstoria-culinary server running on port ${port}`);
-    });
-    // Initialize Socket.IO
-    const io = new Server(server);
-
-    io.on("connection", (socket) => {
-      socket.on("chat", (msg) => {
-        io.emit("chat_transfer", msg);
-      });
     });
   } catch (error: any) {
     console.log(error);

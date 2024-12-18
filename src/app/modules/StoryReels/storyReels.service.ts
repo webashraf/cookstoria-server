@@ -13,13 +13,11 @@ const createUpdateStory = async (payload: IStoryReels, image: string) => {
   if (!isUserExist) {
     throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
   }
-
   const res = await StoryReels.findOneAndUpdate(
     { user },
     {
-      $push: { images: image },
-
-      $set: { updatedAt: new Date() },
+      $push: { images: { $each: [image], $position: 0 } },
+      $set: { updatedAt: new Date().toISOString() },
     },
     { new: true, upsert: true }
   );
@@ -59,7 +57,10 @@ const removeImageFromStory = async (storyId: string, imageUrl: string) => {
 };
 
 const getStories = async () => {
-  const res = await StoryReels.find().populate("user").sort("-updatedAt");
+  const res = await StoryReels.find()
+    .populate("user")
+    .sort("-updatedAt")
+    .lean();
   return res;
 };
 

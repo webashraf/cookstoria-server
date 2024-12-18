@@ -171,11 +171,20 @@ const refreshTokenToAccessToken = async (token: string) => {
 };
 
 const getAllUsersFromDB = async () => {
-  const user = await User.find({ role: "user" });
+  const user = await User.find({
+    role: "user",
+  });
   const premiumUser = await User.find({ role: "user", isPremium: true });
 
   return { user, premiumUser: premiumUser.length, dataLength: user.length };
 };
+
+const getSingleUserFromDB = async (id: string) => {
+  const user = await User.findById(id);
+
+  return user;
+};
+
 const getAllAdminFromDB = async () => {
   const res = await User.find({ role: "admin" });
   return res;
@@ -184,6 +193,7 @@ const getAllAdminFromDB = async () => {
 export const authServices = {
   getAllUsersFromDB,
   getAllAdminFromDB,
+  getSingleUserFromDB,
   loginUser,
   changePasswordIntoDB,
   generateNewPassword: generateNewPassword,
