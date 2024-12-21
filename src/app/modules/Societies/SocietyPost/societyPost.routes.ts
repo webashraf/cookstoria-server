@@ -1,7 +1,8 @@
 import { Router } from "express";
+import { societyPostController } from "./societyPost.controller";
 
 const router = Router();
 
-router.post("/create", (req, res) => {});
+router.post("/create", societyPostController.createSocietyPost);
 
-export const societyPostRouter = router;
+export const societyPostRoutes = router;

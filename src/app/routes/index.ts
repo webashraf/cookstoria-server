@@ -5,6 +5,7 @@ import { userOpinionRoutes } from "../modules/RecipeComments/recipeComments.rout
 import { socialConnectivityRoutes } from "../modules/SocialConnection/socialConnection.routes";
 import { societyRoutes } from "../modules/Societies/Society/society.routes";
 import { societyMemberRoutes } from "../modules/Societies/SocietyMember/societyMember.routes";
+import { societyPostRoutes } from "../modules/Societies/SocietyPost/societyPost.routes";
 import { storyReelsRoute } from "../modules/StoryReels/storyReels.routes";
 import { userRoutes } from "../modules/user/user.routes";
 
@@ -42,6 +43,10 @@ const appRoutes = [
   {
     path: "/society-member",
     route: societyMemberRoutes,
+  },
+  {
+    path: "/society-post",
+    route: societyPostRoutes,
   },
 ];
 
