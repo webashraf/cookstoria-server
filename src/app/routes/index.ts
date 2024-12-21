@@ -2,8 +2,10 @@ import { Router } from "express";
 import { authRoutes } from "../modules/Auth/auth.routes";
 import { recipeRouters } from "../modules/Recipe/recipe.routes";
 import { userOpinionRoutes } from "../modules/RecipeComments/recipeComments.routes";
+import { socialConnectivityRoutes } from "../modules/SocialConnection/socialConnection.routes";
+import { societyRoutes } from "../modules/Societies/Society/society.routes";
+import { societyMemberRoutes } from "../modules/Societies/SocietyMember/societyMember.routes";
 import { storyReelsRoute } from "../modules/StoryReels/storyReels.routes";
-import { socialConnectivityRoutes } from "../modules/socialConnection/socialConnection.routes";
 import { userRoutes } from "../modules/user/user.routes";
 
 const router = Router();
@@ -32,6 +34,14 @@ const appRoutes = [
   {
     path: "/user-opinion",
     route: userOpinionRoutes,
+  },
+  {
+    path: "/society",
+    route: societyRoutes,
+  },
+  {
+    path: "/society-member",
+    route: societyMemberRoutes,
   },
 ];
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from "http-status";
 import AppError from "../../error/appError";
-import { Recipe } from "../Recipe/recipe.modal";
+import { Recipe } from "../Recipe/recipe.model";
 import { User } from "../user/user.model";
 import { IUserOpinions } from "./recipeComments.interface";
 import { RecipeComments } from "./recipeComments.modal";

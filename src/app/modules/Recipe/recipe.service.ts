@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import AppError from "../../error/appError";
 import { User } from "../user/user.model";
 import { IRecipe } from "./recipe.interface";
-import { Recipe } from "./recipe.modal";
+import { Recipe } from "./recipe.model";
 
 const createRecipeIntoDB = async (payload: IRecipe, image: any) => {
   const recipeData = {
