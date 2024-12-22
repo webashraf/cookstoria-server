@@ -11,6 +11,16 @@ const createSociety = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSociety = catchAsync(async (req: Request, res: Response) => {
+  const result = await societyServices.getSocietyFromDB();
+  res.status(200).json({
+    success: true,
+    message: "Society retrieved successfully!",
+    data: result,
+  });
+});
+
 export const societyController = {
   createSociety,
+  getSociety,
 };

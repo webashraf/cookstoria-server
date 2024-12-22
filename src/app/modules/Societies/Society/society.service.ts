@@ -15,6 +15,9 @@ const createSocietyIntoDB = async (payload: ISociety) => {
   return result;
 };
 
+const getSocietyFromDB = async () => await Society.find();
+
 export const societyServices = {
   createSocietyIntoDB,
+  getSocietyFromDB,
 };

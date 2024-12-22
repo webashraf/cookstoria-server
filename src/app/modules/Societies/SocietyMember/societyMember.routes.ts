@@ -3,6 +3,6 @@ import { societyMemberController } from "./societyMember.controller";
 
 const router = Router();
 
-router.post("/create", societyMemberController.createSocietyMember);
+router.post("/connect", societyMemberController.createSocietyMember);
 
 export const societyMemberRoutes = router;
