@@ -8,7 +8,7 @@ import { SocietyPost } from "./societyPost.model";
 const createSocietyPostIntoDB = async (payload: ISocietyPost) => {
   const isUserExist = await SocietyMember.findById(payload?.userId);
   const isSocietyExist = await Society.findById(payload?.societyId);
-  const isUserExistInCurrentSociety = await SocietyMember.findById({
+  const isUserExistInCurrentSociety = await SocietyMember.find({
     societyId: payload?.societyId,
     userId: payload?.userId,
   });

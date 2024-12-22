@@ -4,7 +4,7 @@ export interface ISocietyPost {
   societyId: ObjectId;
   userId: ObjectId;
   title: string;
-  content: string;
+  content?: string;
   imageUrl?: string;
   tags: string[];
   createdAt: Date;
