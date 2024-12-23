@@ -11,6 +11,17 @@ const createSociety = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSocietyForConnect = catchAsync(async (req: Request, res: Response) => {
+  const result = await societyServices.getSocietyForConnectFromDB(
+    req.params.id
+  );
+  res.status(200).json({
+    success: true,
+    message: "Society retrieved successfully!",
+    data: result,
+  });
+});
+
 const getSociety = catchAsync(async (req: Request, res: Response) => {
   const result = await societyServices.getSocietyFromDB();
   res.status(200).json({
@@ -22,5 +33,6 @@ const getSociety = catchAsync(async (req: Request, res: Response) => {
 
 export const societyController = {
   createSociety,
+  getSocietyForConnect,
   getSociety,
 };

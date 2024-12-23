@@ -12,7 +12,6 @@ const createSocietyMemberIntoDB = async (payload: ISocietyMember) => {
     userId: payload.userId,
     societyId: payload.societyId,
   });
-  console.log("isUserExistInSociety", isUserExistInSociety);
 
   if (!isUserExist) {
     throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
@@ -24,10 +23,19 @@ const createSocietyMemberIntoDB = async (payload: ISocietyMember) => {
     throw new Error("User all ready exist in this society!");
   }
 
+  console.log("isUserExistInSociety", isUserExistInSociety);
+
   const result = await SocietyMember.create(payload);
+  return result;
+};
+
+const getMemberByIdFromDB = async (userId: string) => {
+  const result = await SocietyMember.find({ userId });
+
   return result;
 };
 
 export const societyMemberService = {
   createSocietyMemberIntoDB,
+  getMemberByIdFromDB,
 };

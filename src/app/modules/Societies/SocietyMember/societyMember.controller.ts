@@ -12,6 +12,17 @@ const createSocietyMember = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSocietyMemberById = catchAsync(async (req: Request, res: Response) => {
+  const result = await societyMemberService.getMemberByIdFromDB(req.params.id);
+
+  res.status(200).json({
+    success: true,
+    message: "Society member retrieved successfully",
+    data: result,
+  });
+});
+
 export const societyMemberController = {
   createSocietyMember,
+  getSocietyMemberById,
 };
