@@ -22,7 +22,23 @@ const getSocietyMemberById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSingleSocietyMemberById = catchAsync(
+  async (req: Request, res: Response) => {
+    const result =
+      await societyMemberService.getSingleSocietyMemberBySocietyIdFromDB(
+        req.params.id
+      );
+
+    res.status(200).json({
+      success: true,
+      message: "Society member retrieved successfully",
+      data: result,
+    });
+  }
+);
+
 export const societyMemberController = {
   createSocietyMember,
   getSocietyMemberById,
+  getSingleSocietyMemberById,
 };

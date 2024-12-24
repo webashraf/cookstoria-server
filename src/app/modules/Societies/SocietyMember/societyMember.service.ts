@@ -30,12 +30,16 @@ const createSocietyMemberIntoDB = async (payload: ISocietyMember) => {
 };
 
 const getMemberByIdFromDB = async (userId: string) => {
-  const result = await SocietyMember.find({ userId });
+  const result = await SocietyMember.find({ userId }).populate("societyId");
 
   return result;
 };
 
+const getSingleSocietyMemberBySocietyIdFromDB = async (societyId: string) =>
+  await SocietyMember.find({ societyId }).populate("userId");
+
 export const societyMemberService = {
   createSocietyMemberIntoDB,
   getMemberByIdFromDB,
+  getSingleSocietyMemberBySocietyIdFromDB,
 };

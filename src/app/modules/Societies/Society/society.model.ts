@@ -8,6 +8,10 @@ const societySchema: Schema<ISociety> = new Schema(
       required: true,
       unique: true,
     },
+    coverImage: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,

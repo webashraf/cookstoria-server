@@ -12,18 +12,11 @@ const societyPostSchema: Schema<ISocietyPost> = new Schema(
       ref: "SocietyMember",
       required: true,
     },
-    title: {
-      type: String,
-    },
     content: {
       type: String,
     },
     imageUrl: {
       type: String,
-    },
-    tags: {
-      type: [String],
-      default: [],
     },
   },
   {

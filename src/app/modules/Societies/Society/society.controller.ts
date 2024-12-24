@@ -31,8 +31,18 @@ const getSociety = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSingleSociety = catchAsync(async (req: Request, res: Response) => {
+  const result = await societyServices.getSingleSocietyFromDB(req.params.id);
+  res.status(200).json({
+    success: true,
+    message: "Society retrieved successfully",
+    data: result,
+  });
+});
+
 export const societyController = {
   createSociety,
   getSocietyForConnect,
+  getSingleSociety,
   getSociety,
 };

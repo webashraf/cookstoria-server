@@ -45,14 +45,19 @@ const getSocietyForConnectFromDB = async (userId: string) => {
     session.endSession();
 
     console.error("Error during transaction:", error);
-    throw error; 
+    throw error;
   }
 };
 
 const getSocietyFromDB = async () => await Society.find();
 
+const getSingleSocietyFromDB = async (societyId: string) => {
+  return await Society.findById(societyId);
+};
+
 export const societyServices = {
   createSocietyIntoDB,
   getSocietyForConnectFromDB,
+  getSingleSocietyFromDB,
   getSocietyFromDB,
 };
