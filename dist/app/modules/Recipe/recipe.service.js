@@ -17,14 +17,14 @@ exports.recipeService = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const appError_1 = __importDefault(require("../../error/appError"));
 const user_model_1 = require("../user/user.model");
-const recipe_modal_1 = require("./recipe.modal");
+const recipe_model_1 = require("./recipe.model");
 const createRecipeIntoDB = (payload, image) => __awaiter(void 0, void 0, void 0, function* () {
     const recipeData = Object.assign(Object.assign({}, payload), { imageUrl: image, createdAt: new Date(), updatedAt: new Date() });
     const isUserExist = yield user_model_1.User.isUserExistById(payload.user);
     if (!isUserExist) {
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User does not exist!!");
     }
-    const res = yield recipe_modal_1.Recipe.create(recipeData);
+    const res = yield recipe_model_1.Recipe.create(recipeData);
     return res;
 });
 const updateRecipeIntoDB = (rId, payload, image) => __awaiter(void 0, void 0, void 0, function* () {
@@ -34,7 +34,7 @@ const updateRecipeIntoDB = (rId, payload, image) => __awaiter(void 0, void 0, vo
     }
     const recipeData = Object.assign(Object.assign(Object.assign({}, payload), (image && { imageUrl: image })), { updatedAt: new Date() });
     // Find and update the recipe
-    const updatedRecipe = yield recipe_modal_1.Recipe.findByIdAndUpdate(rId, recipeData, {
+    const updatedRecipe = yield recipe_model_1.Recipe.findByIdAndUpdate(rId, recipeData, {
         new: true,
         runValidators: true,
     });
@@ -44,15 +44,15 @@ const updateRecipeIntoDB = (rId, payload, image) => __awaiter(void 0, void 0, vo
     return updatedRecipe;
 });
 const deleteRecipeIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield recipe_modal_1.Recipe.findByIdAndUpdate(id, { isDeleted: true }, { new: true, runValidators: true, upsert: true });
+    const res = yield recipe_model_1.Recipe.findByIdAndUpdate(id, { isDeleted: true }, { new: true, runValidators: true, upsert: true });
     return res;
 });
 const updateRecipePartialInfo = (id, query) => __awaiter(void 0, void 0, void 0, function* () {
-    const isRecipeExist = yield recipe_modal_1.Recipe.findById(id);
+    const isRecipeExist = yield recipe_model_1.Recipe.findById(id);
     if (!isRecipeExist) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "Recipe not found!!");
     }
-    const res = yield recipe_modal_1.Recipe.findByIdAndUpdate(id, query, {
+    const res = yield recipe_model_1.Recipe.findByIdAndUpdate(id, query, {
         new: true,
         runValidators: true,
         upsert: true,
@@ -68,12 +68,12 @@ const getRecipeFromDB = (query) => __awaiter(void 0, void 0, void 0, function* (
     if (query === null || query === void 0 ? void 0 : query.searchTerm) {
         searchTerm = query.searchTerm;
     }
-    const searchQuery = recipe_modal_1.Recipe.find({
+    const searchQuery = recipe_model_1.Recipe.find({
         $or: ["title", "ingredients", "tags"].map((field) => ({
             [field]: { $regex: searchTerm, $options: "i" },
         })),
     });
-    const allRecipe = yield recipe_modal_1.Recipe.find();
+    const allRecipe = yield recipe_model_1.Recipe.find();
     // Filter query
     const filterQuery = searchQuery.find(filterQueryItems).populate("user");
     // sort
@@ -99,7 +99,7 @@ const getRecipeFromDB = (query) => __awaiter(void 0, void 0, void 0, function* (
         fields = query.fields.split(",").join(" ");
     }
     const filedLimitQuery = yield limitQuery.select(fields);
-    const premiumRecipe = yield recipe_modal_1.Recipe.find({ isPremium: true });
+    const premiumRecipe = yield recipe_model_1.Recipe.find({ isPremium: true });
     return {
         recipes: filedLimitQuery,
         dataLength: allRecipe === null || allRecipe === void 0 ? void 0 : allRecipe.length,

@@ -35,7 +35,14 @@ const createSocietyPostIntoDB = async (payload: ISocietyPost, image: any) => {
 };
 
 const getSocietyPostFromDB = async (societyId: string) => {
-  const result = await SocietyPost.find({ societyId });
+  const result = await SocietyPost.find({ societyId }).populate({
+    path: "userId",
+    populate: {
+      path: "userId",
+    },
+  });
+
+  console.log(result);
   return result;
 };
 

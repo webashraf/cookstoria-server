@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.societyPostRoutes = void 0;
+const express_1 = require("express");
+const multer_config_1 = require("../../../config/multer.config");
+const parseBody_1 = require("../../../middleware/parseBody");
+const societyPost_controller_1 = require("./societyPost.controller");
+const router = (0, express_1.Router)();
+router.post("/create", multer_config_1.multerUpload.single("image"), parseBody_1.parseBody, societyPost_controller_1.societyPostController.createSocietyPost);
+router.get("/:id", societyPost_controller_1.societyPostController.getSocietyPost);
+exports.societyPostRoutes = router;

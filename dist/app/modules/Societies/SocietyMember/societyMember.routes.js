@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.societyMemberRoutes = void 0;
+const express_1 = require("express");
+const societyMember_controller_1 = require("./societyMember.controller");
+const router = (0, express_1.Router)();
+router.post("/connect", societyMember_controller_1.societyMemberController.createSocietyMember);
+router.get("/:id", societyMember_controller_1.societyMemberController.getSocietyMemberById);
+router.get("/single/:id", societyMember_controller_1.societyMemberController.getSingleSocietyMemberById);
+exports.societyMemberRoutes = router;

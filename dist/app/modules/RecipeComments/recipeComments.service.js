@@ -16,12 +16,12 @@ exports.userOpinionsServices = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const http_status_1 = __importDefault(require("http-status"));
 const appError_1 = __importDefault(require("../../error/appError"));
-const recipe_modal_1 = require("../Recipe/recipe.modal");
+const recipe_model_1 = require("../Recipe/recipe.model");
 const user_model_1 = require("../user/user.model");
 const recipeComments_modal_1 = require("./recipeComments.modal");
 const createCommentUpDownVoteAndRatingsIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { postId, userId, upVote, downVote } = payload;
-    const isPostExist = yield recipe_modal_1.Recipe.findById(postId);
+    const isPostExist = yield recipe_model_1.Recipe.findById(postId);
     if (!isPostExist) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "Post does not exist!!");
     }
@@ -38,14 +38,14 @@ const createCommentUpDownVoteAndRatingsIntoDB = (payload) => __awaiter(void 0, v
         if (upVote) {
             update.upVote = 1;
             update.downVote = 0;
-            yield recipe_modal_1.Recipe.findByIdAndUpdate(postId, { upVote: totalUpVotes + 1 }, {
+            yield recipe_model_1.Recipe.findByIdAndUpdate(postId, { upVote: totalUpVotes + 1 }, {
                 new: true,
             });
         }
         if (downVote) {
             update.downVote = 1;
             update.upVote = 0;
-            yield recipe_modal_1.Recipe.findByIdAndUpdate(postId, { upVote: totalUpVotes - 1 }, {
+            yield recipe_model_1.Recipe.findByIdAndUpdate(postId, { upVote: totalUpVotes - 1 }, {
                 new: true,
             });
         }
@@ -61,7 +61,7 @@ const createCommentUpDownVoteAndRatingsIntoDB = (payload) => __awaiter(void 0, v
     }
 });
 const removeUserOpinionsFromRecipeIntoDB = (_a) => __awaiter(void 0, [_a], void 0, function* ({ postId, userId, }) {
-    const isPostExist = yield recipe_modal_1.Recipe.findById(postId);
+    const isPostExist = yield recipe_model_1.Recipe.findById(postId);
     if (!isPostExist) {
         throw new appError_1.default(http_status_1.default.NOT_FOUND, "Post does not exist!!");
     }

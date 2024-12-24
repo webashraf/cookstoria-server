@@ -6,7 +6,7 @@ import { IsocialConnectivity } from "./socialConnection.interface";
 import { Follow } from "./socialConnection.model";
 
 const createFollowIntoDB = async (payload: IsocialConnectivity) => {
-  const isUserExist = await User.isUserExistById(payload.userId);
+  const isUserExist = await User.isUserExistById(payload.userId as any);
 
   if (!isUserExist) {
     throw new AppError(httpStatus.BAD_REQUEST, "User not found!!");
@@ -42,7 +42,10 @@ const createFollowIntoDB = async (payload: IsocialConnectivity) => {
   }
 };
 
-const unfollowASingleUser = async (myId: string, followedUserId: string) => {
+const unfollowASingleUser = async (
+  myId: string | any,
+  followedUserId: string
+) => {
   const isUserExist = await User.isUserExistById(myId);
   if (!isUserExist) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
@@ -63,7 +66,7 @@ const unfollowASingleUser = async (myId: string, followedUserId: string) => {
   return updatedFollowRecord;
 };
 
-const retrievedFollowerByIdIntoDB = async (userId: string) => {
+const retrievedFollowerByIdIntoDB = async (userId: string | any) => {
   const isUserExist = await User.isUserExistById(userId);
   if (!isUserExist) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
