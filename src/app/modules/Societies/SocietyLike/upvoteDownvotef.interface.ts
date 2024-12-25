@@ -1,9 +1,8 @@
 import { ObjectId } from "mongoose";
 
-export interface ISocietyComment {
+export interface IUpvoteDownvote {
   postId: ObjectId;
   userId: ObjectId;
-  comment: string;
+  voteType: "upvote" | "downvote";
   createdAt: Date;
 }
- 

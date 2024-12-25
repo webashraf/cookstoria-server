@@ -6,7 +6,7 @@ const router = Router();
 router.post("/create", societyPostCommentController.createSocietyPostComment);
 
 router.get(
-  "/post-comments/:id",
+  "/post-comments",
   societyPostCommentController.getSocietyComment
 );
 

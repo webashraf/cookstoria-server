@@ -16,7 +16,7 @@ const createSocietyPostComment = catchAsync(
 
 const getSocietyComment = catchAsync(async (req: Request, res: Response) => {
   const result = await societyPostCommentService.getSocietyCommentFormDB(
-    req.params.id
+    req.query
   );
 
   res.status(200).send({

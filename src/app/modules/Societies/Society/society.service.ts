@@ -7,14 +7,15 @@ import { SocietyMember } from "../SocietyMember/societyMember.model";
 import { ISociety } from "./society.interface";
 import { Society } from "./society.model";
 
-const createSocietyIntoDB = async (payload: ISociety) => {
+const createSocietyIntoDB = async (payload: ISociety, image: any) => {
+  console.log(payload, image);
   const isUserExist = await User.isUserExistById(payload?.admin);
 
   if (!isUserExist) {
     throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!");
   }
 
-  const result = await Society.create(payload);
+  const result = await Society.create({ ...payload, coverImage: image });
   return result;
 };
 

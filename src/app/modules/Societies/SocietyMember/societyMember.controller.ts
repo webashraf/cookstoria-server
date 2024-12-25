@@ -12,6 +12,8 @@ const createSocietyMember = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// * get all users by a original userId
+// ! Keep it for quantum
 const getSocietyMemberById = catchAsync(async (req: Request, res: Response) => {
   const result = await societyMemberService.getMemberByIdFromDB(req.params.id);
 
@@ -22,10 +24,29 @@ const getSocietyMemberById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getSingleSocietyMemberById = catchAsync(
+// * Get all members for a single society
+
+// * get current login society single user
+const getCurrentSocietyMemberByUserId = catchAsync(
+  async (req: Request, res: Response) => {
+    console.log("Request", req.query);
+    const result =
+      await societyMemberService.getCurrentSocietyMemberByUserIdFromDB(
+        req.query
+      );
+
+    res.status(200).json({
+      success: true,
+      message: "Society member retrieved successfully",
+      data: result,
+    });
+  }
+);
+
+const getSingleSocietyMembersById = catchAsync(
   async (req: Request, res: Response) => {
     const result =
-      await societyMemberService.getSingleSocietyMemberBySocietyIdFromDB(
+      await societyMemberService.getSingleSocietyMembersBySocietyIdFromDB(
         req.params.id
       );
 
@@ -40,5 +61,6 @@ const getSingleSocietyMemberById = catchAsync(
 export const societyMemberController = {
   createSocietyMember,
   getSocietyMemberById,
-  getSingleSocietyMemberById,
+  getSingleSocietyMembersById,
+  getCurrentSocietyMemberByUserId,
 };

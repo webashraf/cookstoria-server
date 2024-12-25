@@ -5,6 +5,7 @@ import { userOpinionRoutes } from "../modules/RecipeComments/recipeComments.rout
 import { socialConnectivityRoutes } from "../modules/SocialConnection/socialConnection.routes";
 import { societyRoutes } from "../modules/Societies/Society/society.routes";
 import { societyPostCommentRoutes } from "../modules/Societies/SocietyComment/SocietyComment.routes";
+import { upvoteDownvote } from "../modules/Societies/SocietyLike/upvoteDownvote.routes";
 import { societyMemberRoutes } from "../modules/Societies/SocietyMember/societyMember.routes";
 import { societyPostRoutes } from "../modules/Societies/SocietyPost/societyPost.routes";
 import { storyReelsRoute } from "../modules/StoryReels/storyReels.routes";
@@ -52,6 +53,10 @@ const appRoutes = [
   {
     path: "/society-post-comment",
     route: societyPostCommentRoutes,
+  },
+  {
+    path: "/upvote-downvote",
+    route: upvoteDownvote,
   },
 ];
 

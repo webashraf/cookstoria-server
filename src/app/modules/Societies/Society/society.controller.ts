@@ -3,7 +3,10 @@ import catchAsync from "../../../utils/catchAsync";
 import { societyServices } from "./society.service";
 
 const createSociety = catchAsync(async (req: Request, res: Response) => {
-  const result = await societyServices.createSocietyIntoDB(req.body);
+  const image = req?.file?.path;
+
+ 
+  const result = await societyServices.createSocietyIntoDB(req.body, image);
   res.status(200).json({
     success: true,
     message: "Society created successfully!!",

@@ -1,4 +1,5 @@
-import httpStatus from "http-status";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus, { NOT_FOUND } from "http-status";
 import AppError from "../../../error/appError";
 import { User } from "../../user/user.model";
 import { Society } from "../Society/society.model";
@@ -29,17 +30,43 @@ const createSocietyMemberIntoDB = async (payload: ISocietyMember) => {
   return result;
 };
 
+// * get all users by a original userId
+// ! Keep it for quantum
 const getMemberByIdFromDB = async (userId: string) => {
+  console.log(userId);
   const result = await SocietyMember.find({ userId }).populate("societyId");
 
   return result;
 };
 
-const getSingleSocietyMemberBySocietyIdFromDB = async (societyId: string) =>
+// * get current login society single user
+const getCurrentSocietyMemberByUserIdFromDB = async (queries: any) => {
+  const { userId, societyId } = queries;
+  console.log("queries", queries);
+  const isUserExist = await User.isUserExistById(userId as any);
+  const isSocietyExist = await Society.findById(societyId);
+  console.log(isSocietyExist);
+  if (!isUserExist) {
+    throw new AppError(NOT_FOUND, "user not found!");
+  }
+  if (!isSocietyExist) {
+    throw new AppError(NOT_FOUND, "Society not found!");
+  }
+
+  const result = await SocietyMember.findOne({
+    userId,
+    societyId,
+  }).populate("userId");
+  return result;
+};
+
+// * Get all members for a single society
+const getSingleSocietyMembersBySocietyIdFromDB = async (societyId: string) =>
   await SocietyMember.find({ societyId }).populate("userId");
 
 export const societyMemberService = {
   createSocietyMemberIntoDB,
   getMemberByIdFromDB,
-  getSingleSocietyMemberBySocietyIdFromDB,
+  getSingleSocietyMembersBySocietyIdFromDB,
+  getCurrentSocietyMemberByUserIdFromDB,
 };
