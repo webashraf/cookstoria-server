@@ -20,7 +20,6 @@ const user_model_1 = require("../user/user.model");
 const storyReels_modal_1 = require("./storyReels.modal");
 const createUpdateStory = (payload, image) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = payload;
-    console.log("Hello mr. this is storyReels service!", payload, image);
     const isUserExist = yield user_model_1.User.isUserExistById(user);
     if (!isUserExist) {
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User does not exist!!");
@@ -32,7 +31,6 @@ const createUpdateStory = (payload, image) => __awaiter(void 0, void 0, void 0, 
     return res;
 });
 const removeImageFromStory = (storyId, imageUrl) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(storyId, imageUrl);
     const isStoryExist = yield storyReels_modal_1.StoryReels.findById(storyId);
     if (!isStoryExist) {
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User does not exist!!");

@@ -67,7 +67,8 @@ const getAllUsers = catchAsync(async (req, res) => {
     success: true,
     message: "User retrieved successfully!",
     dataLength: result.dataLength,
-    PremiumUser: result.premiumUser,
+    premiumUser: result.premiumUser,
+    premiumUserLength: result.premiumUserLength,
     data: result.user,
   });
 });

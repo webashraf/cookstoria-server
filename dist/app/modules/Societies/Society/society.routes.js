@@ -2,10 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.societyRoutes = void 0;
 const express_1 = require("express");
+const multer_config_1 = require("../../../config/multer.config");
+const parseBody_1 = require("../../../middleware/parseBody");
 const society_controller_1 = require("./society.controller");
 const router = (0, express_1.Router)();
-router.post("/create", society_controller_1.societyController.createSociety);
+router.post("/create", multer_config_1.multerUpload.single("image"), parseBody_1.parseBody, society_controller_1.societyController.createSociety);
 router.get("/society-for-connect/:id", society_controller_1.societyController.getSocietyForConnect);
 router.get("/", society_controller_1.societyController.getSociety);
 router.get("/single/:id", society_controller_1.societyController.getSingleSociety);
+router.put("/update/:id", society_controller_1.societyController.updateSociety);
 exports.societyRoutes = router;

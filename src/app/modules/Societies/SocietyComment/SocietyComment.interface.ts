@@ -6,4 +6,3 @@ export interface ISocietyComment {
   comment: string;
   createdAt: Date;
 }
- 

@@ -8,7 +8,6 @@ import { ISociety } from "./society.interface";
 import { Society } from "./society.model";
 
 const createSocietyIntoDB = async (payload: ISociety, image: any) => {
-  console.log(payload, image);
   const isUserExist = await User.isUserExistById(payload?.admin);
 
   if (!isUserExist) {
@@ -50,15 +49,44 @@ const getSocietyForConnectFromDB = async (userId: string) => {
   }
 };
 
-const getSocietyFromDB = async () => await Society.find();
-
 const getSingleSocietyFromDB = async (societyId: string) => {
   return await Society.findById(societyId);
 };
 
+const getSocietyFromDB = async () => await Society.find().populate("admin");
+
+const updateSocietyIntoDB = async (societyId: string, payload: any) => {
+  console.log(societyId, payload);
+
+  try {
+    const isSocietyExist = await Society.findById(societyId);
+    if (!isSocietyExist) {
+      throw new AppError(httpStatus.NOT_FOUND, "Society does not exist!");
+    }
+
+    const updatedSociety = await Society.findByIdAndUpdate(societyId, payload, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedSociety) {
+      throw new AppError(httpStatus.NOT_FOUND, "Failed to update the society!");
+    }
+
+    return updatedSociety;
+  } catch (error) {
+    console.error("Error updating society:", error);
+
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      "Something went wrong for updating the society!"
+    );
+  }
+};
 export const societyServices = {
   createSocietyIntoDB,
   getSocietyForConnectFromDB,
   getSingleSocietyFromDB,
   getSocietyFromDB,
+  updateSocietyIntoDB,
 };

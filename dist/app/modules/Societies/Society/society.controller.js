@@ -16,7 +16,9 @@ exports.societyController = void 0;
 const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
 const society_service_1 = require("./society.service");
 const createSociety = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield society_service_1.societyServices.createSocietyIntoDB(req.body);
+    var _a;
+    const image = (_a = req === null || req === void 0 ? void 0 : req.file) === null || _a === void 0 ? void 0 : _a.path;
+    const result = yield society_service_1.societyServices.createSocietyIntoDB(req.body, image);
     res.status(200).json({
         success: true,
         message: "Society created successfully!!",
@@ -31,14 +33,6 @@ const getSocietyForConnect = (0, catchAsync_1.default)((req, res) => __awaiter(v
         data: result,
     });
 }));
-const getSociety = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield society_service_1.societyServices.getSocietyFromDB();
-    res.status(200).json({
-        success: true,
-        message: "Society retrieved successfully!",
-        data: result,
-    });
-}));
 const getSingleSociety = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield society_service_1.societyServices.getSingleSocietyFromDB(req.params.id);
     res.status(200).json({
@@ -47,9 +41,26 @@ const getSingleSociety = (0, catchAsync_1.default)((req, res) => __awaiter(void 
         data: result,
     });
 }));
+const getSociety = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield society_service_1.societyServices.getSocietyFromDB();
+    res.status(200).json({
+        success: true,
+        message: "Society retrieved successfully!",
+        data: result,
+    });
+}));
+const updateSociety = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield society_service_1.societyServices.updateSocietyIntoDB(req.params.id, req.body);
+    res.status(200).json({
+        success: true,
+        message: "Society updated successfully",
+        data: result,
+    });
+}));
 exports.societyController = {
     createSociety,
     getSocietyForConnect,
     getSingleSociety,
     getSociety,
+    updateSociety
 };

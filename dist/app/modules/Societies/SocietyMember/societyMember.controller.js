@@ -23,6 +23,8 @@ const createSocietyMember = (0, catchAsync_1.default)((req, res) => __awaiter(vo
         data: result,
     });
 }));
+// * get all users by a original userId
+// ! Keep it for quantum
 const getSocietyMemberById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield societyMember_service_1.societyMemberService.getMemberByIdFromDB(req.params.id);
     res.status(200).json({
@@ -31,8 +33,18 @@ const getSocietyMemberById = (0, catchAsync_1.default)((req, res) => __awaiter(v
         data: result,
     });
 }));
-const getSingleSocietyMemberById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield societyMember_service_1.societyMemberService.getSingleSocietyMemberBySocietyIdFromDB(req.params.id);
+// * Get all members for a single society
+// * get current login society single user
+const getCurrentSocietyMemberByUserId = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield societyMember_service_1.societyMemberService.getCurrentSocietyMemberByUserIdFromDB(req.query);
+    res.status(200).json({
+        success: true,
+        message: "Society member retrieved successfully",
+        data: result,
+    });
+}));
+const getSingleSocietyMembersById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield societyMember_service_1.societyMemberService.getSingleSocietyMembersBySocietyIdFromDB(req.params.id);
     res.status(200).json({
         success: true,
         message: "Society member retrieved successfully",
@@ -42,5 +54,6 @@ const getSingleSocietyMemberById = (0, catchAsync_1.default)((req, res) => __awa
 exports.societyMemberController = {
     createSocietyMember,
     getSocietyMemberById,
-    getSingleSocietyMemberById,
+    getSingleSocietyMembersById,
+    getCurrentSocietyMemberByUserId,
 };

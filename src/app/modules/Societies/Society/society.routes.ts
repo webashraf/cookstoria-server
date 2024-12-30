@@ -14,5 +14,6 @@ router.post(
 router.get("/society-for-connect/:id", societyController.getSocietyForConnect);
 router.get("/", societyController.getSociety);
 router.get("/single/:id", societyController.getSingleSociety);
+router.put("/update/:id", societyController.updateSociety);
 
 export const societyRoutes = router;

@@ -14,7 +14,7 @@ const getSocietyCommentFormDB = async (query: Record<string, unknown>) => {
   const removableFields = ["sort", "limit", "page", "fields"];
   removableFields.forEach((field) => delete filterQueryItems[field]);
 
-  const allRecipe = await SocietyPostComment.find();
+  const allRecipe = await SocietyPostComment.find(filterQueryItems);
 
   // Filter query
   const filterQuery = SocietyPostComment.find(filterQueryItems).populate({
@@ -23,6 +23,8 @@ const getSocietyCommentFormDB = async (query: Record<string, unknown>) => {
       path: "userId",
     },
   });
+
+
 
   // sort
   let sort = "-updatedAt";

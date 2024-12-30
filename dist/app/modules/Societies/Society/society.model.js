@@ -26,6 +26,14 @@ const societySchema = new mongoose_1.Schema({
         ref: "User",
         required: true,
     },
+    isBlocked: {
+        type: Boolean,
+        default: false,
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    },
 }, {
     timestamps: true,
 });

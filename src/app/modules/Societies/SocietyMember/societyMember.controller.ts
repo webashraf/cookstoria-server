@@ -29,7 +29,6 @@ const getSocietyMemberById = catchAsync(async (req: Request, res: Response) => {
 // * get current login society single user
 const getCurrentSocietyMemberByUserId = catchAsync(
   async (req: Request, res: Response) => {
-    console.log("Request", req.query);
     const result =
       await societyMemberService.getCurrentSocietyMemberByUserIdFromDB(
         req.query

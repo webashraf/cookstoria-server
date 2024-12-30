@@ -24,8 +24,6 @@ const createSocietyMemberIntoDB = async (payload: ISocietyMember) => {
     throw new Error("User all ready exist in this society!");
   }
 
-  console.log("isUserExistInSociety", isUserExistInSociety);
-
   const result = await SocietyMember.create(payload);
   return result;
 };
@@ -33,7 +31,6 @@ const createSocietyMemberIntoDB = async (payload: ISocietyMember) => {
 // * get all users by a original userId
 // ! Keep it for quantum
 const getMemberByIdFromDB = async (userId: string) => {
-  console.log(userId);
   const result = await SocietyMember.find({ userId }).populate("societyId");
 
   return result;
@@ -42,10 +39,8 @@ const getMemberByIdFromDB = async (userId: string) => {
 // * get current login society single user
 const getCurrentSocietyMemberByUserIdFromDB = async (queries: any) => {
   const { userId, societyId } = queries;
-  console.log("queries", queries);
   const isUserExist = await User.isUserExistById(userId as any);
   const isSocietyExist = await Society.findById(societyId);
-  console.log(isSocietyExist);
   if (!isUserExist) {
     throw new AppError(NOT_FOUND, "user not found!");
   }

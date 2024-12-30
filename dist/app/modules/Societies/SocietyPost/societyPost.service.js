@@ -20,9 +20,7 @@ const society_model_1 = require("../Society/society.model");
 const societyMember_model_1 = require("../SocietyMember/societyMember.model");
 const societyPost_model_1 = require("./societyPost.model");
 const createSocietyPostIntoDB = (payload, image) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(payload, image);
     const isUserExist = yield societyMember_model_1.SocietyMember.findById(payload === null || payload === void 0 ? void 0 : payload.userId);
-    console.log(isUserExist);
     const isSocietyExist = yield society_model_1.Society.findById(payload === null || payload === void 0 ? void 0 : payload.societyId);
     const isUserExistInCurrentSociety = yield societyMember_model_1.SocietyMember.find({
         societyId: payload === null || payload === void 0 ? void 0 : payload.societyId,
@@ -41,7 +39,12 @@ const createSocietyPostIntoDB = (payload, image) => __awaiter(void 0, void 0, vo
     return result;
 });
 const getSocietyPostFromDB = (societyId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield societyPost_model_1.SocietyPost.find({ societyId });
+    const result = yield societyPost_model_1.SocietyPost.find({ societyId }).populate({
+        path: "userId",
+        populate: {
+            path: "userId",
+        },
+    });
     return result;
 });
 exports.societyPostService = {

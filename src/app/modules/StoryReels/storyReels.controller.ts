@@ -15,7 +15,6 @@ const createStoryReels = catchAsync(async (req, res) => {
 });
 
 const removeAStroyImage = catchAsync(async (req, res) => {
-  console.log(req.body.image);
   const result = await storyReelsServices.removeImageFromStory(
     req.params.id,
     req.body.image

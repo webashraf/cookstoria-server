@@ -7,9 +7,7 @@ import { ISocietyPost } from "./societyPost.interface";
 import { SocietyPost } from "./societyPost.model";
 
 const createSocietyPostIntoDB = async (payload: ISocietyPost, image: any) => {
-  console.log(payload, image);
   const isUserExist = await SocietyMember.findById(payload?.userId);
-  console.log(isUserExist);
   const isSocietyExist = await Society.findById(payload?.societyId);
   const isUserExistInCurrentSociety = await SocietyMember.find({
     societyId: payload?.societyId,
@@ -42,7 +40,6 @@ const getSocietyPostFromDB = async (societyId: string) => {
     },
   });
 
-  console.log(result);
   return result;
 };
 

@@ -6,6 +6,8 @@ const recipe_routes_1 = require("../modules/Recipe/recipe.routes");
 const recipeComments_routes_1 = require("../modules/RecipeComments/recipeComments.routes");
 const socialConnection_routes_1 = require("../modules/SocialConnection/socialConnection.routes");
 const society_routes_1 = require("../modules/Societies/Society/society.routes");
+const SocietyComment_routes_1 = require("../modules/Societies/SocietyComment/SocietyComment.routes");
+const upvoteDownvote_routes_1 = require("../modules/Societies/SocietyLike/upvoteDownvote.routes");
 const societyMember_routes_1 = require("../modules/Societies/SocietyMember/societyMember.routes");
 const societyPost_routes_1 = require("../modules/Societies/SocietyPost/societyPost.routes");
 const storyReels_routes_1 = require("../modules/StoryReels/storyReels.routes");
@@ -47,6 +49,14 @@ const appRoutes = [
     {
         path: "/society-post",
         route: societyPost_routes_1.societyPostRoutes,
+    },
+    {
+        path: "/society-post-comment",
+        route: SocietyComment_routes_1.societyPostCommentRoutes,
+    },
+    {
+        path: "/upvote-downvote",
+        route: upvoteDownvote_routes_1.upvoteDownvote,
     },
 ];
 appRoutes.forEach((aRoute) => {

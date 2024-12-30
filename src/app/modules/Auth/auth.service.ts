@@ -176,7 +176,12 @@ const getAllUsersFromDB = async () => {
   });
   const premiumUser = await User.find({ role: "user", isPremium: true });
 
-  return { user, premiumUser: premiumUser.length, dataLength: user.length };
+  return {
+    user,
+    premiumUser,
+    premiumUserLength: premiumUser.length,
+    dataLength: user.length,
+  };
 };
 
 const getSingleUserFromDB = async (id: string) => {

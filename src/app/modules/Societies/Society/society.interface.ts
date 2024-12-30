@@ -6,6 +6,8 @@ export interface ISociety {
   coverImage: string;
   privacyType: "Public" | "Private";
   admin: ObjectId;
+  isBlocked: boolean;
+  isDeleted: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

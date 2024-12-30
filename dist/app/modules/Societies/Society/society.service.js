@@ -20,12 +20,12 @@ const appError_1 = __importDefault(require("../../../error/appError"));
 const user_model_1 = require("../../user/user.model");
 const societyMember_model_1 = require("../SocietyMember/societyMember.model");
 const society_model_1 = require("./society.model");
-const createSocietyIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+const createSocietyIntoDB = (payload, image) => __awaiter(void 0, void 0, void 0, function* () {
     const isUserExist = yield user_model_1.User.isUserExistById(payload === null || payload === void 0 ? void 0 : payload.admin);
     if (!isUserExist) {
         throw new appError_1.default(http_status_1.default.UNAUTHORIZED, "User does not exist!");
     }
-    const result = yield society_model_1.Society.create(payload);
+    const result = yield society_model_1.Society.create(Object.assign(Object.assign({}, payload), { coverImage: image }));
     return result;
 });
 const getSocietyForConnectFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -50,13 +50,35 @@ const getSocietyForConnectFromDB = (userId) => __awaiter(void 0, void 0, void 0,
         throw error;
     }
 });
-const getSocietyFromDB = () => __awaiter(void 0, void 0, void 0, function* () { return yield society_model_1.Society.find(); });
 const getSingleSocietyFromDB = (societyId) => __awaiter(void 0, void 0, void 0, function* () {
     return yield society_model_1.Society.findById(societyId);
+});
+const getSocietyFromDB = () => __awaiter(void 0, void 0, void 0, function* () { return yield society_model_1.Society.find().populate("admin"); });
+const updateSocietyIntoDB = (societyId, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(societyId, payload);
+    try {
+        const isSocietyExist = yield society_model_1.Society.findById(societyId);
+        if (!isSocietyExist) {
+            throw new appError_1.default(http_status_1.default.NOT_FOUND, "Society does not exist!");
+        }
+        const updatedSociety = yield society_model_1.Society.findByIdAndUpdate(societyId, payload, {
+            new: true,
+            runValidators: true,
+        });
+        if (!updatedSociety) {
+            throw new appError_1.default(http_status_1.default.NOT_FOUND, "Failed to update the society!");
+        }
+        return updatedSociety;
+    }
+    catch (error) {
+        console.error("Error updating society:", error);
+        throw new appError_1.default(http_status_1.default.NOT_FOUND, "Something went wrong for updating the society!");
+    }
 });
 exports.societyServices = {
     createSocietyIntoDB,
     getSocietyForConnectFromDB,
     getSingleSocietyFromDB,
     getSocietyFromDB,
+    updateSocietyIntoDB,
 };

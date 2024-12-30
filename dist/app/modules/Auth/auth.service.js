@@ -125,7 +125,12 @@ const getAllUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
         role: "user",
     });
     const premiumUser = yield user_model_1.User.find({ role: "user", isPremium: true });
-    return { user, premiumUser: premiumUser.length, dataLength: user.length };
+    return {
+        user,
+        premiumUser,
+        premiumUserLength: premiumUser.length,
+        dataLength: user.length,
+    };
 });
 const getSingleUserFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.User.findById(id);

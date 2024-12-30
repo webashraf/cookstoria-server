@@ -11,21 +11,27 @@ const express_1 = __importDefault(require("express"));
 const glovalErrorHandalerMiddleware_1 = __importDefault(require("./app/middleware/glovalErrorHandalerMiddleware"));
 const routes_1 = __importDefault(require("./app/routes"));
 const app = (0, express_1.default)();
+// https://cook-storia-culinary-frontend.vercel.app
+// CORS Configuration
 const corsOptions = {
     credentials: true,
-    origin: [
-        // "https://cook-storia-culinary-frontend.vercel.app",
-        "http://localhost:3000",
-    ],
+    origin: "https://cook-storia-culinary-frontend.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Credentials",
+    ],
 };
 app.use((0, cors_1.default)(corsOptions));
+// Middleware
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use(body_parser_1.default.json({ limit: "50mb" }));
 app.use(body_parser_1.default.urlencoded({ limit: "50mb", extended: true }));
-// routes
+// Routes
 app.use("/api/v1", routes_1.default);
 app.get("/api/v1", (req, res) => {
     res.send("this is /api/v1");
@@ -57,7 +63,7 @@ app.get("/", (req, res) => {
       </h2>
     </section>`);
 });
-// 404 handler
+// 404 Handler
 app.use((req, res) => {
     res.status(404).json({
         success: false,
@@ -65,5 +71,6 @@ app.use((req, res) => {
         message: "Not Found This Route",
     });
 });
+// Global Error Handler
 app.use(glovalErrorHandalerMiddleware_1.default);
 exports.default = app;

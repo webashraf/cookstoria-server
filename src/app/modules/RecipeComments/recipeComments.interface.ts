@@ -1,6 +1,5 @@
 import { ObjectId } from "mongoose";
 
-
 export interface IUserOpinions {
   postId: string;
   userId: ObjectId;

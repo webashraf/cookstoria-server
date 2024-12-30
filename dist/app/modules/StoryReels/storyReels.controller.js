@@ -26,7 +26,6 @@ const createStoryReels = (0, catchAsync_1.default)((req, res) => __awaiter(void 
     });
 }));
 const removeAStroyImage = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body.image);
     const result = yield storyReels_service_1.storyReelsServices.removeImageFromStory(req.params.id, req.body.image);
     res.status(200).json({
         success: true,

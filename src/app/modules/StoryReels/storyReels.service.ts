@@ -8,7 +8,6 @@ import { StoryReels } from "./storyReels.modal";
 const createUpdateStory = async (payload: IStoryReels, image: string) => {
   const { user } = payload;
 
-  console.log("Hello mr. this is storyReels service!", payload, image);
   const isUserExist = await User.isUserExistById(user as any);
   if (!isUserExist) {
     throw new AppError(httpStatus.UNAUTHORIZED, "User does not exist!!");
@@ -26,7 +25,6 @@ const createUpdateStory = async (payload: IStoryReels, image: string) => {
 };
 
 const removeImageFromStory = async (storyId: string, imageUrl: string) => {
-  console.log(storyId, imageUrl);
   const isStoryExist = await StoryReels.findById(storyId as any);
 
   if (!isStoryExist) {

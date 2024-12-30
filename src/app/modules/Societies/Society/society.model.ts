@@ -26,6 +26,14 @@ const societySchema: Schema<ISociety> = new Schema(
       ref: "User",
       required: true,
     },
+    isBlocked: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
