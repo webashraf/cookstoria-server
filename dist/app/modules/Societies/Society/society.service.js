@@ -51,7 +51,7 @@ const getSocietyForConnectFromDB = (userId) => __awaiter(void 0, void 0, void 0,
     }
 });
 const getSingleSocietyFromDB = (societyId) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield society_model_1.Society.findById(societyId);
+    return yield society_model_1.Society.findById(societyId).populate("admin");
 });
 const getSocietyFromDB = () => __awaiter(void 0, void 0, void 0, function* () { return yield society_model_1.Society.find().populate("admin"); });
 const updateSocietyIntoDB = (societyId, payload) => __awaiter(void 0, void 0, void 0, function* () {

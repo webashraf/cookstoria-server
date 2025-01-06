@@ -11,7 +11,7 @@ const app: Application = express();
 // CORS Configuration
 const corsOptions = {
   credentials: true,
-  origin: "http://localhost:3000",
+  origin: "https://cook-storia-culinary-frontend.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: [
     "Content-Type",

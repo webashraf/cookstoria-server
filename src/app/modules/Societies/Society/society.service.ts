@@ -50,7 +50,7 @@ const getSocietyForConnectFromDB = async (userId: string) => {
 };
 
 const getSingleSocietyFromDB = async (societyId: string) => {
-  return await Society.findById(societyId);
+  return await Society.findById(societyId).populate("admin");
 };
 
 const getSocietyFromDB = async () => await Society.find().populate("admin");
